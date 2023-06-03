@@ -140,11 +140,12 @@
         \xdef\ftitle{Torre de Hanoi -- \the\ndiscs\ Discos}
     \fi
     \gdef\fmsg{}
-    \center
+    \begin{center}
     \drawpoles
     % Recursion draws a new frame for every step.
     \rhanoi{1}{2}{3}{\ndiscs}
     % Final frame.
     \gdef\fmsg{\node[] at (3.8,2.5) {\Huge\scalefont{2}\color{darkgreen}OK};}
     \drawpoles
+    \end{center}
 }
