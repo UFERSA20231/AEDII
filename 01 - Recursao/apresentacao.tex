@@ -1,4 +1,4 @@
-\documentclass[10pt, handout]{beamer}
+\documentclass[10pt]{beamer}
 \usepackage{multicol}
 \usepackage[english]{babel}
 \usepackage{blindtext}
@@ -200,6 +200,25 @@
 \hanoi{1}
 \hanoi{2}
 \hanoi{3}
+
+\begin{frame}
+  \frametitle{Torre de Hanoi (Algoritmo) - $N>1$}
+  MOVER(N, ORIGEM, DESTINO, AUXILIAR)
+  \begin{itemize}\itemsep1em 
+    \item<2->Passo 1: MOVER(N-1, ORIGEM, AUXILIAR, DESTINO)
+    \item<3->Passo 2: MOVER(1, ORIGEM, DESTINO, AUXILIAR)
+    \item<4->Passo 3: MOVER(n-1, AUXILIAR, DESTINO, ORIGEM)
+  \end{itemize}
+
+  \vfill
+  \begin{figure}[h]
+    \begin{center}
+      \includegraphics[width=8cm]{./fig/hanoi.png}
+    \end{center}
+  \end{figure}
+  
+\end{frame}
+
 
 \begin{frame}
   \frametitle{Exemplo: Formação de sequências}
