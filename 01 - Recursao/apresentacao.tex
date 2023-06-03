@@ -139,6 +139,19 @@
   \end{columns}
 }
 
+\begin{frame}[t]
+  \frametitle{Cálculo de uma potência}
+  Calcula a potência com um expoente inteiro de um número em ponto flutuante.
+  \begin{equation*}
+    x^n=\begin{cases}
+      1,                & \text{se}\ n=0.        \\
+      \frac{1}{x^{-n}}, & \text{se}\ n<0.        \\
+      x(x^{n-1}),       & \text{caso contrário}.
+    \end{cases}
+  \end{equation*}
+
+\end{frame}
+
 \begin{frame}
   \frametitle{Exemplo: Números naturais}
   \begin{columns}[t]
