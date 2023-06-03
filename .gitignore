@@ -1,0 +1,43 @@
+# Ignorando arquivos sem extensão (exec files)
+# Ref: https://www.codegrepper.com/code-examples/shell/gitignore+all+files+with+no+extension
+*
+!/**/
+!*.*
+
+#Specific files
+*.pdf
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.gz
+*.toc
+*.snm
+*.out
+*.a
+*.o
+.vscode/launch.json
+.vscode/tasks.json
+*.dvi
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*run.xml
+*.bcf
+*launch.json
+*tasks.json
+*.json
+!Makefile
+.vscode/c_cpp_properties.json
+.vscode/settings.json
+.index/lab/roteiro.pdf
+*.code-workspace
