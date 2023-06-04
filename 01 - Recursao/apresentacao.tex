@@ -9,6 +9,9 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{dirtree}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 \input{torreHanoi.tex}
 \definecolor{commentgreen}{RGB}{2,112,10}
 \definecolor{eminence}{RGB}{108,48,130}
@@ -244,9 +247,9 @@
   \end{center}
 \end{frame}
 
-% \hanoi{1}
-% \hanoi{2}
-% \hanoi{3}
+\hanoi{1}
+\hanoi{2}
+\hanoi{3}
 
 \begin{frame}
   \frametitle{Torre de Hanoi (Algoritmo) - $N>1$}
@@ -283,7 +286,51 @@
 
 \end{frame}
 
-% \hanoi{4}
+\hanoi{4}
+
+\begin{frame}
+  \frametitle{Passos da torre de Hanoi}
+  \begin{center}
+
+    \begin{tikzpicture}
+      \begin{axis}[
+          title = Passo na Torre de Hanoi,
+          xlabel = Quantidade,
+          ylabel = Discos,
+          xmin = 0, xmax = 10,
+          ymin = 0, ymax = 200,
+          xtick = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+          ytick = {0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200},
+          grid = major,
+          grid style = {dashed},
+          width = 10cm,
+          height = 7cm,
+          nodes near coords,
+          nodes near coords align={vertical},
+          nodes near coords style={black},
+        ]
+        \addplot[
+          smooth,
+          mark = *,
+          mark options={draw=black, fill=black},
+          blue,
+        ] plot coordinates {
+            (1, 1)
+            (2, 3)
+            (3, 7)
+            (4, 15)
+            (5, 31)
+            (6, 63)
+            (7, 127)
+            (8, 255)
+            (9, 511)
+            (10, 1023)
+          };
+      \end{axis}
+    \end{tikzpicture}
+  \end{center}
+
+\end{frame}
 
 
 \begin{frame}
