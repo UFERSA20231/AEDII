@@ -192,24 +192,27 @@
                 } -- cycle;
 
             % Desenhar o apótema
-            \draw[dashed] (0,0) -- (v1) node[midway, above] {a};
+            \draw[dashed] (0,0) -- (v1) node[midway, above] {};
+            \draw[dashed] (0,0) -- (v2) node[midway, above] {};
 
-            % Posicionar a expressão matemática
-            % \node[anchor=west] at (3,0) {a = $360/#1$};
-            \node[anchor=west, text width=5cm] at (2,0) {%
-                \pgfmathsetmacro{\alfa}{360/(2*#1)}
-                \pgfmathsetmacro{\alfaB}{tan(#1*180/3.14)}
+            \node[anchor=west, xshift=1cm, text width=6cm] at (2,0.5) {
+                \pgfmathsetmacro{\alfa}{(180 - (360/#1))/2}
+                \pgfmathsetmacro{\alfaB}{tan(\alfa)}
                 \pgfmathsetmacro{\Atotal}{#1*2*\alfaB/2}
-                \pgfmathsetmacro{\perimetro}{#1*2}
-                \pgfmathsetmacro{\final}{\Atotal/\perimetro}
+                \pgfmathsetmacro{\diag}{2*sqrt(1+\alfaB*\alfaB)}
 
+                \pgfmathsetmacro{\pAlfa}{round(100*\alfa)/100}
+                \pgfmathsetmacro{\pAlfaB}{round(100*\alfaB)/100}
+                \pgfmathsetmacro{\pTotal}{round(100*\Atotal)/100}
+                \pgfmathsetmacro{\PT}{2*#1}
+                \pgfmathsetmacro{\razao}{\PT/\diag}
 
                 \begin{align*}
-                    \alpha           & = \frac{360}{2\times #1} \rightarrow \alpha = \alfa \\
-                    tg(\alpha)       & = \frac{h}{L/2} \rightarrow h=\alfaB                \\
-                    A_T              & = \frac{#1\times L\times h}{2} = \Atotal            \\
-                    P_T              & = #1\times L = \perimetro                           \\
-                    \pi_{aproximado} & = A_T/P_T = \final
+                    2*\alpha   & = \left(180 - \frac{360}{#1}\right) \rightarrow \alpha   = \pAlfa ^o \\
+                    tg(\alpha) & = \frac{h}{L/2}          \rightarrow h                 = \pAlfaB     \\
+                    P_T        & = #1L      = \PT                                                     \\
+                    D          & = 2\sqrt{1+h^2}= \diag                                               \\
+                    \pi        & \approx P_T/D = \razao
                 \end{align*}
             };
         \end{tikzpicture}
@@ -224,17 +227,9 @@
     \end{frame}
 }
 
-\slidefiguraRegular{2}{3}
-\slidefiguraRegular{2}{4}
-\slidefiguraRegular{2}{5}
-\slidefiguraRegular{2}{6}
-\slidefiguraRegular{2}{7}
-\slidefiguraRegular{2}{8}
-\slidefiguraRegular{2}{9}
-\slidefiguraRegular{2}{10}
-\slidefiguraRegular{2}{11}
-\slidefiguraRegular{2}{12}
-\slidefiguraRegular{2}{40}
+\foreach \i in {3,...,20} {
+        \slidefiguraRegular{2}{\i}
+    }
 
 \end{document}
 
