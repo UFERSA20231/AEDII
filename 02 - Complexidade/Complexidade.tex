@@ -1,13 +1,23 @@
 \documentclass[12pt]{beamer}
-\setbeamercovered{transparent}
-% \beamerdefaultoverlayspecification{<+(1)-| alert@+(1)>}
-% Configurações do tema
+% \setbeamercovered{transparent}
+\beamerdefaultoverlayspecification{<+(1)-| alert@+(1)>}
 \usetheme{CambridgeUS}
-
-% Pacotes adicionais
+\usepackage{multicol}
 \usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfmath}
 
-% Informações da apresentação
+\newcommand{\duascolunas}[2]{
+  \begin{columns}
+    \begin{column}{0.72\textwidth}
+      #1
+    \end{column}
+    \begin{column}{0.28\textwidth}
+		#2
+	\end{column}
+  \end{columns}
+}
+
 \title{Análise de Complexidade}
 \author{Prof. Kennedy Reurison Lopes}
 \date{\today}
@@ -15,43 +25,28 @@
 % Início do documento
 \begin{document}
 
-% Slide de título
 \frame{\titlepage}
 
-% Slide de introdução
 \begin{frame}
     \frametitle{Introdução}
 
     \begin{itemize}
         \item Bem-vindos à apresentação sobre a complexidade de realizar uma tarefa!
         \item Hoje discutiremos exemplos de tarefas que podem ser complexas, mesmo não necessariamente estejam diretamente relacionados a algoritmos.
+        \item Depois iremos direto ao assunto: Como identificar a complexidade em algoritmos.
     \end{itemize}
 \end{frame}
 
-% Slide 1
 \begin{frame}
     \frametitle{Ordenar uma pilha de livros}
-    \begin{columns}[T] % Alinhar as colunas no topo
-        \begin{column}{0.5\textwidth}
-            \begin{itemize}
-                \pause \item Imagine uma pilha desorganizada de livros.
-                \pause \item A tarefa é organizá-los em ordem alfabética.
-                \pause \item A complexidade aumenta à medida que a pilha de livros fica maior.
-            \end{itemize}
-        \end{column}
-        \begin{column}{0.4\textwidth}
-            \onslide<1->\begin{figure}[htb]
-                \centering
-                \includegraphics[width=0.2\textwidth]{livros.jpg}
-                \label{fig:livros}
-            \end{figure}
-        \end{column}
-    \end{columns}
+    \begin{itemize}
+        \item Imagine uma pilha desorganizada de livros.
+        \item A tarefa é organizá-los em ordem alfabética.
+        \item A complexidade aumenta à medida que a pilha de livros fica maior.
+    \end{itemize}
 \end{frame}
 
-% Slide 2
 \begin{frame}
-    % \frametitle{Ache o Wally}
     \begin{figure}[htb]
         \centering
         \includegraphics[width=0.9\textwidth]{wally.jpg}
@@ -67,7 +62,6 @@
     \end{itemize}
 \end{frame}
 
-% Slide 3
 \begin{frame}
     \frametitle{Classificar uma coleção de fotos}
 
@@ -84,7 +78,6 @@
     \end{figure}
 \end{frame}
 
-% Slide 4
 \begin{frame}
     \frametitle{Resolver um quebra-cabeça complexo}
 
@@ -95,43 +88,151 @@
 
     \begin{figure}[htb]
         \centering
-        \includegraphics[width=0.2\textwidth]{livros}
-        \caption{Exemplo de quebra-cabeça complexo.}
+        \includegraphics[width=0.4\textwidth]{quebracabeca}
         \label{fig:quebracabeca}
     \end{figure}
 \end{frame}
 
-% Slide 5
 \begin{frame}
     \frametitle{Planejar uma viagem com múltiplos destinos}
-
     \begin{itemize}
         \item Ao planejar uma viagem com vários destinos e restrições, como orçamento, tempo, logística, preferências pessoais, entre outros fatores, a complexidade aumenta.
         \item Quanto mais destinos e restrições envolvidos, mais complexo se torna o planejamento.
     \end{itemize}
-
-    \begin{figure}[htb]
-        \centering
-        \includegraphics[width=0.2\textwidth]{livros}
-        \caption{Exemplo de planejamento de viagem com múltiplos destinos.}
-        \label{fig:viagem}
-    \end{figure}
 \end{frame}
 
-% Slide de conclusão
+\begin{frame}[t]
+    \frametitle{O que é um algoritmo?}
+    \duascolunas{\begin{itemize}
+            \item Um algoritmo é um conjunto \textbf{finito} de passos.
+            \item Entretanto, a existência de um algoritmo não garante que possa ser resolvido.
+            \item  Condições de tempo e memória devem ser avaliadas.
+        \end{itemize}}{\begin{figure}[h]
+            \centering
+            \includegraphics[width=1\textwidth]{Ampulheta}
+        \end{figure}}
+\end{frame}
+
 \begin{frame}
-    \frametitle{Conclusão}
-
+    \frametitle{Recursos valiosos}
     \begin{itemize}
-        \item Nesta apresentação, exploramos exemplos de tarefas não relacionadas a algoritmos que demonstram a complexidade de realizar uma determinada atividade.
-        \item Mesmo em contextos distintos, a complexidade pode aumentar à medida que a quantidade de elementos, restrições ou a dificuldade do problema crescem.
-        \item A compreensão dessas complexidades nos ajuda a lidar melhor com tarefas desafiadoras e a buscar soluções eficientes.
+        \item Algoritmos demandam tempo de execução e recursos:
+              \begin{itemize}
+                  \item Memória
+                  \item Espaço em disco
+                  \item Dispositivos externos
+                  \item Banda de rede
+                  \item \ldots
+              \end{itemize}
+        \item Um bom programador deve ter o atributo de \textbf{poupar} tempo e recursos.
+        \item A principal desempenho avaliado é a \emph{economia} do tempo necessário para o cálculo dos algoritmos.
     \end{itemize}
-
-    \vspace{1cm}
-    Obrigado!
-
 \end{frame}
 
+\newcommand{\randomGrid}[1]{%
+    \begin{tikzpicture}[scale=1]
+        \def\gridSize{#1}
+        \foreach \x in {1,...,\gridSize} {
+                \foreach \y in {1,...,\gridSize} {
+                        \pgfmathsetmacro{\randomColor}{rnd}
+                        \pgfmathsetmacro{\randomNumber}{int(random(1,1000))}
+                        \fill[red!20] (\x-1,\y-1) rectangle (\x,\y);
+                        \node at (\x-0.5,\y-0.5) {\randomNumber};
+                    }
+            }
+        \draw[step=1cm, fill=blue] (0,0) grid (\gridSize,\gridSize);
+    \end{tikzpicture}%
+}
+
+\begin{frame}\frametitle{Quanto tempo preciso para organizar este grid?}
+    \begin{center}
+        \randomGrid{2}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Quanto tempo preciso para organizar este grid?}
+    \begin{center}
+        \randomGrid{3}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Quanto tempo preciso para organizar este grid?}
+    \begin{center}
+        \randomGrid{4}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Quanto tempo preciso para organizar este grid?}
+    \begin{center}
+        \randomGrid{5}
+    \end{center}
+\end{frame}
+
+\newcommand{\figuraRegular}[2]{%
+    \begin{center}
+        \begin{tikzpicture}
+            \pgfmathsetmacro{\radius}{#2} % Raio da figura regular
+            \pgfmathsetmacro{\angle}{360/#1} % Ângulo entre os lados da figura regular
+            \pgfmathsetmacro{\apothem}{\radius*cos(\angle/2)} % Apótema da figura regular
+
+            % Desenhar os vértices da figura regular
+            \foreach \i in {1,...,#1} {
+                    \pgfmathsetmacro{\x}{\radius*cos(\i*\angle)}
+                    \pgfmathsetmacro{\y}{\radius*sin(\i*\angle)}
+                    \coordinate (v\i) at (\x,\y);
+                }
+
+            % Desenhar a figura regular
+            \draw (v1)
+            \foreach \i in {2,...,#1} {
+                    -- (v\i)
+                } -- cycle;
+
+            % Desenhar o apótema
+            \draw[dashed] (0,0) -- (v1) node[midway, above] {a};
+
+            % Posicionar a expressão matemática
+            % \node[anchor=west] at (3,0) {a = $360/#1$};
+            \node[anchor=west, text width=5cm] at (2,0) {%
+                \pgfmathsetmacro{\alfa}{360/(2*#1)}
+                \pgfmathsetmacro{\alfaB}{tan(#1)}
+                \pgfmathsetmacro{\Atotal}{3*2*\alfaB/2}
+                \pgfmathsetmacro{\perimetro}{#1*2}
+
+                \begin{align*}
+                    \alpha           & = \frac{360}{2\times #1} \rightarrow \alpha = \alfa \\
+                    tg(\alpha)       & = \frac{h}{L/2} \rightarrow h=\alfaB                \\
+                    A_T              & = \frac{#1\times L\times h}{2} = \Atotal            \\
+                    P_T              & = #1\times L = \perimetro                           \\
+                    \pi_{aproximado} & = A_T/P_T
+                \end{align*}
+            };
+        \end{tikzpicture}
+    \end{center}
+}
+
+\newcommand{\slidefiguraRegular}[2]{
+    \begin{frame}
+        \frametitle{Cálculo do $\pi$}
+        \framesubtitle{#2 lados  ($L=2$)}
+        \figuraRegular{#2}{#1}
+    \end{frame}
+}
+
+\slidefiguraRegular{2}{3}
+\slidefiguraRegular{2}{4}
+\slidefiguraRegular{2}{5}
+\slidefiguraRegular{2}{6}
+\slidefiguraRegular{2}{7}
+\slidefiguraRegular{2}{8}
+\slidefiguraRegular{2}{9}
+\slidefiguraRegular{2}{10}
+\slidefiguraRegular{2}{11}
+\slidefiguraRegular{2}{12}
+\slidefiguraRegular{2}{40}
 
 \end{document}
+
