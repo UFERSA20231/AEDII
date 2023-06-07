@@ -198,16 +198,18 @@
             % \node[anchor=west] at (3,0) {a = $360/#1$};
             \node[anchor=west, text width=5cm] at (2,0) {%
                 \pgfmathsetmacro{\alfa}{360/(2*#1)}
-                \pgfmathsetmacro{\alfaB}{tan(#1)}
-                \pgfmathsetmacro{\Atotal}{3*2*\alfaB/2}
+                \pgfmathsetmacro{\alfaB}{tan(#1*180/3.14)}
+                \pgfmathsetmacro{\Atotal}{#1*2*\alfaB/2}
                 \pgfmathsetmacro{\perimetro}{#1*2}
+                \pgfmathsetmacro{\final}{\Atotal/\perimetro}
+
 
                 \begin{align*}
                     \alpha           & = \frac{360}{2\times #1} \rightarrow \alpha = \alfa \\
                     tg(\alpha)       & = \frac{h}{L/2} \rightarrow h=\alfaB                \\
                     A_T              & = \frac{#1\times L\times h}{2} = \Atotal            \\
                     P_T              & = #1\times L = \perimetro                           \\
-                    \pi_{aproximado} & = A_T/P_T
+                    \pi_{aproximado} & = A_T/P_T = \final
                 \end{align*}
             };
         \end{tikzpicture}
