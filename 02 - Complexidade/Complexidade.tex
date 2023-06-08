@@ -1,4 +1,4 @@
-\documentclass[12pt]{beamer}
+\documentclass[10pt]{beamer}
 % \setbeamercovered{transparent}
 \beamerdefaultoverlayspecification{<+(1)-| alert@+(1)>}
 \usetheme{CambridgeUS}
@@ -13,7 +13,10 @@
 \usepackage{amssymb} 
 \usepackage{helvet}
 \usepackage{xcolor}
-
+\usepackage{pgfplots}
+\usepackage{array}
+\usepackage{arydshln}
+\pgfplotsset{compat=1.18}
 
 
 \lstset{
@@ -333,9 +336,9 @@
         \circuloEQuadrado{#1}
     \end{frame}
 }
-% \foreach \i in {10,20,...,200} {
-%         \calcpi{\i}
-%     }
+\foreach \i in {10,20,...,200} {
+        \calcpi{\i}
+    }
 
 \begin{frame}[t]
     \frametitle{Cálculo de $\pi$ (Alg. 2)}
@@ -433,7 +436,7 @@
 
 \end{frame}
 
-\begin{frame}[t]
+\begin{frame}
     \frametitle{Contagem de frequência}
     Exemplo: Conte as operações (contagem de frequência) realizadas na operação de uma soma geométrica definida por:
     $$S = \sum_{i=0}^n x^i$$
@@ -441,7 +444,7 @@
 \end{frame}
 
 \begin{frame}\normalsize
-    \frametitle{Contagem de frequência}
+    \frametitle{Contagem de frequência - Algoritmo 4}
     \duascolunas{\codecppNoTitle[0.9]{algSoma.c}}
     {
         \begin{enumerate}
@@ -455,8 +458,135 @@
     \pause Somando todos os tempos, temos o tempo total:  \begin{center}
         $T(n) = \frac{n^2}{2} + \frac{7n}{2} + 6$
     \end{center}
-
 \end{frame}
+
+\begin{frame}
+    \frametitle{Fórmula de \textit{Horner}}
+
+    Pode-se modificar o algoritmo para melhorar o tempo de execução utilizando o algoritmo de \emph{Horner}.
+    \begin{align*}
+        S = \sum_{i=0}^n x^i & = 1 + x + x^2 +\ldots + x^n                 \\
+                             & = 1+x(1 + x + x^2 +\ldots + x^{n-1})        \\
+                             & = 1+x(1 + x(1 + x + x^2 +\ldots + x^{n-2})) \\
+                             & = 1+x(1+x(1+ x(1+\ldots(1+x(1+x)))\ldots))
+    \end{align*}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Contagem de frequência - Algoritmo 5}
+    \duascolunas{\codecppNoTitle[0.9]{algSoma2.c}}{
+        \begin{enumerate}
+            \pause\item[L2)] 1
+                \pause\item [L3)] n+2
+                  \pause\item [L4)] n+1
+                  \pause\item [L6)] 1
+        \end{enumerate}}
+    \vfill
+    \pause\centering Portanto: $T(n) = 1+(n+2)+(n+1)+1 = 2n+5$.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Fórmula fechada}
+    Uma terceira solução é encontrar a fórmula fechada:
+    \begin{align*}
+        \onslide<1-> {S = \sum_{i=0}^n i & = 1 + x + x^2 +\ldots + x^n}    \\
+        \onslide<2->{xS                  & = x(1 + x + x^2 +\ldots + x^n)} \\
+        \onslide<3->{xS                  & = x + x^2 +\ldots + x^{n+1}}    \\
+        \onslide<4->{xS +1               & = 1+x + x^2 +\ldots + x^{n+1}}  \\
+        \onslide<5->{xS +1               & = S + x^{n+1}}                  \\
+        \onslide<6->{xS -S               & = x^{n+1}-1}                    \\
+        \onslide<7->{(x-1)S              & = x^{n+1}-1}                    \\
+        \onslide<8->{S                   & = \frac{x^{n+1}-1}{x-1}}
+    \end{align*}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Contagem de frequência - Algoritmo 6}
+    Qual a complexidade desse algoritmo com a fórmula fechada?\vfill
+
+    \pause\codecppNoTitle[0.9]{algSoma3.c}
+    \begin{flushleft}
+        \pause Considerando que \emph{pow} tem complexidade logaritmica: $$T(n) = log_2 (n+1)$$
+    \end{flushleft}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Equações }
+    \begin{center}
+
+        \begin{tikzpicture}[x=8mm, y=0.7mm]
+            % Eixos
+            \draw[->,line width=0.25pt] (-1,0) -- (10,0) node[right] {n};
+            \draw[->,line width=0.25pt] (1,-10) -- (1,80) node[above] {f(n)};
+            \draw[xshift=-14pt] (1,0.1) -- (1,-0.1) node[below] {(1,1)};
+
+            \draw<2->[domain=1:8, smooth=bezier, variable=\x, black,line width=0.5pt]
+            plot ({\x},{(\x*\x)/2 + (7*\x)/2 + 6}) node[right] {$\frac{n^2}{2} + \frac{7n}{2} + 6$};
+            \draw<3->[domain=1:8, smooth=bezier, variable=\x, black,line width=0.5pt]
+            plot ({\x},{2*\x + 5}) node[right, yshift=15] {$2n + 5$};
+            \draw<4->[domain=1:8, smooth=bezier, variable=\x, black,line width=0.5pt]
+            plot ({\x},{log10(\x+1)}) node[right, yshift=15] {$\log(n+1)$};
+        \end{tikzpicture}
+
+    \end{center}
+\end{frame}
+
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\renewcommand{\arraystretch}{1.5}
+\begin{frame}
+    \frametitle{Comportamento assintótico}
+    Comparação numérica da complexidade: Considere que cada operação ($n=1$) dura/custa\footnote{Dura/custa: Termo de comparação dos algoritmos} de $0.0001s = 100\mu s$.\vfill
+    \begin{table}[]
+        \begin{tabular}{P{2.5cm}P{2.5cm}P{2.5cm}P{2.5cm}}
+            $T(n)$      & $20$                 & $40$                       & $60$                                                                                                                         \\ \hline
+            $n$         & \only<2->{$200\mu s$ & $400\mu s$                 & $600\mu s$}                                                                                                                  \\ \hdashline
+            $n\ log(n)$ & \only<3->{$900\mu s$ & $2.1ms$                    & $3.5ms$}                                                                                                                     \\ \hdashline
+            $n^2$       & \only<4->{$4ms$      & $16ms$                     & $36ms$}                                                                                                                      \\ \hdashline
+            $n^3$       & \only<5->{$80ms$     & $640ms$                    & $2.16s$}                                                                                                                     \\ \hdashline
+            $2^n$       & \only<6->{$10s$      & $27 dias$}   \only<7->{    & $3660$ séculos}                                                                                                              \\ \hdashline
+            $3^n$       & \only<8->{$580min$}  & \only<9->{$38550$ séculos} & \only<10->{$1.3*10^{14}$ séculos\footnote{O tempo do universo medido em séculos é de aproximadamente $13.8*10^{7}$ séculos}}
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Complexidade Assintótica}
+    \begin{itemize}
+        \item Na análise de algoritmos, geralmente usa-se a complexidade assintótica, analisando o algoritmo para n tendendo a infinito;
+        \item Nesse caso, despreza-se constantes e termos de menor crescimento;
+        \item Usa-se notações especiais para a complexidade assintótica.
+    \end{itemize}
+    \pause Tipos de Notação:
+    \pause\begin{center}
+
+        \begin{tabular}{c|c}
+            \textbf{Notação}   & \textbf{Descrição simplificada} \\
+            \hline
+            \pause $O(n)$      & Limitador Estrito Superior      \\
+            \pause $\Omega(n)$ & Limitador Estrito Inferior      \\
+            \pause $\Theta(n)$ & Limitador Central               \\
+            \pause $o(n)$      & Limitador Não Estrito Superior  \\
+            \pause $\omega(n)$ & Limitador Não Estrito Inferior  \\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Complexidade Assintótica}
+    \large O que significa complexidade assintótica?  
+    \begin{center}
+      \begin{tikzpicture}[x=50]
+        % Eixo x
+        \draw<1->[->, line width=1] (0,0) -- (5,0) node[right] {$x$};
+        \draw<1->[->, line width=1] (0,0) -- (0,5) node[above] {$y$};
+        \draw<2->[smooth, blue, line width=0.5] plot coordinates {(0,0) (1,1) (2,3) (3,2.5) (4,4) (5,5)};
+        \draw<3->[smooth, blue, line width=0.5] plot coordinates {(0,0) (1,2) (2,2) (3,2) (4,3) (5,3)};
+        \draw<4->[smooth, blue, line width=0.5] plot coordinates {(0,0) (1,1) (2,3) (3,2) (4,2) (5,2)};
+        \draw<5->[-, line width=1, dashed] (3,5) -- (3,0) node[below] {$x=3$};
+      \end{tikzpicture}
+    \end{center}
+  \end{frame}
 
 \end{document}
 
