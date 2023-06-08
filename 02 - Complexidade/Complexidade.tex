@@ -8,6 +8,52 @@
 \usepackage{calc}
 \usetikzlibrary{calc}
 \usepackage{fp}
+\usepackage{listings} % Pacote para destacar código fonte
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{helvet}
+\usepackage{xcolor}
+
+
+
+\lstset{
+  language=C++,
+  basicstyle=\small\ttfamily,
+  numbers=left, % Adiciona a numeração nas linhas
+  numberstyle=\tiny, % Estilo da numeração (pequena)
+  stepnumber=1, % Incremento da numeração
+  numbersep=-30pt, % Espaçamento entre a numeração e o código (valor negativo)
+}
+
+\newcommand{\codecppNoTitle}[2][0.6]{
+  \centering
+  \begin{minipage}{#1\textwidth}
+    %Referencia: https://ctan.dcc.uchile.cl/macros/latex/contrib/listings/listings.pdf
+    \lstset{
+      language=C++,
+      numbers=left,
+      numberstyle=\tiny,
+      stepnumber=1,
+      numbersep=5pt,
+      showstringspaces = false,
+      frame=shadowbox,
+      commentstyle=\color{commentgreen},
+      keywordstyle=\color{eminence},
+      stringstyle=\color{red},
+      backgroundcolor=\color{black!3},
+      keywordstyle=\color{blue},
+      rulesepcolor=\color{black!5},
+      basicstyle=\small\ttfamily, % basic font setting
+      emph={int,char,double,float,unsigned,void,bool},
+      emphstyle={\color{blue}}
+    }
+    \lstinputlisting{#2}
+  \end{minipage}}
+
+
+% Definindo as cores para as palavras reservadas
+\definecolor{keywordblue}{RGB}{0,0,255}
+\definecolor{identifierblack}{RGB}{0,0,0}
 
 \newcommand{\duascolunas}[2]{
   \begin{columns}
@@ -240,14 +286,11 @@
             \draw[fill=none](0,0) circle (2.0);
             \draw (0,0) -- (2,0) node[midway, yshift=10] {R};
             \node[anchor=west, xshift=1cm, text width=6cm] at (2,0.5) {
-                $$lim_{n\rightarrow\infty}\left(\frac{P_T}{D}\right) = \left(\frac{2 \pi R}{2R}\right)= \pi$$
+                $$\lim_{n\rightarrow\infty}\left(\frac{P_T}{D}\right) = \left(\frac{2 \pi R}{2R}\right)= \pi$$
             };
         \end{tikzpicture}
     \end{center}
 \end{frame}
-
-
-
 
 
 \newcounter{bluePointsCounter}
@@ -358,6 +401,59 @@
 
 
         \end{tikzpicture}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}[fragile, t]
+    \frametitle{Contagem de Frequência - Algoritmo 1}
+
+    \begin{lstlisting}[language=C++, basicstyle=\small]
+        int main() {
+            int x = 0;
+            x = x + 1;
+            return 0;
+        }
+  \end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile, t]
+    \frametitle{Contagem de Frequência - Algoritmo 2}
+
+    \begin{lstlisting}[language=C++, basicstyle=\small]
+        int main() {
+            int x = 0, n=10;
+            for (int i = 0; i < n; i++) {
+                x = x + 1;
+            }
+            return 0;
+        }
+  \end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Contagem de frequência}
+    Exemplo: Conte as operações (contagem de frequência) realizadas na operação de uma soma geométrica definida por:
+    $$S = \sum_{i=0}^n x^i$$
+    Analise as instruções do algoritmo que o descreve logo a seguir:
+\end{frame}
+
+\begin{frame}\normalsize
+    \frametitle{Contagem de frequência}
+    \duascolunas{\codecppNoTitle[0.9]{algSoma.c}}
+    {
+        \begin{enumerate}
+            \item[L2)] $1$
+            \item[L3)] $n+2$
+            \item[L4)] $n+1$
+            \item[L6)] $\sum_{i=0}^n i$
+            \item[L7)] $n+1$
+            \item[L9)] $1$
+        \end{enumerate}}
+    \pause Somando todos os tempos, temos o tempo total:  \begin{center}
+        $T(n) = \frac{n^2}{2} + \frac{7n}{2} + 6$
     \end{center}
 
 \end{frame}
