@@ -258,7 +258,7 @@
         \draw (2,2) circle [radius=2cm];
         \fill (2,2) circle [radius=0.5pt];
         \foreach \i in {1,...,#1}
-        {
+            {
                 \pgfmathsetmacro{\x}{random()*4}
                 \pgfmathsetmacro{\y}{random()*4}
 
@@ -267,10 +267,10 @@
                 \ifnum\pgfmathresult=1
                     \fill[blue] (\x,\y) circle [radius=1pt];
                     \stepcounter{bluePointsCounter} % Incrementa o contador
-                    \else
+                \else
                     \fill[red] (\x,\y) circle [radius=1pt];
-                    \fi
-                    }
+                \fi
+            }
 
         % Exibe o valor do contador
         \def\azul{\thebluePointsCounter}
@@ -290,18 +290,75 @@
         \circuloEQuadrado{#1}
     \end{frame}
 }
-
-\foreach \i in {5,10,...,30} {
-    \calcpi{\i}
-    }
+% \foreach \i in {10,20,...,200} {
+%         \calcpi{\i}
+%     }
 
 \begin{frame}[t]
     \frametitle{Cálculo de $\pi$ (Alg. 2)}
-    \circuloEQuadrado{2000}
+    \circuloEQuadrado{50}
     Quando os pontos tendem ao infinito:
     \begin{align*}
         \lim_{N\rightarrow\infty} A/T = \frac{A_c}{A_q} = \frac{\pi R^2}{(2R)^2} = \frac{\pi}{4}
     \end{align*}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Cálculo da complexidade}
+    Tempo de Execução:
+    $$T(n) = \sum^n_{i=1} t_in_i$$
+    \begin{itemize}
+        \item $i$ índice da instrução;
+        \item $t_i$ o tempo necessário para a excução da instrução $i$;
+        \item $n_i$ o número de vezes que a instrução $i$ é executada.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Obtenção de $t_i$}\large
+    O cálculo de $t_i$ depende:
+    \begin{itemize}
+        \item Memória disponível do computador;
+        \item Desempenho do processador;
+        \item Arquitetura e estado dos dispositivos naquele momento de execução.
+    \end{itemize}
+
+    \pause Até mesmo o mesmo computador tem tempo de respostas diferentes.
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Experimento para cálculo do tempo}
+
+    \begin{center}
+
+        \begin{tikzpicture}[node distance=2cm, every node/.style={rectangle, draw, text centered, rounded corners}]
+
+            % Passo Inicial
+            \node<1-> (inicial) [fill=blue!20, rectangle,text width=3cm] {Init cronômetro; Inicialize N=0};
+
+            % Passos Intermediários
+            \onslide<2->\node (passo1) [fill=orange!20, below of=inicial, text width=2cm] {Execute o algoritmo};
+            \onslide<3->\node (passo2) [fill=orange!20, below of=passo1] {$N>Max$};
+            \onslide<6->\node (passo3) [fill=blue!20, below of=passo2,text width=3cm] {Calcule o tempo médio};
+
+            % Conexões
+            \onslide<2->\draw [->] (inicial) -- (passo1);
+            \onslide<3->\draw [->] (passo1) -- (passo2);
+            \onslide<6->\draw [->] (passo2) -- (passo3);
+
+            % Fluxo Alternativo
+            \onslide<4->\node (condicao) [fill=orange!20, right of=passo2, node distance=4cm] {$N = N+1$};
+            \onslide<5->\node (retorno) [fill=orange!20, above of=condicao, text width=4cm] {Reinicie os parâmetros};
+
+            \onslide<4->\draw [->] (passo2.east) -- node[above, draw=none] {Não} (condicao.west);
+            \onslide<5->\draw [->] (condicao.north) -- (retorno.south);
+            \onslide<5->\draw [->] (retorno.west) -- (passo1.east);
+
+
+        \end{tikzpicture}
+    \end{center}
 
 \end{frame}
 
