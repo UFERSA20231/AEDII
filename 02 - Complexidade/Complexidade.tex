@@ -5,7 +5,9 @@
 \usepackage{multicol}
 \usepackage{graphicx}
 \usepackage{tikz}
-\usepackage{pgfmath}
+\usepackage{calc}
+\usetikzlibrary{calc}
+\usepackage{fp}
 
 \newcommand{\duascolunas}[2]{
   \begin{columns}
@@ -195,7 +197,7 @@
             \draw[dashed] (0,0) -- (v1) node[midway, above] {};
             \draw[dashed] (0,0) -- (v2) node[midway, above] {};
 
-            \node[anchor=west, xshift=1cm, text width=6cm] at (2,0.5) {
+            \node[anchor=west, xshift=1cm, text width=8cm] at (0.5,0) {
                 \pgfmathsetmacro{\alfa}{(180 - (360/#1))/2}
                 \pgfmathsetmacro{\alfaB}{tan(\alfa)}
                 \pgfmathsetmacro{\Atotal}{#1*2*\alfaB/2}
@@ -221,7 +223,7 @@
 
 \newcommand{\slidefiguraRegular}[2]{
     \begin{frame}
-        \frametitle{Cálculo do $\pi$}
+        \frametitle{Cálculo do $\pi$ (Alg. 1)}
         \framesubtitle{#2 lados  ($L=2$)}
         \figuraRegular{#2}{#1}
     \end{frame}
@@ -230,6 +232,78 @@
 \foreach \i in {3,...,20} {
         \slidefiguraRegular{2}{\i}
     }
+
+\begin{frame}
+    \begin{center}
+        \begin{tikzpicture}
+            \frametitle{Cálculo do $\pi$ (Alg. 1)}
+            \draw[fill=none](0,0) circle (2.0);
+            \draw (0,0) -- (2,0) node[midway, yshift=10] {R};
+            \node[anchor=west, xshift=1cm, text width=6cm] at (2,0.5) {
+                $$lim_{n\rightarrow\infty}\left(\frac{P_T}{D}\right) = \left(\frac{2 \pi R}{2R}\right)= \pi$$
+            };
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+
+
+
+
+\newcounter{bluePointsCounter}
+\newcommand{\circuloEQuadrado}[1]{
+    \setcounter{bluePointsCounter}{0}
+    \begin{tikzpicture}
+        \draw (0,0) rectangle (4,4);
+        \draw (2,2) circle [radius=2cm];
+        \fill (2,2) circle [radius=0.5pt];
+        \foreach \i in {1,...,#1}
+        {
+                \pgfmathsetmacro{\x}{random()*4}
+                \pgfmathsetmacro{\y}{random()*4}
+
+                % Verifica se o ponto está dentro do círculo
+                \pgfmathparse{(\x-2)^2 + (\y-2)^2 <= 2^2 ? int(1) : int(0)}
+                \ifnum\pgfmathresult=1
+                    \fill[blue] (\x,\y) circle [radius=1pt];
+                    \stepcounter{bluePointsCounter} % Incrementa o contador
+                    \else
+                    \fill[red] (\x,\y) circle [radius=1pt];
+                    \fi
+                    }
+
+        % Exibe o valor do contador
+        \def\azul{\thebluePointsCounter}
+        \node[anchor=west] at (6,3.5) {Pontos Azuis(A): \thebluePointsCounter};
+        \pgfmathsetmacro{\vermelhos}{#1 - \thebluePointsCounter};
+        \node[anchor=west] at (6,2.5) {Pontos Vermelhos(V): \vermelhos};
+        \node[anchor=west] at (6,1.5) {Totais(T): #1};
+        \pgfmathsetmacro{\razao}{4*\azul/#1};
+        \node[anchor=west] at (6,0.5) {4*Razão (A/T): \razao};
+        \draw[|-|] (0,-0.5) -- node[below] {$L=4$} (4,-0.5);
+        \draw[|-|] (2,2) -- node[below] {$R=2$} ++(2,0);
+    \end{tikzpicture}
+}
+\newcommand{\calcpi}[1]{
+    \begin{frame}
+        \frametitle{Cálculo do $\pi$ (Alg. 2)}
+        \circuloEQuadrado{#1}
+    \end{frame}
+}
+
+\foreach \i in {5,10,...,30} {
+    \calcpi{\i}
+    }
+
+\begin{frame}[t]
+    \frametitle{Cálculo de $\pi$ (Alg. 2)}
+    \circuloEQuadrado{2000}
+    Quando os pontos tendem ao infinito:
+    \begin{align*}
+        \lim_{N\rightarrow\infty} A/T = \frac{A_c}{A_q} = \frac{\pi R^2}{(2R)^2} = \frac{\pi}{4}
+    \end{align*}
+
+\end{frame}
 
 \end{document}
 
