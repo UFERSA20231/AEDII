@@ -1,7 +1,9 @@
 \documentclass[10pt]{beamer}
 % \setbeamercovered{transparent}
 \beamerdefaultoverlayspecification{<+(1)-| alert@+(1)>}
-\usetheme{CambridgeUS}
+\usetheme{Boadilla}
+\usecolortheme{seahorse}
+\usefonttheme{structurebold}
 \usepackage{multicol}
 \usepackage{graphicx}
 \usepackage{tikz}
@@ -16,6 +18,7 @@
 \usepackage{pgfplots}
 \usepackage{array}
 \usepackage{arydshln}
+\usepackage{enumitem}
 \pgfplotsset{compat=1.18}
 
 
@@ -571,22 +574,44 @@
         \end{tabular}
     \end{center}
 \end{frame}
-
+\definecolor{olivegreen}{RGB}{85, 107, 47}
 \begin{frame}[t]
     \frametitle{Complexidade Assintótica}
-    \large O que significa complexidade assintótica?  
+    \large O que significa complexidade assintótica?
     \begin{center}
-      \begin{tikzpicture}[x=50]
-        % Eixo x
-        \draw<1->[->, line width=1] (0,0) -- (5,0) node[right] {$x$};
-        \draw<1->[->, line width=1] (0,0) -- (0,5) node[above] {$y$};
-        \draw<2->[smooth, blue, line width=0.5] plot coordinates {(0,0) (1,1) (2,3) (3,2.5) (4,4) (5,5)};
-        \draw<3->[smooth, blue, line width=0.5] plot coordinates {(0,0) (1,2) (2,2) (3,2) (4,3) (5,3)};
-        \draw<4->[smooth, blue, line width=0.5] plot coordinates {(0,0) (1,1) (2,3) (3,2) (4,2) (5,2)};
-        \draw<5->[-, line width=1, dashed] (3,5) -- (3,0) node[below] {$x=3$};
-      \end{tikzpicture}
+        \begin{tikzpicture}[x=50]
+            % Eixo x
+            \draw<1->[->, line width=1] (0,0) -- (5,0) node[right] {$n$};
+            \draw<1->[->, line width=1] (0,0) -- (0,5) node[above] {$f(n)$};
+            \draw<2->[smooth, blue, line width=0.5] plot coordinates {(0,0) (1,1) (2,3) (3,2.5) (4,4) (5,5)};
+            \draw<3-6>[smooth, red, line width=0.5] plot coordinates {(0,0) (1,2) (2,2) (3,2) (4,3) (5,3)};
+            \draw<4-6>[smooth, olivegreen, line width=0.5] plot coordinates {(0,0) (1,1) (2,3) (3,2) (4,2) (5,2)};
+            \draw<7>[smooth, red!20, line width=0.5] plot coordinates {(0,0) (1,2) (2,2) (3,2) (4,3) (5,3)};
+            \draw<7>[smooth, olivegreen!20, line width=0.5] plot coordinates {(0,0) (1,1) (2,3) (3,2) (4,2) (5,2)};
+            \draw<5>[-, line width=1, dashed] (3,5) -- (3,0) node[below] {$n=3$};
+            \draw<6>[-, line width=1, dashed] (2,5) -- (2,0) node[below] {$n=2$};
+            \draw<7->[smooth, blue, line width=1.5] plot coordinates {(0,0) (1,1) (2,3) (3,2.5) (4,4) (5,5)};
+        \end{tikzpicture}
     \end{center}
-  \end{frame}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Assíntota}
+    \framesubtitle{O que é uma assíntota?}
+    São retas horizontais ou verticais que determinam a aproximação das curvas. Exemplos:\newline
+    \begin{beamerboxesrounded}{Exemplo}
+        \begin{enumerate}[label=\alph*)]
+            \setlength\itemsep{1em}
+            \item $f(x) = \frac{3x}{x-1}$
+            \item $f(x) = \frac{1}{(x-2)^2}$
+            \item $f(x) = \frac{(x+2)(x-1)}{x(x+1)(x-2)}$
+            \item $f(x) = \frac{x}{\sqrt{x^2+2}}$
+            \item $f(x) = 1+e^{-x}$
+            \item $f(x) = \log\left(2+3^x\right)$
+        \end{enumerate}
+    \end{beamerboxesrounded}
+
+\end{frame}
 
 \end{document}
 
