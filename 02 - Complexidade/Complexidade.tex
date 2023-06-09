@@ -598,7 +598,7 @@
 \begin{frame}[t]
     \frametitle{Assíntota}
     \framesubtitle{O que é uma assíntota?}
-    São retas horizontais ou verticais que determinam a aproximação das curvas. Exemplos:\newline
+    São retas horizontais ou verticais que determinam a aproximação das curvas.
     \begin{beamerboxesrounded}{Exemplo}
         \begin{enumerate}[label=\alph*)]
             \setlength\itemsep{1em}
@@ -612,6 +612,65 @@
     \end{beamerboxesrounded}
 
 \end{frame}
+
+\begin{frame}[t]
+    \frametitle{Complexidade Assintótica}
+    % \framesubtitle{Notação $O(n)$}
+    \begin{beamerboxesrounded}{Definição}
+        Uma função $g(n)$ \textbf{domina assintoticamente} outra função f(n) se existem duas constantes positivas $c$ e $m$ tais que, para $n\geq m$, tem-se $$\left|f(n)\right| \leq c\times \left|g(n)\right|$$
+    \end{beamerboxesrounded}
+
+    \pause\begin{center}
+        \begin{tikzpicture}[x=50]
+            % Eixo x
+            \draw[->, line width=1] (0,0) -- (5,0) node[right] {$n$};
+            \draw[->, line width=1] (0,0) -- (0,3) node[above] {$T(n)$};
+            \draw[smooth, black!80, line width=0.5] plot coordinates {(0,0) (2,2) (4,0.5) (5, 0.5)} node[above] {$f(n)$};
+            \draw[smooth, black!80, line width=0.5] plot coordinates {(0,2) (1,1) (4,2) (5, 3)} node[above] {$c\times g(n)$};
+            \draw[thin, dashed] (2.85, 0) node[below] {$x=2.85$} -- (2.85, 3);
+            \draw[thin, dashed] (0.85, 0) node[below] {$x=0.85$} -- (0.85, 3);
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Assíntota}
+    \framesubtitle{Domínio assintótico}
+    \begin{beamerboxesrounded}{Determine quais funções são dominantes:}
+        \begin{enumerate}[label=\alph*)]
+            \setlength\itemsep{1em}
+            \item $f(n)=n$ ou $g(n)=-n^2$
+            \item $f(n)=50n$ ou $g(n)=2n^2$
+            \item $f(n)=(n+1)^2$ ou $g(n)=n^2$
+            \item $f(n)=n^2 + 2n + 1$ ou $g(n)=0.1n^3$
+            \item $f(n)=0.2n^2$ ou $g(n)=1000n$
+        \end{enumerate}
+    \end{beamerboxesrounded}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Notação $\Theta$}
+    Uma função $f(n)$ é dita como sendo $\Theta(g(n))$ se existem constantes positivas $c_1$, $c_2$ e $n_0$ para os quais:
+  
+    $$0<c_1g(n) \leq f(n)\leq c_2g(n)$$
+  
+    para todo $n>n_0$.
+  
+    \begin{center}
+      \begin{tikzpicture}[x=50]
+        % Eixo x
+        \draw[->, line width=1] (0,0) -- (5,0) node[right] {$n$};
+        \draw[->, line width=1] (0,0) -- (0,3) node[above] {$T(n)$};
+        \draw[smooth, black!80, line width=0.5] plot coordinates {(0,0) (2,2) (4,0.5) (5, 0.5)} node[above] {$c_2\times g(n)$};
+        \draw[smooth, black!40, line width=0.5] plot coordinates {(0,0) (2,2) (4,0.5) (5, 0.5)} node[above] {$c_2\times g(n)$};
+        \draw[smooth, blue!80, line width=0.5] plot coordinates  {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
+        \draw[smooth, black!80, line width=0.5] plot coordinates {(0,2) (1,1) (4,2) (5, 3)} node[above] {$c_1\times g(n)$};
+        \draw[smooth, black!40, line width=0.5] plot coordinates {(0,2) (1,1) (4,2) (5, 3)} node[above] {$c_1\times g(n)$};
+        \draw[smooth, blue!80, line width=1] plot coordinates  {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
+        \draw[thin, dashed] (2.9, 0) node[below] {$x=2.9$} -- (2.9, 3);
+      \end{tikzpicture}
+    \end{center}
+  \end{frame}
 
 \end{document}
 
