@@ -649,28 +649,94 @@
 \end{frame}
 
 \begin{frame}[t]
-    \frametitle{Notação $\Theta$}
-    Uma função $f(n)$ é dita como sendo $\Theta(g(n))$ se existem constantes positivas $c_1$, $c_2$ e $n_0$ para os quais:
+    \frametitle{Notação $O$}
+    Uma função $f(n)$ é dita como sendo $O(g(n))$ se existe uma constante positivas $c$ para o qual:
+
+    $$0<f(n) \leq c\times g(n)$$
+
+    para todo $n>n_0$.
+
+    \begin{center}
+        \begin{tikzpicture}[x=50]
+            \draw<1->[->, line width=1] (0,0) -- (5,0) node[right] {$n$};
+            \draw<1->[->, line width=1] (0,0) -- (0,3) node[above] {$T(n)$};
+
+            % Curva preta
+            \draw<3-4>[smooth, black!80, line width=0.5] plot coordinates
+                {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$c\times g(n)$};
+            % Curva azul forte
+            \draw<2->[smooth, blue!80, line width=0.5] plot coordinates
+                {(0,0) (2,2) (4,0.5) (5, 0.5)} node[above] {$f(n)$};
+            % Assíntota
+            \draw<4->[thin, dashed] (2.92, 0) node[below]
+            {$x=3$} -- (2.92, 3);
+            \draw<5->[smooth, blue!80, line width=1.0] plot coordinates
+                {(0,0) (2,2) (4,0.5) (5, 0.5)} node[above] {$f(n)$};
+            % Curva preta
+            \draw<5->[smooth, black!20, line width=0.5] plot coordinates
+                {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$c\times g(n)$};
+            % \draw[smooth, blue!80, line width=1] plot coordinates  
+            %   {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Notação $\Omega$}
+    Uma função $f(n)$ é dita como sendo $O(g(n))$ se existe uma constante positivas $c$ para o qual:
   
-    $$0<c_1g(n) \leq f(n)\leq c_2g(n)$$
+    $$0< c\times g(n)\leq f(n)$$
   
     para todo $n>n_0$.
   
     \begin{center}
       \begin{tikzpicture}[x=50]
-        % Eixo x
-        \draw[->, line width=1] (0,0) -- (5,0) node[right] {$n$};
-        \draw[->, line width=1] (0,0) -- (0,3) node[above] {$T(n)$};
-        \draw[smooth, black!80, line width=0.5] plot coordinates {(0,0) (2,2) (4,0.5) (5, 0.5)} node[above] {$c_2\times g(n)$};
-        \draw[smooth, black!40, line width=0.5] plot coordinates {(0,0) (2,2) (4,0.5) (5, 0.5)} node[above] {$c_2\times g(n)$};
-        \draw[smooth, blue!80, line width=0.5] plot coordinates  {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
-        \draw[smooth, black!80, line width=0.5] plot coordinates {(0,2) (1,1) (4,2) (5, 3)} node[above] {$c_1\times g(n)$};
-        \draw[smooth, black!40, line width=0.5] plot coordinates {(0,2) (1,1) (4,2) (5, 3)} node[above] {$c_1\times g(n)$};
-        \draw[smooth, blue!80, line width=1] plot coordinates  {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
-        \draw[thin, dashed] (2.9, 0) node[below] {$x=2.9$} -- (2.9, 3);
+        \draw<1->[->, line width=1] (0,0) -- (5,0) node[right] {$n$};
+        \draw<1->[->, line width=1] (0,0) -- (0,3) node[above] {$T(n)$};
+  
+        % Curva preta
+        \draw<3-4>[smooth, black!80, line width=0.5] plot coordinates
+          {(0,0) (2,2) (4,0.5) (5, 0.5)} node[above] {$c\times g(n)$};
+        % Curva azul forte
+        \draw<2->[smooth, blue!80, line width=0.5] plot coordinates
+          {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
+        % Assíntota
+        \draw<4->[thin, dashed] (2.92, 0) node[below]
+        {$x=3$} -- (2.92, 3);
+        \draw<5->[smooth, blue!80, line width=1.0] plot coordinates
+          {(0,1) (1,0.5) (3,1.5) (5, 1.5)}   node[above] {$f(n)$};
+        % Curva preta
+        \draw<5->[smooth, black!20, line width=0.5] plot coordinates
+          {(0,0) (2,2) (4,0.5) (5, 0.5)}node[above] {$c\times g(n)$};
+        % \draw[smooth, blue!80, line width=1] plot coordinates  
+        %   {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
       \end{tikzpicture}
     \end{center}
   \end{frame}
+  
+\begin{frame}[t]
+    \frametitle{Notação $\Theta$}
+    Uma função $f(n)$ é dita como sendo $\Theta(g(n))$ se existem constantes positivas $c_1$, $c_2$ e $n_0$ para os quais:
+
+    $$0<c_1g(n) \leq f(n)\leq c_2g(n)$$
+
+    para todo $n>n_0$.
+
+    \begin{center}
+        \begin{tikzpicture}[x=50]
+            % Eixo x
+            \draw<1->[->, line width=1] (0,0) -- (5,0) node[right] {$n$};
+            \draw<1->[->, line width=1] (0,0) -- (0,3) node[above] {$T(n)$};
+            \draw<2-4>[smooth, black!80, line width=0.5] plot coordinates {(0,2) (1,1) (4,2) (5, 3)} node[above] {$c_1\times g(n)$};
+            \draw<3-4>[smooth, black!80, line width=0.5] plot coordinates {(0,0) (2,2) (4,0.5) (5, 0.5)} node[above] {$c_2\times g(n)$};
+            \draw<4->[smooth, blue!80, line width=0.5] plot coordinates  {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
+            \draw<5->[smooth, black!40, line width=0.5] plot coordinates {(0,2) (1,1) (4,2) (5, 3)} node[above] {$c_1\times g(n)$};
+            \draw<5->[smooth, black!40, line width=0.5] plot coordinates {(0,0) (2,2) (4,0.5) (5, 0.5)} node[above] {$c_2\times g(n)$};
+            \draw<6->[smooth, blue!80, line width=1] plot coordinates  {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
+            \draw<6->[thin, dashed] (2.9, 0) node[below] {$x=2.9$} -- (2.9, 3);
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
 
 \end{document}
 
