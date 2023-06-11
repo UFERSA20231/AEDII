@@ -552,28 +552,7 @@
     \end{table}
 \end{frame}
 
-\begin{frame}[t]
-    \frametitle{Complexidade Assintótica}
-    \begin{itemize}
-        \item Na análise de algoritmos, geralmente usa-se a complexidade assintótica, analisando o algoritmo para n tendendo a infinito;
-        \item Nesse caso, despreza-se constantes e termos de menor crescimento;
-        \item Usa-se notações especiais para a complexidade assintótica.
-    \end{itemize}
-    \pause Tipos de Notação:
-    \pause\begin{center}
 
-        \begin{tabular}{c|c}
-            \textbf{Notação}   & \textbf{Descrição simplificada} \\
-            \hline
-            \pause $O(n)$      & Limitador Estrito Superior      \\
-            \pause $\Omega(n)$ & Limitador Estrito Inferior      \\
-            \pause $\Theta(n)$ & Limitador Central               \\
-            \pause $o(n)$      & Limitador Não Estrito Superior  \\
-            \pause $\omega(n)$ & Limitador Não Estrito Inferior  \\
-            \hline
-        \end{tabular}
-    \end{center}
-\end{frame}
 \definecolor{olivegreen}{RGB}{85, 107, 47}
 \begin{frame}[t]
     \frametitle{Complexidade Assintótica}
@@ -646,6 +625,29 @@
             \item $f(n)=0.2n^2$ ou $g(n)=1000n$
         \end{enumerate}
     \end{beamerboxesrounded}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Complexidade Assintótica}
+    \begin{itemize}
+        \item Na análise de algoritmos, geralmente usa-se a complexidade assintótica, analisando o algoritmo para n tendendo a infinito;
+        \item Nesse caso, despreza-se constantes e termos de menor crescimento;
+        \item Usa-se notações especiais para a complexidade assintótica.
+    \end{itemize}
+    \pause Tipos de Notação:
+    \pause\begin{center}
+
+        \begin{tabular}{c|c}
+            \textbf{Notação}   & \textbf{Descrição simplificada} \\
+            \hline
+            \pause $O(n)$      & Limitador Estrito Superior      \\
+            \pause $\Omega(n)$ & Limitador Estrito Inferior      \\
+            \pause $\Theta(n)$ & Limitador Central               \\
+            \pause $o(n)$      & Limitador Não Estrito Superior  \\
+            \pause $\omega(n)$ & Limitador Não Estrito Inferior  \\
+            \hline
+        \end{tabular}
+    \end{center}
 \end{frame}
 
 \begin{frame}[t]
@@ -733,7 +735,7 @@
             \draw<5->[smooth, black!40, line width=0.5] plot coordinates {(0,2) (1,1) (4,2) (5, 3)} node[above] {$c_1\times g(n)$};
             \draw<5->[smooth, black!40, line width=0.5] plot coordinates {(0,0) (2,2) (4,0.5) (5, 0.5)} node[above] {$c_2\times g(n)$};
             \draw<6->[smooth, blue!80, line width=1] plot coordinates  {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
-            \draw<6->[thin, dashed] (2.9, 0) node[below] {$x=2.9$} -- (2.9, 3);
+            \draw<6->[thin, dashed] (2.9, 0) node[below] {$x=3$} -- (2.9, 3);
         \end{tikzpicture}
     \end{center}
 \end{frame}
