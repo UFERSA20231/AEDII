@@ -677,45 +677,153 @@
             % Curva preta
             \draw<5->[smooth, black!20, line width=0.5] plot coordinates
                 {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$c\times g(n)$};
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile, t]
+    \frametitle{Exemplo: Complexidade $O$}
+    Verifique se o algoritmo é $O(n^2)$.\vfill
+
+    \begin{lstlisting}[language=C++, basicstyle=\small]
+      void funcao(int *v, int n){ 
+        int soma = 0;
+        for (int i=0; i<(n/2); i++) 
+          for (int j=0; j<(n/4); j++) 
+            soma += i + j;
+        return soma;
+      } 
+  \end{lstlisting}\vfill
+
+    \begin{columns}
+        \begin{column}{0.4\textwidth}
+            \begin{enumerate}
+                \item[L2)] $1$
+                \item[L3)] $1 + n/2$
+                \item[L4)] $1 + (n/4)(n/2)$
+                \item[L5)] $3(n/4)(n/2)$
+                \item[L6)] $1$
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.6\textwidth}
+            \begin{align*}
+                T(n) & = 4 + \left(\frac{n}{2}\right) + \left(\frac{n}{2}\frac{n}{4}\right) + 3\left(\frac{n}{2}\frac{n}{4}\right) \\
+                T(n) & = 4 + \frac{n}{2}+ \frac{n^2}{2}
+            \end{align*}
+
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile, t]
+    \frametitle{Exemplo: Complexidade O}
+    $$T(n) = 4 + \frac{n}{2}+ \frac{n^2}{2} = \frac{8+n + n^2}{2}$$
+    \begin{align*}
+        0 & <f(n) \leq c\times g(n)                 \\
+        0 & <\frac{8+n + n^2}{2} \leq c_1\times n^2
+    \end{align*}
+
+    A primeira inequação sempre será válida, basta então avaliar a segunda inequação:
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{align*}
+                \frac{n^2 + n + 8}{2} & \leq c_1n^2  \\
+                n^2 + n + 8           & \leq 2c_1n^2 \\
+                n^2(1 - 2c_1) + n + 8 & \leq 0
+            \end{align*}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            Os valores de $c_1$ indicarão em quais condições $n$ permitirá que a inequação será verdadeira.
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Análise de $n^2(1 - 2c_1) + n + 8 \leq 0$}
+    Escolha de $c_1$:
+  
+    \begin{tikzpicture}[x=15mm, y=0.3mm]
+      \draw[<->,line width=0.75pt] (0,0) -- (6,0) node[right] {n};
+      \draw[<->,line width=0.75pt] (1,-180) -- (1,15) node[above] {f(n)};
+      \draw[xshift=-14pt] (1,0.1) -- (1,-0.1) node[below] {(1,1)};
+      \def\c_1{0.5}
+      \draw<2>[domain=1:5, smooth=bezier, variable=\x, red,line width=0.5pt] plot ({\x},{(\x*\x)*(1-2*\c_1) + \x + 8}) node[right] {$c_1=0.5$};
+      \node<2>[text width=150, color=red] at (3,-60) {
+        \begin{align*}
+          n^2 (1-2(0.5))+ n + 8 & \leq 0 \\
+          n + 8                 & \leq 0
+        \end{align*}};
+      \def\c_1{1}
+      \draw<3-5>[domain=0:5, smooth=bezier, variable=\x, black,line width=0.5pt] plot ({\x},{(\x*\x)*(1-2*\c_1) + \x + 8}) node[right] {\small$c_1=1$};
+      \node<4>[text width=150] at (3,-60) {
+        \begin{align*}
+          n^2 (1-2(1))+ n + 8 & \leq 0 \\
+          -n^2 + n + 8        & \leq 0
+        \end{align*}};
+      \draw<5>[-,line width=0.5pt, dashed] (3.38,-180) node[below] {\small$n_0 = 3.38$} -- (3.38,15);
+      \def\c_1{2}
+      \draw<6-8>[domain=0:5, smooth=bezier, variable=\x, black,line width=0.5pt] plot ({\x},{(\x*\x)*(1-2*\c_1) + \x + 8}) node[right] {\small$c_1=2$};
+      \node<7>[text width=150] at (3,-100) {
+        \begin{align*}
+          n^2 (1-2(2))+ n + 8 & \leq 0 \\
+          -3n^2 + n + 8       & \leq 0
+        \end{align*}};
+      \draw<8>[-,line width=0.5pt, dashed] (1.8,-180) node[below] {\small$n_0 = 1.8$} -- (1.8,15);
+      \def\c_1{3}
+      \draw<9-11>[domain=0:5, smooth=bezier, variable=\x, black,line width=0.5pt] plot ({\x},{(\x*\x)*(1-2*\c_1) + \x + 8}) node[right] {\small$c_1=3$};
+      \node<10>[text width=150] at (3,-100) {
+        \begin{align*}
+          n^2 (1-2(3))+ n + 8 & \leq 0 \\
+          -5n^2 + n + 8       & \leq 0
+        \end{align*}};
+      \draw<11>[-,line width=0.5pt, dashed] (1.37,-180) node[below] {\small$n_0 = 1.37$} -- (1.37,15);
+      \def\c_1{4}
+      \draw<12-14>[domain=0:4.6, smooth=bezier, variable=\x, black,line width=0.5pt] plot ({\x},{(\x*\x)*(1-2*\c_1) + \x + 8}) node[right] {\small$c_1=4$};
+      \node<13>[text width=150] at (4.2,-40) {
+        \begin{align*}
+          n^2 (1-2(4))+ n + 8 & \leq 0 \\
+          -7n^2 + n + 8       & \leq 0
+        \end{align*}};
+      \draw<14>[-,line width=0.5pt, dashed] (1.15,-180) node[below] {\small$n_0 = 1.15$} -- (1.15,15);
+    \end{tikzpicture}
+  
+  \end{frame}
+
+\begin{frame}[t]
+    \frametitle{Notação $\Omega$}
+    Uma função $f(n)$ é dita como sendo $O(g(n))$ se existe uma constante positivas $c$ para o qual:
+
+    $$0< c\times g(n)\leq f(n)$$
+
+    para todo $n>n_0$.
+
+    \begin{center}
+        \begin{tikzpicture}[x=50]
+            \draw<1->[->, line width=1] (0,0) -- (5,0) node[right] {$n$};
+            \draw<1->[->, line width=1] (0,0) -- (0,3) node[above] {$T(n)$};
+
+            % Curva preta
+            \draw<3-4>[smooth, black!80, line width=0.5] plot coordinates
+                {(0,0) (2,2) (4,0.5) (5, 0.5)} node[above] {$c\times g(n)$};
+            % Curva azul forte
+            \draw<2->[smooth, blue!80, line width=0.5] plot coordinates
+                {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
+            % Assíntota
+            \draw<4->[thin, dashed] (2.92, 0) node[below]
+            {$x=3$} -- (2.92, 3);
+            \draw<5->[smooth, blue!80, line width=1.0] plot coordinates
+                {(0,1) (1,0.5) (3,1.5) (5, 1.5)}   node[above] {$f(n)$};
+            % Curva preta
+            \draw<5->[smooth, black!20, line width=0.5] plot coordinates
+                {(0,0) (2,2) (4,0.5) (5, 0.5)}node[above] {$c\times g(n)$};
             % \draw[smooth, blue!80, line width=1] plot coordinates  
             %   {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
         \end{tikzpicture}
     \end{center}
 \end{frame}
 
-\begin{frame}[t]
-    \frametitle{Notação $\Omega$}
-    Uma função $f(n)$ é dita como sendo $O(g(n))$ se existe uma constante positivas $c$ para o qual:
-  
-    $$0< c\times g(n)\leq f(n)$$
-  
-    para todo $n>n_0$.
-  
-    \begin{center}
-      \begin{tikzpicture}[x=50]
-        \draw<1->[->, line width=1] (0,0) -- (5,0) node[right] {$n$};
-        \draw<1->[->, line width=1] (0,0) -- (0,3) node[above] {$T(n)$};
-  
-        % Curva preta
-        \draw<3-4>[smooth, black!80, line width=0.5] plot coordinates
-          {(0,0) (2,2) (4,0.5) (5, 0.5)} node[above] {$c\times g(n)$};
-        % Curva azul forte
-        \draw<2->[smooth, blue!80, line width=0.5] plot coordinates
-          {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
-        % Assíntota
-        \draw<4->[thin, dashed] (2.92, 0) node[below]
-        {$x=3$} -- (2.92, 3);
-        \draw<5->[smooth, blue!80, line width=1.0] plot coordinates
-          {(0,1) (1,0.5) (3,1.5) (5, 1.5)}   node[above] {$f(n)$};
-        % Curva preta
-        \draw<5->[smooth, black!20, line width=0.5] plot coordinates
-          {(0,0) (2,2) (4,0.5) (5, 0.5)}node[above] {$c\times g(n)$};
-        % \draw[smooth, blue!80, line width=1] plot coordinates  
-        %   {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
-      \end{tikzpicture}
-    \end{center}
-  \end{frame}
-  
 \begin{frame}[t]
     \frametitle{Notação $\Theta$}
     Uma função $f(n)$ é dita como sendo $\Theta(g(n))$ se existem constantes positivas $c_1$, $c_2$ e $n_0$ para os quais:
