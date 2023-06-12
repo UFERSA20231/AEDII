@@ -743,53 +743,53 @@
 \begin{frame}[t]
     \frametitle{Análise de $n^2(1 - 2c_1) + n + 8 \leq 0$}
     Escolha de $c_1$:
-  
+
     \begin{tikzpicture}[x=15mm, y=0.3mm]
-      \draw[<->,line width=0.75pt] (0,0) -- (6,0) node[right] {n};
-      \draw[<->,line width=0.75pt] (1,-180) -- (1,15) node[above] {f(n)};
-      \draw[xshift=-14pt] (1,0.1) -- (1,-0.1) node[below] {(1,1)};
-      \def\c_1{0.5}
-      \draw<2>[domain=1:5, smooth=bezier, variable=\x, red,line width=0.5pt] plot ({\x},{(\x*\x)*(1-2*\c_1) + \x + 8}) node[right] {$c_1=0.5$};
-      \node<2>[text width=150, color=red] at (3,-60) {
-        \begin{align*}
-          n^2 (1-2(0.5))+ n + 8 & \leq 0 \\
-          n + 8                 & \leq 0
-        \end{align*}};
-      \def\c_1{1}
-      \draw<3-5>[domain=0:5, smooth=bezier, variable=\x, black,line width=0.5pt] plot ({\x},{(\x*\x)*(1-2*\c_1) + \x + 8}) node[right] {\small$c_1=1$};
-      \node<4>[text width=150] at (3,-60) {
-        \begin{align*}
-          n^2 (1-2(1))+ n + 8 & \leq 0 \\
-          -n^2 + n + 8        & \leq 0
-        \end{align*}};
-      \draw<5>[-,line width=0.5pt, dashed] (3.38,-180) node[below] {\small$n_0 = 3.38$} -- (3.38,15);
-      \def\c_1{2}
-      \draw<6-8>[domain=0:5, smooth=bezier, variable=\x, black,line width=0.5pt] plot ({\x},{(\x*\x)*(1-2*\c_1) + \x + 8}) node[right] {\small$c_1=2$};
-      \node<7>[text width=150] at (3,-100) {
-        \begin{align*}
-          n^2 (1-2(2))+ n + 8 & \leq 0 \\
-          -3n^2 + n + 8       & \leq 0
-        \end{align*}};
-      \draw<8>[-,line width=0.5pt, dashed] (1.8,-180) node[below] {\small$n_0 = 1.8$} -- (1.8,15);
-      \def\c_1{3}
-      \draw<9-11>[domain=0:5, smooth=bezier, variable=\x, black,line width=0.5pt] plot ({\x},{(\x*\x)*(1-2*\c_1) + \x + 8}) node[right] {\small$c_1=3$};
-      \node<10>[text width=150] at (3,-100) {
-        \begin{align*}
-          n^2 (1-2(3))+ n + 8 & \leq 0 \\
-          -5n^2 + n + 8       & \leq 0
-        \end{align*}};
-      \draw<11>[-,line width=0.5pt, dashed] (1.37,-180) node[below] {\small$n_0 = 1.37$} -- (1.37,15);
-      \def\c_1{4}
-      \draw<12-14>[domain=0:4.6, smooth=bezier, variable=\x, black,line width=0.5pt] plot ({\x},{(\x*\x)*(1-2*\c_1) + \x + 8}) node[right] {\small$c_1=4$};
-      \node<13>[text width=150] at (4.2,-40) {
-        \begin{align*}
-          n^2 (1-2(4))+ n + 8 & \leq 0 \\
-          -7n^2 + n + 8       & \leq 0
-        \end{align*}};
-      \draw<14>[-,line width=0.5pt, dashed] (1.15,-180) node[below] {\small$n_0 = 1.15$} -- (1.15,15);
+        \draw[<->,line width=0.75pt] (0,0) -- (6,0) node[right] {n};
+        \draw[<->,line width=0.75pt] (1,-180) -- (1,15) node[above] {f(n)};
+        \draw[xshift=-14pt] (1,0.1) -- (1,-0.1) node[below] {(1,1)};
+        \def\c_1{0.5}
+        \draw<2>[domain=1:5, smooth=bezier, variable=\x, red,line width=0.5pt] plot ({\x},{(\x*\x)*(1-2*\c_1) + \x + 8}) node[right] {$c_1=0.5$};
+        \node<2>[text width=150, color=red] at (3,-60) {
+            \begin{align*}
+                n^2 (1-2(0.5))+ n + 8 & \leq 0 \\
+                n + 8                 & \leq 0
+            \end{align*}};
+        \def\c_1{1}
+        \draw<3-5>[domain=0:5, smooth=bezier, variable=\x, black,line width=0.5pt] plot ({\x},{(\x*\x)*(1-2*\c_1) + \x + 8}) node[right] {\small$c_1=1$};
+        \node<4>[text width=150] at (3,-60) {
+            \begin{align*}
+                n^2 (1-2(1))+ n + 8 & \leq 0 \\
+                -n^2 + n + 8        & \leq 0
+            \end{align*}};
+        \draw<5>[-,line width=0.5pt, dashed] (3.38,-180) node[below] {\small$n_0 = 3.38$} -- (3.38,15);
+        \def\c_1{2}
+        \draw<6-8>[domain=0:5, smooth=bezier, variable=\x, black,line width=0.5pt] plot ({\x},{(\x*\x)*(1-2*\c_1) + \x + 8}) node[right] {\small$c_1=2$};
+        \node<7>[text width=150] at (3,-100) {
+            \begin{align*}
+                n^2 (1-2(2))+ n + 8 & \leq 0 \\
+                -3n^2 + n + 8       & \leq 0
+            \end{align*}};
+        \draw<8>[-,line width=0.5pt, dashed] (1.8,-180) node[below] {\small$n_0 = 1.8$} -- (1.8,15);
+        \def\c_1{3}
+        \draw<9-11>[domain=0:5, smooth=bezier, variable=\x, black,line width=0.5pt] plot ({\x},{(\x*\x)*(1-2*\c_1) + \x + 8}) node[right] {\small$c_1=3$};
+        \node<10>[text width=150] at (3,-100) {
+            \begin{align*}
+                n^2 (1-2(3))+ n + 8 & \leq 0 \\
+                -5n^2 + n + 8       & \leq 0
+            \end{align*}};
+        \draw<11>[-,line width=0.5pt, dashed] (1.37,-180) node[below] {\small$n_0 = 1.37$} -- (1.37,15);
+        \def\c_1{4}
+        \draw<12-14>[domain=0:4.6, smooth=bezier, variable=\x, black,line width=0.5pt] plot ({\x},{(\x*\x)*(1-2*\c_1) + \x + 8}) node[right] {\small$c_1=4$};
+        \node<13>[text width=150] at (4.2,-40) {
+            \begin{align*}
+                n^2 (1-2(4))+ n + 8 & \leq 0 \\
+                -7n^2 + n + 8       & \leq 0
+            \end{align*}};
+        \draw<14>[-,line width=0.5pt, dashed] (1.15,-180) node[below] {\small$n_0 = 1.15$} -- (1.15,15);
     \end{tikzpicture}
-  
-  \end{frame}
+
+\end{frame}
 
 \begin{frame}[t]
     \frametitle{Notação $\Omega$}
@@ -826,55 +826,63 @@
 
 \begin{frame}[t]
     \frametitle{Exemplo: Complexidade $\Omega$}
-  
+
     Mostre que: $$2n^2 -20n -50\ \text{é}\ \Omega(2n)$$
     \vfill
     \hrule
     \vfill
     Resolvendo a inequação da notação $\Omega$:
     \begin{align}
-      c_1\times (2n)          & \leq 2n^2 - 20n - 50 \\
-      2n^2 - 20n - 50 - 2c_1n & \geq 0               \\
-      2n^2 - n(20+2c_1) - 50  & \geq 0               \\
-      n^2 - n(10+c_1) - 25    & \geq 0\label{eq4}
+        c_1\times (2n)          & \leq 2n^2 - 20n - 50 \\
+        2n^2 - 20n - 50 - 2c_1n & \geq 0               \\
+        2n^2 - n(20+2c_1) - 50  & \geq 0               \\
+        n^2 - n(10+c_1) - 25    & \geq 0\label{eq4}
     \end{align}
-  
+
     portanto, precisamos avaliar a concavidade desta curva. Escolher um valor de $c_1$ no qual a inequação~\ref{eq4} seja válida para qualquer valor de $n\geq n_0$.
-  \end{frame}
-  
-  \begin{frame}[t]
+\end{frame}
+
+\begin{frame}[t]
     \frametitle{Exemplo: Complexidade $\Omega$}
-  
+
     Ao analisar a inequação:
-  
+
     $$n^2 - n(10+c_1) - 25    \geq 0$$
-  
+
     Percebemos que se comporta como uma inequação do segundo grau no qual o produto e a soma das raízes são respectivamente $(10+c_1)$ e $(-25)$. Graficamente:
-    \vfill
-    \begin{tikzpicture}[x=7mm]
-      \draw[->] (0,0) -- (15,0);
-      \draw[-] (5, -0.1) -- (5, 0.1) node[below, yshift=-5] {$n_1$};
-      \draw[-] (10, -0.1) -- (10, 0.1) node[below, yshift=-5] {$n_2$};
-      \node[yshift=10] at (2.5,0) {+++++++++++++++};
-      \node[yshift=10] at (12.5,0) {+++++++++++++++};
-      \node[yshift=10] at (7.5,0) {$--------$};
-    \end{tikzpicture}
-  
-    \begin{columns}
-      \begin{column}{0.6\textwidth}
-        \begin{align*}
-          n_1 + n_2 & = 10+c_1 \\
-          n_1n_2    & = -25
-        \end{align*}
-        Escolhendo $c_1=2$, observamos que $n_1 \approx 1.81$ e $n_2 \approx -13.81$.
-      \end{column}
-      \begin{column}{0.3\textwidth}
-        Ou seja:
-  
-        A partir de $n_0=2$, escolhendo $c_1=2$, a inequação será sempre válida.
-      \end{column}
-    \end{columns}
-  \end{frame}
+
+    \begin{center}
+
+        \begin{tikzpicture}[x=7mm]
+            \draw[->] (0,0) -- (16.2,0);
+            \draw[-] (5.4, -0.1) -- (5.4, 0.1) node[below, yshift=-5] {$n_1$};
+            \draw[-] (10.8, -0.1) -- (10.8, 0.1) node[below, yshift=-5] {$n_2$};
+            %   \node[anchor=east] at (n1) {+++++++++++++++++};
+            %   \node[anchor=west] at (n1) {$-----------$};
+            %   \node[anchor=west] at (n2) {+++++++++++++++};
+            \draw[ultra thick, blue] (0,0) -- (5.4, 0) node[midway, above] {$+$};
+            \draw[ultra thick, red] (5.4, 0) -- (10.8, 0) node[midway, above] {$-$};
+            \draw[ultra thick, blue] (10.8, 0) -- (16.2, 0) node[midway, above] {$+$};
+
+        \end{tikzpicture}
+    \end{center}
+    \begin{flushleft}
+        \begin{columns}
+            \begin{column}{0.45\textwidth}
+                \begin{align*}
+                    n_1 + n_2 & = 10+c_1 \\
+                    n_1n_2    & = -25
+                \end{align*}
+                Escolhendo $c_1=2$, observamos que $n_1 \approx 1.81$ e $n_2 \approx -13.81$.
+            \end{column}
+            \begin{column}{0.45\textwidth}
+                Ou seja:
+
+                A partir de $n_0=2$, escolhendo $c_1=2$, a inequação será sempre válida.
+            \end{column}
+        \end{columns}
+    \end{flushleft}
+\end{frame}
 
 \begin{frame}[t]
     \frametitle{Notação $\Theta$}
