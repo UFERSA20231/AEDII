@@ -793,7 +793,7 @@
 
 \begin{frame}[t]
     \frametitle{Notação $\Omega$}
-    Uma função $f(n)$ é dita como sendo $O(g(n))$ se existe uma constante positivas $c$ para o qual:
+    Uma função $f(n)$ é dita como sendo $\Omega(g(n))$ se existe uma constante positivas $c$ para o qual:
 
     $$0< c\times g(n)\leq f(n)$$
 
@@ -823,6 +823,58 @@
         \end{tikzpicture}
     \end{center}
 \end{frame}
+
+\begin{frame}[t]
+    \frametitle{Exemplo: Complexidade $\Omega$}
+  
+    Mostre que: $$2n^2 -20n -50\ \text{é}\ \Omega(2n)$$
+    \vfill
+    \hrule
+    \vfill
+    Resolvendo a inequação da notação $\Omega$:
+    \begin{align}
+      c_1\times (2n)          & \leq 2n^2 - 20n - 50 \\
+      2n^2 - 20n - 50 - 2c_1n & \geq 0               \\
+      2n^2 - n(20+2c_1) - 50  & \geq 0               \\
+      n^2 - n(10+c_1) - 25    & \geq 0\label{eq4}
+    \end{align}
+  
+    portanto, precisamos avaliar a concavidade desta curva. Escolher um valor de $c_1$ no qual a inequação~\ref{eq4} seja válida para qualquer valor de $n\geq n_0$.
+  \end{frame}
+  
+  \begin{frame}[t]
+    \frametitle{Exemplo: Complexidade $\Omega$}
+  
+    Ao analisar a inequação:
+  
+    $$n^2 - n(10+c_1) - 25    \geq 0$$
+  
+    Percebemos que se comporta como uma inequação do segundo grau no qual o produto e a soma das raízes são respectivamente $(10+c_1)$ e $(-25)$. Graficamente:
+    \vfill
+    \begin{tikzpicture}[x=7mm]
+      \draw[->] (0,0) -- (15,0);
+      \draw[-] (5, -0.1) -- (5, 0.1) node[below, yshift=-5] {$n_1$};
+      \draw[-] (10, -0.1) -- (10, 0.1) node[below, yshift=-5] {$n_2$};
+      \node[yshift=10] at (2.5,0) {+++++++++++++++};
+      \node[yshift=10] at (12.5,0) {+++++++++++++++};
+      \node[yshift=10] at (7.5,0) {$--------$};
+    \end{tikzpicture}
+  
+    \begin{columns}
+      \begin{column}{0.6\textwidth}
+        \begin{align*}
+          n_1 + n_2 & = 10+c_1 \\
+          n_1n_2    & = -25
+        \end{align*}
+        Escolhendo $c_1=2$, observamos que $n_1 \approx 1.81$ e $n_2 \approx -13.81$.
+      \end{column}
+      \begin{column}{0.3\textwidth}
+        Ou seja:
+  
+        A partir de $n_0=2$, escolhendo $c_1=2$, a inequação será sempre válida.
+      \end{column}
+    \end{columns}
+  \end{frame}
 
 \begin{frame}[t]
     \frametitle{Notação $\Theta$}
