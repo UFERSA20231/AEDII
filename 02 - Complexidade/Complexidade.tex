@@ -1231,7 +1231,7 @@
               \begin{align}\label{Eq1}
                   1\times \frac{p}{n} + 2\times \frac{p}{n} +\ldots n\times \frac{p}{n}= \pause \sum_{i=1}^n i\times \frac{p}{n}
               \end{align}
-              \item O custo do elemento não ser encontrado é:
+        \item O custo do elemento não ser encontrado é:
               \begin{align}\label{Eq2}
                   (1-p) (n+1)
               \end{align}
@@ -1269,6 +1269,43 @@
 
     \end{itemize}
 \end{frame}
-% Parte 3
+\begin{frame}[t]
+    \frametitle{Complexidades}
+    Pior e Caso médio das estruturas básicas:
+    \begin{table}[]
+        \resizebox{10cm}{!}{%
+            \begin{tabular}{p{3cm}|l|l|l|l}
+                \textbf{Estrutura} & \textbf{$n^0$ elem} & \textbf{Busca} & \textbf{Inserção} & \textbf{Remoção} \\
+                \hline
+                Array              & $O(1)$                & $O(n)$           & $O(n)$              & $O(n)$             \\
+                Pilha              & $O(n)$                & $O(n)$           & $O(1)$              & $O(1)$             \\
+                Fila               & $O(n)$                & $O(n)$           & $O(1)$              & $O(1)$
+            \end{tabular}%
+        }
+    \end{table}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Complexidades}
+    \begin{table}[]
+        \resizebox{0.75\textwidth}{!}{%
+            \begin{tabular}{l|l|l|l}
+                \textbf{Algoritmo}    & \textbf{Melhor} & \textbf{Médio} & \textbf{Pior}  \\
+                \hline
+                \pause Bubble Sort    & $O(n)$          & $O(n^2)$       & $O(1)$         \\
+                \pause Insertion Sort & $O(n^2)$        & $O(n^2)$       & $O(1)$         \\
+                \pause Selection Sort & $O(n)$          & $O(n^2)$       & $O(1)$         \\
+                \pause Merge Sort     & $O(n\log{n})$   & $O(n\log{n})$  & $O(n\log{n})$  \\
+                \pause Heap Sort      & $O(n\log{n})$   & $O(n\log{n})$  & $O(n\log{n})$  \\
+                \pause Quick Sort     & $O(n\log{n})$   & $O(n\log{n})$  & $O(n^2)$       \\
+                \pause Tree Sort      & $O(n\log{n})$   & $O(n\log{n})$  & $O(n^2)$       \\
+                \pause Counting Sort  & $O(n+k)$        & $O(n+k)$       & $O(n+k)$       \\
+                \pause Bucket Sort    & $O(n+k)$        & $O(n+k)$       & $O(n^2)$       \\
+                \pause Radix Sort     & $O(d\times n)$  & $O(d\times n)$ & $O(d\times n)$
+            \end{tabular}%
+        }
+    \end{table}
+\end{frame}
+
 \end{document}
 
