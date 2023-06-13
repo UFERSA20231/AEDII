@@ -10,7 +10,7 @@
 \usepackage{calc}
 \usetikzlibrary{calc}
 \usepackage{fp}
-\usepackage{listings} % Pacote para destacar código fonte
+\usepackage{listings} 
 \usepackage{amsmath} 
 \usepackage{amssymb} 
 \usepackage{helvet}
@@ -985,9 +985,108 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Exercícios}
+    \begin{center}
+        \frametitle{Ordem de Complexidade}
+        \begin{tabular}{l|c}
+            \textbf{Complexidade} & \textbf{Descrição simplificada} \\[5pt]
+            \hline
+            \pause $O(1)$         & Complexidade Constante          \\[5pt]
+            \pause $O(log(n))$    & Complexidade logarítmica        \\[5pt]
+            \pause $O(n)$         & Complexidade Linear             \\[5pt]
+            \pause $O(n\ log(n))$ & Complexidade Log Linear         \\[5pt]
+            \pause $O(n^2)$       & Complexidade Quadrática         \\[5pt]
+            \pause $O(n^3)$       & Complexidade Cúbica             \\[5pt]
+            \pause $O(2^n)$       & Complexidade Exponencial        \\[5pt]
+            \pause $O(n!)$        & Complexidade Fatorial           \\[5pt]
+        \end{tabular}
+    \end{center}
+\end{frame}
 
-    
+
+\begin{frame}[fragile, t]
+    \frametitle{Complexidade Constante}
+    \begin{itemize}
+        \item Ocorre quando a complexidade do algoritmo independe do tamanho do problema (n);
+        \item As instruções são executadas em uma quantidade fixa de vezes.
+    \end{itemize}
+    \pause Exemplo:
+    \begin{lstlisting}[language=C++, basicstyle=\small]
+        int funcConstante(int *v, int n){ 
+          if(V[0] > V[n-1]){
+            return V[n-1];
+          }else{
+            return V[0];
+          }
+        } 
+    \end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile, t]
+    \frametitle{Complexidade Logarítmica}
+    \begin{itemize}
+        \item Ocorre quando um problema é subdividido em em subproblemas menores.
+        \item A solução deve ser apenas uma das soluções menores.
+    \end{itemize}
+    \pause Exemplo:
+    \begin{lstlisting}[language=C++, basicstyle=\small]
+        bool funcLog(int v[], int a, int b, int x)
+        {
+            if (a > b)
+                return false;
+            int c = (a + b) / 2;
+            if (v[c] == x)
+                return true;
+            else if (v[c] > x)
+                return funcLog(v, a, c-1, x);
+            else
+                return funcLog(v, c+1, b, x);
+        }
+    \end{lstlisting}
+
+\end{frame}
+
+
+\begin{frame}[fragile, t]
+    \frametitle{Complexidade Linear}
+    \begin{itemize}
+        \item Ocorre quando a complexidade do algoritmo é proporcional ao tamanho do problema;
+        \item O tempo computacional é um múltiplo de $n$ podendo ser acrescido de alguma constante.
+    \end{itemize}
+    \pause Exemplo:
+    \begin{lstlisting}[language=C++, basicstyle=\small]
+        int funcLinear(int *v, int n){ 
+          int maior = v[0];
+          int cont = 0;
+          while(cont < n){
+            if(v[cont] > maior){
+                maior = v[i];
+            }
+            cont = cont + 1;
+          }
+          return maior;
+        } 
+    \end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile, t]
+    \frametitle{Complexidade LogLinear}
+    \begin{itemize}
+        \item Ocorre quando o problema é subdividido em subproblemas;
+        \item A solução será a união das contribuiçoes das resoluções dos subproblemas.
+    \end{itemize}
+    \pause Exemplo:
+    \begin{lstlisting}[language=C++, basicstyle=\small]
+        void funcLogLinear (int inicio, int fim){
+            if ( inicio < fim ){
+                int meio = ( inicio + fim )/2;
+                funcLogLinear ( inicio , meio );
+                funcLogLinear ( meio +1 , fim );
+                unir ( inicio , meio , fim );
+            }
+         }
+    \end{lstlisting}
 
 \end{frame}
 
