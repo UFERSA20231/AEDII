@@ -10,3 +10,4 @@
   + Parte 1
   + Parte 2
   + Parte 3
++ Inclusão de tabelas com complexidades
