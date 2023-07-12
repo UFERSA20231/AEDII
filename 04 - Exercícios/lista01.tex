@@ -1,0 +1,74 @@
+\documentclass[12pt]{article}
+\usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=2cm]{geometry} % Reduzindo as margens
+
+\usepackage{enumitem}
+
+\usepackage{listings} % Pacote para exibir código fonte
+
+\lstset{
+    basicstyle=\small\ttfamily, % Estilo básico do código fonte
+    breaklines=true, % Quebra de linha automática
+    frame=single, % Borda ao redor do código
+    numbers=left % Números de linha à esquerda
+}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+% Cabeçalho
+\newcommand{\professor}{Prof. Kennedy Lopes}
+\newcommand{\turma}{Algoritmos e Estrutura de Dados II}
+\newcommand{\ano}{2023}
+\newcommand{\periodo}{1º Semestre}
+
+% Configuração do cabeçalho
+\fancyhead{}
+\fancyhead[L]{\professor}
+\fancyhead[C]{\turma}
+\fancyhead[R]{\ano, \periodo}
+
+\setlength{\headheight}{14.49998pt}
+\addtolength{\topmargin}{-2.49998pt}
+
+\begin{document}
+
+\begin{center}
+    \LARGE \textbf{Lista de exercícios}
+\end{center}
+\section*{Recursão}
+\begin{enumerate}[label=\textbf{Q\arabic*.}]
+    \item Através do algoritmo abaixo, calcule o fibonacci de 8. Neste procedimento, verifique quantas vezes o fibonacci(4) foi calculado.
+    \input{q1.tex}\label{lb:q1}
+    
+    \item Generalize a operação da questão~\ref{lb:q1} anterior considerando que estou calculando o fibonacci de qualquer valor maior do que 4.\label{lb:q2}
+    
+    \item Generalize a questão~\ref{lb:q2} considerando que estou calculando quantas vezes o fibonacci(n) é calculado para encontrar o fibonacci(m), sendo $m>n$.
+    
+    \item No algoritmo abaixo, considere os seguintes tempos:
+    \begin{itemize}
+        \item Chamada recursiva demora $2ns$
+        \item Retorno da chamada recursiva demora $1ns$;
+        \item Atribuição e soma demora $0.5ns$;
+        \item Divisão e multiplicação demora $1.5ns$
+    \end{itemize}
+    \input{q4.tex}
+    Calcule o tempo total para funcRecursiva(5).\label{lb:q4}
+
+    \item Refaça o procedimento da questão~\ref{lb:q4} considerando uma modificação no algoritmo:\input{q5.tex}
+
+    \item Escreva, passo a passo, a \textbf{execução} do algoritmo fatorial em seu formato recursivo. Evidencie as chamadas recursiva e retornos da recursão.
+    
+    \item No calendário gregoriano, \textbf{geralmente} um ano X é bissexto se o ano (x-4) também foi. Este pode ser uma etapa para calcular o algoritmo recursivo para um ano bissexto, mas não está correto por completo. Explique o porquê e apresente uma solução.
+    
+    \item 
+
+\end{enumerate}
+\section*{Complexidade}
+\begin{enumerate}[resume,label=\textbf{Q\arabic*.}]
+    \item 
+    \item 
+    \item 
+\end{enumerate}
+\section*{Conceitos iniciais de Árvores}
+
+\end{document}

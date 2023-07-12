@@ -12,6 +12,9 @@
   + Parte 3
 + Inclusão de tabelas com complexidades
 
+## Exercícios para a primeira avaliação
+
+
 ## Próximos temas:
 
 ### Primeira unidade
