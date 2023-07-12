@@ -327,7 +327,7 @@
                     n_1 + n_2 & = 10+c_1 \\
                     n_1n_2    & = -25
                 \end{align*}
-                Escolhendo $c_1=2$, observamos que $n_1 \approx 1.81$ e $n_2 \approx -13.81$.
+                Escolhendo $c_1=2$, observamos que $n_1 \approx -13.81$ e $n_2 \approx -1.81$.
             \end{column}
             \begin{column}{0.45\textwidth}
                 Ou seja:
@@ -351,13 +351,13 @@
             % Eixo x
             \draw<1->[->, line width=1] (0,0) -- (5,0) node[right] {$n$};
             \draw<1->[->, line width=1] (0,0) -- (0,3) node[above] {$T(n)$};
-            \draw<2-4>[smooth, black!80, line width=0.5] plot coordinates {(0,2) (1,1) (4,2) (5, 3)} node[above] {$c_1\times g(n)$};
-            \draw<3-4>[smooth, black!80, line width=0.5] plot coordinates {(0,0) (2,2) (4,0.5) (5, 0.5)} node[above] {$c_2\times g(n)$};
-            \draw<4->[smooth, blue!80, line width=0.5] plot coordinates  {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
-            \draw<5->[smooth, black!40, line width=0.5] plot coordinates {(0,2) (1,1) (4,2) (5, 3)} node[above] {$c_1\times g(n)$};
-            \draw<5->[smooth, black!40, line width=0.5] plot coordinates {(0,0) (2,2) (4,0.5) (5, 0.5)} node[above] {$c_2\times g(n)$};
-            \draw<6->[smooth, blue!80, line width=1] plot coordinates  {(0,1) (1,0.5) (3,1.5) (5, 1.5)} node[above] {$f(n)$};
-            \draw<6->[thin, dashed] (2.9, 0) node[below] {$x=3$} -- (2.9, 3);
+            \draw<2-4>[smooth, black!80, line width=0.5] plot coordinates {(0,2.5) (1,1.2) (4,2.4) (5, 3.6)} node[above] {$c_1\times g(n)$};
+            \draw<3-4>[smooth, black!80, line width=0.5] plot coordinates {(0,1) (1,0.5) (4,1) (5, 1.25)} node[above] {$c_2\times g(n)$};
+            \draw<4->[smooth, blue!80, line width=0.5] plot coordinates  {(0,1) (1,0.25) (3,2.4) (4, 2.2) (5, 2.8)} node[above] {$f(n)$};
+            \draw<5->[smooth, black!40, line width=0.5] plot coordinates {(0,2.5) (1,1.2) (4,2.4) (5, 3.6)} node[above] {$c_1\times g(n)$};
+            \draw<5->[smooth, black!40, line width=0.5] plot coordinates {(0,1) (1,0.5) (4,1) (5, 1.25)} node[above] {$c_2\times g(n)$};
+            \draw<5->[smooth, blue!80, line width=1] plot coordinates  {(0,1) (1,0.25) (3,2.4) (4, 2.2) (5, 2.8)} node[above] {$f(n)$};
+            \draw<5->[thin, dashed] (3.78, 0) node[below] {$x=3$} -- (3.78, 3);
         \end{tikzpicture}
     \end{center}
 \end{frame}
@@ -407,7 +407,7 @@
 
     \pause Deste modo, a partir de $n_0 > 0$\footnote{Verifique esta afirmação}:
 
-    $$0<c_1\log_{10}n \leq \lg{n}\leq c_2g(n)\log_{10}$$
+    $$0<c_1\log_{10}n \leq \lg{n}\leq c_2\log_{10}n$$
 
 
 \end{frame}
@@ -737,23 +737,23 @@
 
 \begin{frame}[t]
     \frametitle{Complexidades}
-    \begin{table}[]
-        \resizebox{0.75\textwidth}{!}{%
-            \begin{tabular}{l|l|l|l}
-                \textbf{Algoritmo}    & \textbf{Melhor} & \textbf{Médio} & \textbf{Pior}  \\
-                \hline
-                \pause Bubble Sort    & $O(n)$          & $O(n^2)$       & $O(1)$         \\
-                \pause Insertion Sort & $O(n^2)$        & $O(n^2)$       & $O(1)$         \\
-                \pause Selection Sort & $O(n)$          & $O(n^2)$       & $O(1)$         \\
-                \pause Merge Sort     & $O(n\log{n})$   & $O(n\log{n})$  & $O(n\log{n})$  \\
-                \pause Heap Sort      & $O(n\log{n})$   & $O(n\log{n})$  & $O(n\log{n})$  \\
-                \pause Quick Sort     & $O(n\log{n})$   & $O(n\log{n})$  & $O(n^2)$       \\
-                \pause Tree Sort      & $O(n\log{n})$   & $O(n\log{n})$  & $O(n^2)$       \\
-                \pause Counting Sort  & $O(n+k)$        & $O(n+k)$       & $O(n+k)$       \\
-                \pause Bucket Sort    & $O(n+k)$        & $O(n+k)$       & $O(n^2)$       \\
-                \pause Radix Sort     & $O(d\times n)$  & $O(d\times n)$ & $O(d\times n)$
-            \end{tabular}%
-        }
+    \begin{table}[h]
+        \resizebox{0.8\textwidth}{!}{%
+        \renewcommand{\arraystretch}{1.5}
+        \begin{tabular}{l|c|c|c}
+            \textbf{Algoritmo} & \textbf{Pior Caso} & \textbf{Caso Médio} & \textbf{Melhor Caso} \\
+            \hline
+            \pause Bubble Sort & $O(n^2)$ & $O(n^2)$ & $O(n)$ \\
+            \pause Insertion Sort & $O(n^2)$ & $O(n^2)$ & $O(n)$ \\
+            \pause Selection Sort & $O(n^2)$ & $O(n^2)$ & $O(n^2)$ \\
+            \pause Merge Sort & $O(n \log n)$ & $O(n \log n)$ & $O(n \log n)$ \\
+            \pause Heap Sort & $O(n \log n)$ & $O(n \log n)$ & $O(n \log n)$ \\
+            \pause Quick Sort & $O(n^2)$ & $O(n \log n)$ & $O(n \log n)$ \\
+            \pause Tree Sort & $O(n^2)$ & $O(n \log n)$ & $O(n \log n)$ \\
+            \pause Counting Sort & $O(n + k)$ & $O(n + k)$ & $O(n + k)$ \\
+            \pause Bucket Sort & $O(n^2)$ & $O(n^2)$ & $O(n + k)$ \\
+            \pause Radix Sort & $O(nk)$ & $O(nk)$ & $O(nk)$ \\
+        \end{tabular}}
     \end{table}
 \end{frame}
 \end{document}
