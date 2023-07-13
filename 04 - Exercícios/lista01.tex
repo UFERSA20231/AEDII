@@ -1,7 +1,12 @@
 \documentclass[12pt]{article}
 \usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=2cm]{geometry} % Reduzindo as margens
 
+\usepackage{amsmath}
+\usepackage{tikz}
 \usepackage{enumitem}
+
+\usepackage[brazilian]{babel}
+\usepackage{datetime2}
 
 \usepackage{listings} % Pacote para exibir código fonte
 
@@ -36,38 +41,117 @@
     \LARGE \textbf{Lista de exercícios}
 \end{center}
 \section*{Recursão}
-\begin{enumerate}[label=\textbf{Q\arabic*.}]
+\begin{enumerate}[label=\textbf{Q\arabic*}]
     \item Através do algoritmo abaixo, calcule o fibonacci de 8. Neste procedimento, verifique quantas vezes o fibonacci(4) foi calculado.
-    \input{q1.tex}\label{lb:q1}
-    
+          \input{q1.tex}\label{lb:q1}
+
     \item Generalize a operação da questão~\ref{lb:q1} anterior considerando que estou calculando o fibonacci de qualquer valor maior do que 4.\label{lb:q2}
-    
+
     \item Generalize a questão~\ref{lb:q2} considerando que estou calculando quantas vezes o fibonacci(n) é calculado para encontrar o fibonacci(m), sendo $m>n$.
-    
+
     \item No algoritmo abaixo, considere os seguintes tempos:
-    \begin{itemize}
-        \item Chamada recursiva demora $2ns$
-        \item Retorno da chamada recursiva demora $1ns$;
-        \item Atribuição e soma demora $0.5ns$;
-        \item Divisão e multiplicação demora $1.5ns$
-    \end{itemize}
-    \input{q4.tex}
-    Calcule o tempo total para funcRecursiva(5).\label{lb:q4}
+          \begin{itemize}
+              \item Chamada recursiva demora $2ns$
+              \item Retorno da chamada recursiva demora $1ns$;
+              \item Atribuição e soma demora $0.5ns$;
+              \item Divisão e multiplicação demora $1.5ns$
+          \end{itemize}
+          \input{q4.tex}
+          Calcule o tempo total para funcRecursiva(5).\label{lb:q4}
 
     \item Refaça o procedimento da questão~\ref{lb:q4} considerando uma modificação no algoritmo:\input{q5.tex}
 
     \item Escreva, passo a passo, a \textbf{execução} do algoritmo fatorial em seu formato recursivo. Evidencie as chamadas recursiva e retornos da recursão.
-    
-    \item No calendário gregoriano, \textbf{geralmente} um ano X é bissexto se o ano (x-4) também foi. Este pode ser uma etapa para calcular o algoritmo recursivo para um ano bissexto, mas não está correto por completo. Explique o porquê e apresente uma solução.
-    
-    \item 
 
+    \item No calendário gregoriano, \textbf{geralmente} um ano X é bissexto se o ano (x-4) também foi. Este pode ser uma etapa para calcular o algoritmo recursivo para um ano bissexto, mas não está correto por completo. Explique o porquê e apresente uma solução.
+
+    \item Um fractal é uma estrutura geométrica complexa que exibe repetição infinita de padrões semelhantes em diferentes escalas. Um exemplo de fractal simples é o triângulo de Sierpinski. Ele começa com um triângulo equilátero grande. Em seguida, cada lado desse triângulo é dividido em três partes iguais e o triângulo central é removido. Esse processo é repetido para os triângulos restantes, criando uma sequência infinita de triângulos menores que se assemelham ao triângulo original. Desenhe um triângulo de Sierpinski tal qual descrito no texto.\label{lb:q8}
+    \item Desenhe um triângulo Sierpinski (descrito na questão~\ref{lb:q8}) computacionalmente através do seguinte algoritmo:
+          \begin{enumerate}
+              \item Marque os pontos: $A = (0,1); B = (-1,-1); C=(1, -1)$.
+              \item Escolha um ponto aleatório P que esteja no interior do triângulo formado por pelos pontos A, B e C.
+              \item Marque o ponto médio entre P e um ponto escolhido aleatoriamente entre A, B e C.
+          \end{enumerate}
+    \item Apresente um algoritmo de recursão com e sem cauda executa a seguinte expressão:
+          $$p(x, n) = \prod_{k=0}^{n} (x-k)$$
+    \item Apresente versões recursivas de cauda para cada uma das expressões abaixo:
+          \begin{enumerate}
+              \item $f(n) = n!$
+              \item $f(n) = 2 f(n-1) + 3f(n-2), f(0)=1, f(1)=2$
+              \item $\displaystyle \sum_{k=1}^{M} k$
+          \end{enumerate}
+    \item Calcule o $\sin(80)$ considerando como caso base o resultado que $\displaystyle\sin(x) = x - \frac{x^3}{6}$ e que:
+          \[
+              \begin{cases}
+                  \sin(x) & = \sin\left(\frac{x}{3}\right)\left(\frac{3-\tan^2\left(\frac{x}{3}\right)}{1+\tan^2\left(\frac{x}{3}\right)}\right) \\
+                  \tan(x) & = \frac{\sin(x)}{\cos(x)}                                                                                            \\
+                  \cos(x) & = 1 - \sin\left(\frac{x}{2}\right)                                                                                   \\
+              \end{cases}
+          \]
+    \item Implemente uma versão recursiva dos algoritmos abaixo:
+          \begin{enumerate}
+              \item Somas sucessivas para calcular o produto de dois números.
+              \item Divisão inteira entre dois números através de substrações sucessivas.
+              \item Verificação se uma palavra é um palíndromo.
+              \item Inversão de uma string.
+              \item Geração de todos os números da megasena (6 números entre 1 e 60).
+          \end{enumerate}
 \end{enumerate}
 \section*{Complexidade}
-\begin{enumerate}[resume,label=\textbf{Q\arabic*.}]
-    \item 
-    \item 
-    \item 
+\begin{enumerate}[resume,label=\textbf{Q\arabic*}]
+    \item Explique as seguintes afirmações e questionamentos:
+          \begin{enumerate}
+              \item A função f(n) tem complexidade O($n^2$).
+              \item O tempo necessário para execução do algoritmo tem complexidade $\Theta(n \log n)$
+              \item Qual o algoritmo mais veloz, o que tem complexidade O(n) ou um outro com $\Theta(n^2)$ ?
+          \end{enumerate}
+    \item Quais as complexidades de tempo dos algoritmos abaixo (\emph{big O}):
+          \begin{enumerate}
+              \item $A_1$: Ordenação de uma lista sequencial não ordenada;
+              \item $A_2$: Busca de um elemento em uma pilha formado por lista encadeada.
+              \item $A_3$: Busca de elementos em uma lista linear encadeada ordenada;
+              \item $A_4$: Inserção de elemento numa fila formado por lista encadeada;
+              \item Remoção de elemento em uma lista sequencial;
+          \end{enumerate}
+    \item Quais as complexidades de memória dos algoritmos abaixo (\emph{big O}):
+          \begin{enumerate}
+              \item Inserção de elementos em uma pilha;
+              \item Inserção de elementos em uma fila;
+              \item Remoção de elementos em uma pilha;
+              \item Remoção de elementos em uma fila;
+          \end{enumerate}
+    \item Prove se é verdadeiro ou falso:
+          \begin{enumerate}
+              \item $n^2$ é $O(n^3)$;
+              \item $n^3$ é $O(n^2)$;
+              \item $log_{10}(n^2)$ é $O(\lg(n))$
+              \item $n^2\sin^2(n)$ é $O(n^2)$
+          \end{enumerate}
+    \item O algoritmo A possui complexidade $O(n^5)$ e o algoritmo B possui complexidade $O(1.5^n)$. Ambos realizam a mesma operação. Qual dos dois você utilizaria?
+    \item A quantidade de operações de um algoritmo A é de $T_A(n) = 2n^2 + 5$, do algoritmo B é $T_B(n) = 100n$. Até qual tamanho de problema o algoritmo A é mais eficiente do que o B?
+    \item Calcule a complexidade do algoritmo abaixo:\input{q20.tex}
+    \item Calcule a complexidade do da função main:\input{q21.tex}
+    \item Prove se é verdadeiro ou falso:
+          \begin{enumerate}
+              \item $n^2$ é $\Theta(n^3)$;
+              \item $n^3$ é $\Theta(n^2)$;
+              \item $log_{10}(n^2)$ é $\Theta(\lg(n))$
+              \item $n^2\cos^2(n)$ é $\Theta(n^2)$
+          \end{enumerate}
+    \item Prove se é verdadeiro ou falso:
+          \begin{enumerate}
+              \item $n^2$ é $\Omega(n^3)$;
+              \item $n^3$ é $\Omega(n^2)$;
+              \item $log_{10}(n^2)$ é $\Omega(\lg(n))$
+              \item $n^2\cos^2(n)$ é $\Omega(n^2)$
+          \end{enumerate}
+          \item Julgue as afirmações em (V)erdadeiro ou (F)also:
+          \begin{enumerate}
+            \item $c_1O(f(n)) = O(c_1*f(n))$
+            \item $O(f(n) + g(n)) = O(f(n)*g(n))$
+            \item $O(f(n)) + O(g(n)) = O(max(f(n),g(n))))$
+            \item $f(n)O(g(n)) = O(g(n))$%falso
+          \end{enumerate}
 \end{enumerate}
 \section*{Conceitos iniciais de Árvores}
 
