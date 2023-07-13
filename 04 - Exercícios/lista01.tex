@@ -20,6 +20,15 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 
+\pgfmathsetseed{\number\pdfrandomseed}
+
+\newcommand{\randominteger}[2]{\pgfmathrandominteger{\random}{#1}{#2}\random}
+
+\newcommand{\sequencia}[2]{
+\foreach \i in {1,...,#1} {
+        \randominteger{10}{#2}
+    }
+}
 % Cabeçalho
 \newcommand{\professor}{Prof. Kennedy Lopes}
 \newcommand{\turma}{Algoritmos e Estrutura de Dados II}
@@ -145,14 +154,77 @@
               \item $log_{10}(n^2)$ é $\Omega(\lg(n))$
               \item $n^2\cos^2(n)$ é $\Omega(n^2)$
           \end{enumerate}
-          \item Julgue as afirmações em (V)erdadeiro ou (F)also:
+    \item Julgue as afirmações em (V)erdadeiro ou (F)also:
           \begin{enumerate}
-            \item $c_1O(f(n)) = O(c_1*f(n))$
-            \item $O(f(n) + g(n)) = O(f(n)*g(n))$
-            \item $O(f(n)) + O(g(n)) = O(max(f(n),g(n))))$
-            \item $f(n)O(g(n)) = O(g(n))$%falso
+              \item $c_1O(f(n)) = O(c_1*f(n))$
+              \item $O(f(n) + g(n)) = O(f(n)*g(n))$
+              \item $O(f(n)) + O(g(n)) = O(max(f(n),g(n))))$
+              \item $f(n)O(g(n)) = O(g(n))$%falso
           \end{enumerate}
 \end{enumerate}
 \section*{Conceitos iniciais de Árvores}
+\begin{enumerate}[resume, label=\textbf{Q\arabic*}]
+    \item Construa uma árvore binária qualquer com os elementos:
+
+          \sequencia{15}{99}\label{lb:q25}
+
+    \item Construa uma árvore estritamente binária com os elementos:
+
+          \sequencia{15}{99}
+
+    \item Construa uma árvore binária cheia com os elementos:
+
+          \sequencia{15}{99}
+
+    \item Construa uma árvore binária completa com os elementos:
+
+          \sequencia{15}{99}
+
+    \item Construa uma árvore binária de busca com os elementos:
+
+          \sequencia{15}{99}
+
+    \item Construa uma árvore binária de busca Zigue-Zague com os elementos:
+
+          \sequencia{15}{99}\label{lb:q30}
+
+\end{enumerate}
+
+\noindent Utilizem das questões ~\ref{lb:q25} a ~\ref{lb:q30} para responder as questões ~\ref{lb:q31} a ~\ref{lb:q36}:
+
+\begin{enumerate}[resume, label=\textbf{Q\arabic*}]
+
+    \item Calcule os sucessores e antecessores dos nós raízes.\label{lb:q31}
+
+    \item Localize o nível de todos os nós.
+    
+    \item Localize a altura de todos os nós.
+
+    \item Realize o percurso em pré-ordem.
+
+    \item Realize o percurso em pos-ordem.
+
+    \item Realize o percurso em in-ordem.\label{lb:q36}
+
+    \item Julgue (V)erdadeiro ou (F)also:
+    \begin{enumerate}
+        \item Toda árvore binária cheia é completa.
+        \item Toda árvore binária de busca Zigue-Zague possui como raiz o menor elemento.
+        \item É possível uma árvore ser simultaneamente: Estitamente binária, Cheia, Completa e Zigue-Zague.
+        \item É possível uma árvore ser simultaneamente: Estitamente binária, Cheia, Completa. Mas ser também Zigue-Zague é impossível.
+        \item Se o antecessor e sucessor de um nó são irmãos, então o nó é pai dos dois.
+        \item O tio de um nó é ancestral a ele.
+        \item O neto de um nó é um descendente dele.
+    \end{enumerate}
+    
+    \item Qual a altura de uma árvore cheia que possui N=\randominteger{100}{1000} nós?
+    
+    \item Quantos nós faltam para uma árvore cheia com N=\randominteger{100}{1000} nós se torne uma árvore completa?
+    
+    \item Quantos nós precisariam ser removidos para que uma árvore cheia com N=\randominteger{100}{1000} nós se torne uma árvore completa?
+    
+    \item Qual a maior altura do nó raiz em uma árvore estritamente binária com N=\randominteger{100}{1000} nós.
+
+\end{enumerate}
 
 \end{document}
