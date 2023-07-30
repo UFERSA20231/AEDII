@@ -1,0 +1,221 @@
+\documentclass[12pt]{beamer}
+\usetheme{Frankfurt}
+\usecolortheme{whale}
+\usefonttheme{structurebold}
+\usepackage{tcolorbox} % Pacote para criar caixas personalizadas
+\usepackage{listings}
+\usepackage{xcolor}
+
+\newcommand{\CC}{C\nolinebreak\hspace{-.05em}\raisebox{.4ex}{\tiny\bf +}\nolinebreak\hspace{-.10em}\raisebox{.4ex}{\tiny\bf +}}
+\def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\bf ++}}}
+
+% Configuração do ambiente lstlistings para o Bash
+% Configuração do ambiente lstlistings para o Bash
+\lstset{
+  language=bash,              % Linguagem do código
+  basicstyle=\ttfamily,       % Estilo básico da fonte
+  backgroundcolor=\color{gray!10}, % Cor de fundo
+  frame=none,                 % Nenhuma moldura ao redor do código
+  numbers=none,               % Sem números de linha
+}
+
+\definecolor{caixa}{RGB}{0, 200, 200} % Definindo a cor ciano
+\definecolor{codigo}{RGB}{0, 0, 0} % Definindo a cor ciano
+\definecolor{opt}{RGB}{100, 100, 100} % Definindo a cor ciano
+\newcommand{\codigoEDescricao}[2]{%
+  \begin{tcolorbox}[colback=gray!10,colframe=caixa,title=\textbf{\textcolor{codigo}{#1}}] % 
+  \par
+  #2
+  \end{tcolorbox}%
+}
+
+\title{GDB}
+\subtitle{GNU Debugger}
+\author{Prof. Kennedy Reurison Lopes}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}[t]
+    \frametitle{Introdução}
+    O \textbf{GDB} (GNU Project Debugger) é uma ferramenta para:\vfill
+    \begin{itemize}
+        \item Observar um programa enquanto este executa
+        \item Ver o estado no momento que a execução falha
+    \end{itemize}
+    \vfill Permite:
+    \begin{itemize}
+        \item Iniciar a execução de um programa
+        \item Executar linha-a-linha
+        \item Especificar pontos de paragem
+        \item Imprimir valores de variáveis
+    \end{itemize}\vfill
+    Suporta C, C++, Objective-C, Ada e Pascal (entre outras linguagens)
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Compilação para depuração}
+
+    Considere que você possui um arquivo com o código fonte escrito em C com o nome \emph{main.c}.\vfill
+
+    \textbf{Compilação Normal:}
+
+    \begin{lstlisting}
+    $ gcc -o main main.c
+    \end{lstlisting}
+
+
+    \textbf{Compilação em modo de depuração:}
+
+    \begin{lstlisting}
+    $ gcc -o main main.c -g
+    \end{lstlisting}
+
+\end{frame}
+
+\newcommand{\mm}{\texttt{--}}
+\begin{frame}[fragile,t]
+    \frametitle{Execução\footnote{Cinza$\rightarrow$ opcional}}
+
+    \codigoEDescricao{\$ gdb main \textcolor{opt}{core dump}}
+    {Comando para executar um arquivo depurável}
+
+    \codigoEDescricao{\$ gdb \mm args \underline{program} \underline{args\ldots}}
+    {Execução de um arquivo depurável com parâmetros.}
+
+    \codigoEDescricao{\$ gdb \mm pid \underline{pid}}{Executa em modo depuração um programa que já está em execução}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Execução}
+    \codigoEDescricao{set args \underline{args\ldots}}
+    {Modifica os argumentos a serem passados para o programa}
+
+    \codigoEDescricao{run}
+    {Roda o programa a ser depurado}
+
+    \codigoEDescricao{kill}
+    {Finaliza o programa em depuração}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Breakpoints}
+    \codigoEDescricao{break \underline{where}}
+    {Cria um novo breakpoint}
+
+    \codigoEDescricao{delete \underline{breakpoint\#}}
+    {Remove um breakpoint}
+
+    \codigoEDescricao{enable \underline{breakpoint\#}}
+    {Habilita um breakpoint desabilitado}
+
+    \codigoEDescricao{Clear}
+    {Apaga todos os breakpoints}
+
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Whatchpoints}
+    \codigoEDescricao{whatch \underline{where}}
+    {Cria um novo whatchpoint}
+
+    \codigoEDescricao{delete/enable/disable \underline{breakpoint\#}}
+    {Semelhante ao breakpoint}
+
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Condicionais}
+    \codigoEDescricao{break/whatch \underline{where} if \underline{condicao}}
+    {break/whatch caso determinada condição seja satisfeita}
+
+    \codigoEDescricao{condition \underline{breakpoint\#}}
+    {Modifica determinada condição de um break/whatch existente}
+
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Examinando a pilha}
+    \codigoEDescricao{backtrace/where}
+    {Exibe o rastreamento da pilha de execução}
+
+    \codigoEDescricao{backtrace/where full}
+    {Exibe o rastreamento da pilha de execução com informações sobre as variáveis locais}
+
+    \codigoEDescricao{frame \underline{frame\#}}
+    {Seleciona um determinado frame(um passo na pilha de execução) para operar sobre}
+
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Caminhando}
+    \codigoEDescricao{step}
+    {Caminha para a próxima instrução (linha de código), entrando nas funções}
+
+    \codigoEDescricao{next}
+    {Caminha para a próxima instrução (linha de código), \textbf{não} entrando nas funções}
+
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Caminhando}
+
+    \codigoEDescricao{finish}
+    {Continua até que a função corrente retorne}
+
+    \codigoEDescricao{continue}
+    {Continua a execução normal}
+
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Variáveis e Memória}
+    \framesubtitle{Comando: print format var}
+    \codigoEDescricao{Letras que podem ser usadas no format}
+    {\begin{itemize}
+            \item o (octal)
+            \item x (hexadecimal)
+            \item d (decimal)
+            \item t (binário)
+            \item f (float)
+            \item a (endereço)
+            \item i (instrução)
+            \item c (caractere de 1 byte)
+            \item s (string)
+    \end{itemize}}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Variáveis e Memória}
+    \codigoEDescricao{display/format \underline{what}}{Mesmo que o print, mas imprime na tela a cada passo(step) de execução}
+    \codigoEDescricao{undisplay \underline{display\#}}{Remove um display}
+    \codigoEDescricao{enable/disable display \underline{display\#}}{Remove um display}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Código Fonte}
+    \codigoEDescricao{list,list \textcolor{opt}{filename:function}, list \textcolor{opt}{filename:line\_number}}{Mostra o código fonte que está sendo depurado}
+
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Informações}
+    \codigoEDescricao{info args}{imprime os argumentos para a função da corrente pilha de execução}
+    \codigoEDescricao{info breakpoints}{imprime os breakpoints e whatchpoints}
+    \codigoEDescricao{info display}{imprime os breakpoints e whatchpoints}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Informações}
+    \codigoEDescricao{info local}{imprime as variáveis locais do frame selecionado}
+    \codigoEDescricao{whatis \underline{variable name}}{Imprime o tipo da variável}
+\end{frame}
+
+
+\end{document}
