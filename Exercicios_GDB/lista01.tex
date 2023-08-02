@@ -1,0 +1,137 @@
+\documentclass[12pt]{article}
+\usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=2cm]{geometry} % Reduzindo as margens
+
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{enumitem}
+
+\usepackage[brazilian]{babel}
+\usepackage{datetime2}
+
+\usepackage{listings} % Pacote para exibir código fonte
+
+\lstdefinestyle{codigoC}{
+  language=C,
+  basicstyle=\ttfamily\small,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=5pt,
+  keywordstyle=\color{blue},
+  morekeywords={int, char, float, double, if, else, for, while, return},
+  stringstyle=\color{red!80!black!80},
+  showstringspaces=false,
+  breaklines=true,
+  frame=single
+}
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green!60!black},
+                morecomment=[l][\color{black!50}]{\#}
+}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\pgfmathsetseed{\number\pdfrandomseed}
+
+\newcommand{\randominteger}[2]{\pgfmathrandominteger{\random}{#1}{#2}\random}
+
+\newcommand{\sequencia}[2]{
+\foreach \i in {1,...,#1} {
+        \randominteger{10}{#2}
+    }
+}
+% Cabeçalho
+\newcommand{\professor}{Prof. Kennedy Lopes}
+\newcommand{\turma}{Algoritmos e Estrutura de Dados II}
+\newcommand{\ano}{2023}
+\newcommand{\periodo}{1º Semestre}
+
+% Configuração do cabeçalho
+\fancyhead{}
+\fancyhead[L]{\professor}
+\fancyhead[C]{\turma}
+\fancyhead[R]{\ano, \periodo}
+
+\setlength{\headheight}{14.49998pt}
+\addtolength{\topmargin}{-2.49998pt}
+
+\begin{document}
+
+\begin{center}
+    \LARGE \textbf{Lista de exercícios (GDB)}
+\end{center}
+
+\subsection*{Instalação e Confuguração:}
+\begin{itemize}
+    \item Instale o GCC em seu sistema operacional;
+    \item Instale o GDB em seu sistema operacional;
+    \item Compile um código simples em linguagem C com depuração (usando a flag -g);
+    \item Coloque um breakpoint em uma determinada linha de código e execute o programa até esse ponto.
+    \item Execute o programa no GDB usando o comando \emph{run};
+\end{itemize}
+
+\subsubsection*{Código 1 - Fibonacci}
+\input{q1.tex}
+\begin{enumerate}[label=\alph*)]
+    \item Depure o código para descobrir quantas vezes o \textbf{fibonacci(5)} é calculado (requisitado).
+    \item Descubra através da depuração, qual a maior quantidade de níveis (\emph{frames}) esse código alcança.
+    \item Depure o código até o momento que o primeiro fibonacci(14) é calculado e o executável irá começar a calcular o fibonacci(13).
+\end{enumerate}
+
+\newpage
+\subsubsection*{Código 2 - Operação Matemática}
+\input{q2.tex}
+\begin{enumerate}[label=\alph*)]
+    \item Execute o algoritmo em modo de depuração.
+    \item Descubra através da depuração, qual a maior profundidade de (\emph{frames}) esse código alcança.
+    \item Descubra o que ocorre quando um parâmetro é $0$.
+    \item Descubra o que ocorre quando os dois parâmetros apresentados são iguais e maiores que $1$.
+\end{enumerate}
+
+\newpage
+\subsubsection*{Código 3 - Números primos}
+\input{q3.tex}
+\begin{enumerate}[label=\alph*)]
+    \item Através da depuração, compreenda como o código funciona.
+    \item Desenhe em formato de uma árvore de recursão os passos para o cálculo da procura dos números primos de $10$ a $20$ (usando a depuração).
+    \item Conte a quantidade de chamadas recursivas para realizar o resultado de b).
+    \item Depure o algoritmo com os valores de entrada de $1000$ e $10000$. Utilize o depurador para interromper a depuração quando o 240º número primo aparecer.
+\end{enumerate}
+
+\newpage
+
+\subsubsection*{Código 4 - Função aleatória}
+A figura a seguir representa um círculo inscrito em uma circunferência. A origem (0,0) do centro de coordenadas coincide com a origem do círculo e o centro do quadrado. Foi desenvolvido um algoritmo para gerar pontos aleatórios que aparecerão nos limites deste quadrado. O objetivo é selecionar apenas os pontos que estão dentro do círculo. A seguir, apresentamos o código e algumas questões relacionadas ao mesmo.
+
+\begin{center}
+    \begin{tikzpicture}
+        \def\lados{7}
+        \def\raio{\lados/2}
+        \draw[fill=blue!20] (0,0) rectangle ++(\lados,\lados);
+        \draw[fill=red!60] (\raio,\raio) circle (\raio);
+
+        \draw (\lados/2,\lados/2) -- (\lados,\lados/2);
+        \node at (1.5*\raio,\raio + 0.3) {R = 50};
+        \draw[|-|] (0,-1) -- (\lados,-1);
+        \node at (\raio, -1.3) {L = 100};
+        \node at (0, -0.3) {\textbf{(-50,-50)}};
+        \node at (\lados, \lados + 0.3) {\textbf{(50, 50)}};
+        \node at (\lados, -0.3) {\textbf{(50,-50)}};
+        \node at (0, \lados+0.3) {\textbf{(-50,50)}};
+        \node at (\raio,\raio) {\textbf{$\times$}};
+    \end{tikzpicture}
+\end{center}
+
+\input{q4.tex}
+\begin{enumerate}[label=\alph*)]
+    \item Através da depuração, realize a interrupção do algoritmo toda vez que o número aleatório é maior que $0$.
+    \item Utilize a depuração para realizar interrupções no algoritmo somente quando os pontos estiver na região externa ao círculo.
+    \item Utilize a depuração para realizar interrupções no algoritmo somente quando os pontos estiver na região interna ao círculo.
+\end{enumerate}
+
+
+\end{document}
