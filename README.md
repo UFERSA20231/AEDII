@@ -14,13 +14,13 @@
 
 ## Exercícios para a primeira avaliação
 
-
 ## Próximos temas:
 
 ### Primeira unidade
   + Árvores Binárias
 
 ### Segunda Unidade
+  + Heap
   + Árvores Balanceadas
     + AVL
     + B, B+
