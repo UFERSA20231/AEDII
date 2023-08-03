@@ -1,0 +1,440 @@
+\documentclass[10pt]{beamer}
+\usepackage[portuguese]{babel}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\definecolor{cinza}{gray}{0.6}
+\definecolor{alerta}{RGB}{0, 0, 200}
+\setbeamercolor{alerted text}{fg=alerta!80}
+\setbeamerfont{alerted text}{series=\bfseries}
+\usetheme{Madrid}
+\title{Lista de Prioridades}
+\subtitle{HEAP}
+
+\def\link{\href{https://www.cs.usfca.edu/~galles/visualization/HeapSort.html}{\beamergotobutton{Link}}}
+\institute[UFERSA]{Universidade Federal do Semi-árido}
+\author{Prof. Kennedy Lopes}
+
+\setbeamertemplate{itemize items}[square]
+\setbeamertemplate{enumerate items}[default]
+
+\tikzstyle{block} = [draw, rectangle, rounded corners]
+\tikzstyle{overlay} = [draw, rectangle, rounded corners, fill=blue!50, fill opacity=0.5]
+\newcommand{\duascolunas}[2]{
+  \begin{columns}
+    \begin{column}{6cm}
+      #1
+    \end{column}
+    \begin{column}{6cm}
+      #2
+    \end{column}
+  \end{columns}
+}
+
+\begin{document}
+
+\frame{\titlepage}
+\frame{\tableofcontents}
+
+
+\begin{frame}
+    \frametitle{Prioridades}
+
+    \large
+    Algumas aplicações precisam recuperar rapidamente um dado de maior prioridade.\vfill
+
+    Exemplo: Lista de tarefas\vfill
+    \begin{itemize}[<+-|alert@+>]
+        \color{cinza}
+        \item A cada momento, deve-se executar a tarefa com maior prioridade;
+        \item Selecionar a tarefa mais prioritária de uma lista e retirá-la da lista;
+        \item Prioridades podem mudar;
+        \item Novas tarefas podem chegar e precisam ser acomodadas.
+    \end{itemize}\vfill
+
+    \only<+-> {Nova estrutura idealizada:\vfill}
+    \begin{itemize}[<+-|alert@+>]
+        \color{cinza}
+        \item Os dados possuem prioridades de acesso;\vfill
+        \item Essa prioridade modifica com o decorrer do tempo;\vfill
+        \item Seria interessante manter o dado mais acessado em posição de destaque.
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{HEAP - Lista de Prioridade}
+    \framesubtitle{Definição}
+    \large
+    \begin{itemize}[<+->]\setlength{\itemsep}{\fill}
+        \item Representa uma tabela, na qual cada um de seus dados está associado a uma prioridade;
+        \item Objetivo: Descrever uma estrutura de dados que realize as operações abaixo eficientemente:
+              \begin{itemize}\setlength{\itemsep}{\fill}\large
+                  \item Seleção do elemento de maior prioridade;
+                  \item Inserção de um elemento com prioridade específica;
+                  \item Remoção do dado de maior prioridade;
+                  \item Alteração de prioridade de um dado.
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Implementações}
+
+    \large
+    \textbf{Métodos:}
+    \duascolunas{
+        \begin{itemize}[<+->]\setlength{\itemsep}{1em}
+                  \color{cinza}
+            \item<alert@1> Lista não ordenada;
+            \item<alert@2> Lista Ordenada;
+            \item<alert@3> Heap.
+        \end{itemize}
+    }{
+        \begin{itemize}[<only@1|alert@1>]\setlength{\itemsep}{1em}
+            \item Os dados formam uma lista não ordenada com $n$ nós.
+            \item Complexidades:\vspace*{1em}
+                  \begin{itemize}\setlength{\itemsep}{1em}
+                      \item Seleção $O(n)$;
+                      \item Inserção $O(1)$;
+                      \item Remoção $O(n)$;
+                      \item Alteração $O(n)$.
+                  \end{itemize}
+        \end{itemize}
+
+        \begin{itemize}[<only@2|alert@2>]
+            \item Os dados formam uma lista ordenada, em ordem decrescente de suas prioridades. \vfill
+            \item Complexidades:
+                  \begin{itemize}
+                      \item Seleção $O(1)$;
+                      \item Inserção $O(n)$;
+                      \item Remoção $O(1)$;
+                      \item Alteração $O(n)$.
+                  \end{itemize}\vfill
+            \item Necessita de uma ordenação na fase de construção.
+        \end{itemize}
+
+        \begin{itemize}[<only@3|alert@3>]
+            \item Os dados podem ser visualizados como uma árvore binária completa T.
+            \item As prioridade são organizadas em torno dos níveis dessa árvore.
+        \end{itemize}
+    }
+\end{frame}
+
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\begin{frame}
+    \frametitle{Características}
+    \framesubtitle{HEAP}
+    \begin{itemize}[<+-|alert@+>]
+        \large\setlength{\itemsep}{1em}
+              \color{cinza}
+        \item Lista Linear (vetor) composta de elementos com chaves $s_1, s_2, \ldots s_n$;
+        \item As chaves representam as prioridades;
+        \item Não existem dois elementos com a mesma prioridades;\vspace*{1em}
+              \begin{itemize}\setlength{\itemsep}{1em}
+                        \large
+                  \item Heap Máximo: Chaves $s_1, \ldots s_n$, sendo $s_i \geq \floor{s_{i/2}}$.
+                  \item Heap Mínimo: Chaves $s_1, \ldots s_n$, sendo $s_i \leq \floor{ s_{i/2}}$.
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Exemplo}
+    \large
+    Construir uma HEAP com as entradas abaixo:
+
+    \center
+    \tikzstyle{block} = [draw, rectangle, rounded corners]
+    \begin{tikzpicture}
+        \foreach \y [count=\x] in {95,60,78,39,28,66,70,33}{
+                \node at (1.1*\x, 0.5) {\x};
+                \node[block] at (1.1*\x, 0) {\y};
+            }
+    \end{tikzpicture}\vfill
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Exemplo}
+    \Large
+    Verifique qual(is) sequências são HEAP:\vfill
+
+    \center
+    \begin{tikzpicture}
+        \foreach \y [count=\x] in {33,32,28,31,29,26,25,30,27}{
+                \node at (1.1*\x, 3.7) {\x};
+                \node[block] at (1.1*\x, 3) {\y};
+            }
+        \draw[thin, densely dotted] (0, 1.5) -- (1.1*10,1.5);
+        \foreach \y [count=\x] in {33,32,28,31,26,29,25,30,27}{
+                \node at (1.1*\x, 0.7) {\x};
+                \node[block] at (1.1*\x, 0) {\y};
+            }
+    \end{tikzpicture}\vfill
+\end{frame}
+
+\begin{frame}
+    \frametitle{Propriedades}
+    \large
+    Para um determinado elemento $i$:\vspace*{1em}
+    \begin{itemize}\setlength{\itemsep}{1em}
+              \color{cinza}
+        \item<alert@2> Pai de $i$ é $\floor{i/2}$;
+        \item<alert@3> Filho esquerdo é $i*2$;
+        \item<alert@4> Filho direito é $i*2 + 1$;
+    \end{itemize}\vfill
+
+    \centering
+    \begin{tikzpicture}
+        \node at (0.75*1, 0.7) {1};
+        \node at (0.75*2, 0.7) {2};
+        \node at (0.75*3, 0.7) {3};
+        \node at (0.75*4, 0.7) {4};
+        \node at (0.75*5, 0.7) {5};
+        \node at (0.75*6, 0.7) {6};
+        \node at (0.75*7, 0.7) {7};
+        \node at (0.75*8, 0.7) {8};
+        \node[block] at (0.75*1, 0) {95};
+
+        \node[block](a) at (0.75*2, 0) {60};
+        \uncover<2>{\draw[overlay] (a.south west) rectangle (a.north east);}
+        \uncover<2>{\node [below=1mm of a] {\scriptsize PAI};}
+
+        \node[block] at (0.75*3, 0) {78};
+
+        \hyphenation{Esquerdo}
+        \hyphenation{Direito}
+
+        \node[block](b) at (0.75*4, 0) {39};
+        \uncover<3>{\draw[overlay] (b.south west) rectangle (b.north east);}
+        \uncover<3>{\node [below=1mm of b] {\scriptsize Filho Esquerdo};}
+
+        \node[block](c) at (0.75*5, 0) {28};
+        \uncover<4>{\draw[overlay] (c.south west) rectangle (c.north east);}
+        \uncover<4>{\node [below=1mm of c] {\scriptsize Filho Direito};}
+
+        \node[block] at (0.75*6, 0) {66};
+        \node[block] at (0.75*7, 0) {70};
+        \node[block] at (0.75*8, 0) {33};
+    \end{tikzpicture}
+
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Alteração de Prioridade}
+    \duascolunas{
+        \large
+        \pause Ao alterar a prioridade de um nó, é necessário re-arrumar a Heap para que ela respeite as prioridades.
+        \begin{itemize}[<+->]
+            \item ­Um nó que tem a prioridade aumentada precisa \emph{subir} na árvore.
+            \item ­Um nó que tem a prioridade diminuída precisa  \emph{descer} na árvore.
+        \end{itemize}
+    }{
+        Exemplo: Mudar a prioridade de $66$ para $98$.
+        \begin{tikzpicture}
+            \foreach \y [count=\x] in {95,60,78,39,28,66,70,33}{
+                    \node at (0.72*\x, 0.5) {\x};
+                    \node[block] at (0.72*\x, 0) {\y};
+                }
+        \end{tikzpicture}\vfill
+        Exemplo: Mudar a prioridade de $95$ para $37$.
+        \begin{tikzpicture}
+            \foreach \y [count=\x] in {95,60,78,39,28,66,70,33}{
+                    \node at (0.72*\x, 0.5) {\x};
+                    \node[block] at (0.72*\x, 0) {\y};
+                }
+        \end{tikzpicture}
+    }
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Exemplo: Mudar a prioridade de $66$ para $98$.}
+    \centering
+    \begin{tikzpicture}
+        \foreach \y [count=\x] in {95,60,78,39,28,66,70,33}{
+                \node at (0.72*\x, 0.5) {\x};
+                \node[block] at (0.72*\x, 0) {\y};
+            }
+    \end{tikzpicture}
+
+
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Exemplo: Mudar a prioridade de $95$ para $37$.}
+    \centering
+    \begin{tikzpicture}
+        \foreach \y [count=\x] in {95,60,78,39,28,66,70,33}{
+                \node at (0.72*\x, 0.5) {\x};
+                \node[block] at (0.72*\x, 0) {\y};
+            }
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Inserção}
+    \large
+    Procedimentos:\vspace*{1em}
+    \begin{itemize}[<+-|alert@+>]
+        \large\color{cinza}\setlength{\itemsep}{1em}
+        \item Tabela com $n$ elementos;
+        \item Inserir novo elemento na posição ($n+1$);
+        \item Compare o elemento no final do heap e faça-o subir até sua posição correta:
+              \begin{itemize}
+                  \large\color{cinza}\setlength{\itemsep}{1em}
+                  \item Se \underline{estiver} em ordem, a inserção terminou;
+                  \item Se \underline{não estiver} em ordem, troque com o pai e repita o processo até terminar ou chegar à raiz.
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Exemplo de inserção:}
+    \large
+    Inserir o elemento 15 na Heap abaixo:\vspace*{1em}
+
+    \centering
+    \begin{tikzpicture}
+        \foreach \y [count=\x] in {11,5,8,3,4}{
+                \node at (0.72*\x, 0.5) {\x};
+                \node[block] at (0.72*\x, 0) {\y};
+            }
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Remoção}
+    \large
+    Procedimento:\vspace*{1em}
+    \begin{itemize}[<+-|alert@+>]
+        \large\color{cinza}\setlength{\itemsep}{1em}
+        \item Retira-se sempre a \textbf{raiz} (elemento com maior prioridade):
+        \item Coloque na raiz o \textbf{último elemento} da Heap e faça-o $descer$ até a posição correta.
+        \item Compare o elemento com seus filhos:
+              \begin{itemize}\vspace*{1em}
+                  \large\setlength{\itemsep}{1em}\color{cinza}
+                  \item Se \underline{estiver} em ordem, a remoção terminou.
+                  \item Se \underline{não estiver} em ordem, troque com o maior filho e repita o processo até terminar ou chegar a um nó folha.
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Exemplo de remoção}
+    \large
+    Remova o elemento da Heap abaixo:
+
+    \centering
+    \begin{tikzpicture}
+        \foreach \y [count=\x] in {11,05,08,03,04}{
+                \node at (1.2*\x, 0.5) {\x};
+                \node[block] at (1.2*\x, 0) {\y};
+            }
+    \end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Construção de Lista de Prioridades}
+    \large
+    Dado uma lista $L$ de elementos para o qual se deseja construir uma heap $H$, há três alternativas:\vspace*{1em}
+    \begin{enumerate}[<+-|alert@+>]
+        \large\setlength{\itemsep}{1em}
+        \item Considerar uma heap vazia e inserir elemento a elemento;
+        \item Considerar que a lista $L$ já representa uma Heap, e corrigir as prioridades:\vspace*{1em}
+              \begin{enumerate}
+                  \large\setlength{\itemsep}{1em}
+                  \item Considerar os nós folhas corretos;
+                  \item Corrigir os nós internos realizando descidas.
+              \end{enumerate}
+        \item \link\ Corrigir (subir) os nós a partir dos nós folhas. Incluindo processo de ordenação.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Exemplo: Contrução de uma Heap}
+    \large
+    Construa uma Heap a partir da lista $L$ abaixo:
+
+    $$L =\{28,33,39,60,66,70,78,95\}$$
+
+
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Ordenação a partir de uma Heap}
+    \large
+    A partir de uma heap, é possível ordenar os dados fazendo trocas:\vspace*{1em}
+    \begin{itemize}[<+-|alert@+>]
+        \color{cinza}\large\setlength{\itemsep}{1em}
+        \item O maior elemento(raiz) é trocado com o último elemento;
+        \item Esse elemento já se encontra ordenado!
+        \item Considerar que o vetor possui agora ($n+1$) posições e descer a $nova$ raiz até sua posição correta na Heap;
+        \item Repetir os passos anteriores ($n+1$) vezes.
+    \end{itemize}\vspace*{1em}
+
+    \pause \color{alerta!80} \underline{Complexidade dessa ordenação é de O($n\ log\ n$)}
+\end{frame}
+\begin{frame}[t]
+    \frametitle{Resumo das complexidade da Heap}
+    \renewcommand{\arraystretch}{2.5}
+    \hyphenation{Ordenada}
+    \begin{center}
+        \begin{tabular}{ccccc}
+            \textbf{Operação} & \textbf{Lista} & \textbf{Lista Ordenada} & \textbf{Árvore balanceada} & \textbf{Heap} \\
+            \hline
+            Seleção           & $O(n)$         & $O(1)$                  & $O(log(n))$                & $O(1)$        \\
+            Inserção          & $O(1)$         & $O(n)$                  & $O(log(n))$                & $O(log(n))$   \\
+            Remoção           & $O(n)$         & $O(1)$                  & $O(log(n))$                & $O(log(n))$   \\
+            Construção        & $O(n)$         & $O(n\ log(n))$          & $O(log(n))$                & $O(n)$        \\
+        \end{tabular}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Exercícios}
+    
+    \begin{enumerate}
+        \item Verifique se as sequências correspondem a uma HEAP:
+        $$33\ 32\ 28\ 31\ 26\ 29\ 25\ 30\ 27$$
+        $$33\ 32\ 28\ 31\ 29\ 26\ 25\ 30\ 27$$
+        
+        \item Realize a inserção dos elementos $L = \{63, 55, 59\}$ na Heap abaixo:
+        $$H = \{66\ 62\ 56\ 60\ 58\ 52\ 50\ 54\}$$
+        \item Do resultado da Heap anterior, remova os três elementos com maior prioridade.
+        \item Seja uma lista dada pelas prioridades a seguir:
+        
+        $$ L=\{18\ 25\ 41\ 34\ 14\ 10\ 52\ 50\ 48\}$$
+
+        Explique passo a passo o procedimento de contrução para uma Heap-Max e uma Heap-Min.
+
+        
+        
+        
+        
+        %\item Repetir o exercício anterior, considerando, agora, $i < j$ e $s_i < s_j$ .
+    \end{enumerate}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Exercícios}
+    \begin{enumerate}\addtocounter{enumi}{4}\setlength{\itemsep}{1em}
+        \item Realize o processo de ordenação da Heap-Min da questão anterior pelo algoritom Heapsort. O resultado será uma ordenação crescente ou decrescente?
+        \item Seja $H$ um Heap-max, como podemos desenvolver um algoritmo para decidir qual é o segundo maior elemento (sem precisar ordenar).
+        \item Como generalizar a questão anterior para descobrir o n-ésimo maior elemento?
+        \item Todo vetor decrescente é uma heap-max?
+        \item Toda Heap-max é um vetor decrescente?
+        \item  Suponha que $H[1\ldots m]$ é um heap e p é um índice menor que $m/2$.  É verdade que $H[2p] \geq H[2p+1]$?  É verdade que $H[2p] \leq H[2p+1]$?  
+    \end{enumerate}
+\end{frame}
+
+\end{document}
