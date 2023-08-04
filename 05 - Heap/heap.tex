@@ -14,7 +14,6 @@
 \title{Lista de Prioridades}
 \subtitle{HEAP}
 
-\def\link{\href{https://www.cs.usfca.edu/~galles/visualization/HeapSort.html}{\beamergotobutton{Link}}}
 \institute[UFERSA]{Universidade Federal do Semi-árido}
 \author{Prof. Kennedy Lopes}
 
@@ -82,63 +81,20 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Implementações}
-
-    \large
-    \textbf{Métodos:}
-    \duascolunas{
-        \begin{itemize}[<+->]\setlength{\itemsep}{1em}
-                  \color{cinza}
-            \item<alert@1> Lista não ordenada;
-            \item<alert@2> Lista Ordenada;
-            \item<alert@3> Heap.
-        \end{itemize}
-    }{
-        \begin{itemize}[<only@1|alert@1>]\setlength{\itemsep}{1em}
-            \item Os dados formam uma lista não ordenada com $n$ nós.
-            \item Complexidades:\vspace*{1em}
-                  \begin{itemize}\setlength{\itemsep}{1em}
-                      \item Seleção $O(n)$;
-                      \item Inserção $O(1)$;
-                      \item Remoção $O(n)$;
-                      \item Alteração $O(n)$.
-                  \end{itemize}
-        \end{itemize}
-
-        \begin{itemize}[<only@2|alert@2>]
-            \item Os dados formam uma lista ordenada, em ordem decrescente de suas prioridades. \vfill
-            \item Complexidades:
-                  \begin{itemize}
-                      \item Seleção $O(1)$;
-                      \item Inserção $O(n)$;
-                      \item Remoção $O(1)$;
-                      \item Alteração $O(n)$.
-                  \end{itemize}\vfill
-            \item Necessita de uma ordenação na fase de construção.
-        \end{itemize}
-
-        \begin{itemize}[<only@3|alert@3>]
-            \item Os dados podem ser visualizados como uma árvore binária completa T.
-            \item As prioridade são organizadas em torno dos níveis dessa árvore.
-        \end{itemize}
-    }
-\end{frame}
-
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 \begin{frame}
-    \frametitle{Características}
+    \frametitle{Definições}
     \framesubtitle{HEAP}
     \begin{itemize}[<+-|alert@+>]
         \large\setlength{\itemsep}{1em}
-              \color{cinza}
+        \color{cinza}
         \item Lista Linear (vetor) composta de elementos com chaves $s_1, s_2, \ldots s_n$;
         \item As chaves representam as prioridades;
         \item Não existem dois elementos com a mesma prioridades;\vspace*{1em}
               \begin{itemize}\setlength{\itemsep}{1em}
-                        \large
-                  \item Heap Máximo: Chaves $s_1, \ldots s_n$, sendo $s_i \geq \floor{s_{i/2}}$.
-                  \item Heap Mínimo: Chaves $s_1, \ldots s_n$, sendo $s_i \leq \floor{ s_{i/2}}$.
+                  \large
+                  \item Heap Máximo: Chaves $s_1, \ldots s_n$, sendo $s_i \leq \floor{s_{i/2}}$\footnote{$\floor{x}$: Maior inteiro menor ou igual a $x$ (Piso)}.
+                  \item Heap Mínimo: Chaves $s_1, \ldots s_n$, sendo $s_i \geq \floor{ s_{i/2}}$.
               \end{itemize}
     \end{itemize}
 \end{frame}
@@ -182,7 +138,7 @@
     \large
     Para um determinado elemento $i$:\vspace*{1em}
     \begin{itemize}\setlength{\itemsep}{1em}
-              \color{cinza}
+        \color{cinza}
         \item<alert@2> Pai de $i$ é $\floor{i/2}$;
         \item<alert@3> Filho esquerdo é $i*2$;
         \item<alert@4> Filho direito é $i*2 + 1$;
@@ -353,7 +309,7 @@
                   \item Considerar os nós folhas corretos;
                   \item Corrigir os nós internos realizando descidas.
               \end{enumerate}
-        \item \link\ Corrigir (subir) os nós a partir dos nós folhas. Incluindo processo de ordenação.
+        \item Corrigir (subir) os nós a partir dos nós folhas. Incluindo processo de ordenação.
     \end{enumerate}
 \end{frame}
 
@@ -369,7 +325,7 @@
 
 
 \begin{frame}[t]
-    \frametitle{Ordenação a partir de uma Heap}
+    \frametitle{Ordenação a partir de uma Heap (HEAPSORT)}
     \large
     A partir de uma heap, é possível ordenar os dados fazendo trocas:\vspace*{1em}
     \begin{itemize}[<+-|alert@+>]
@@ -387,13 +343,16 @@
     \renewcommand{\arraystretch}{2.5}
     \hyphenation{Ordenada}
     \begin{center}
+        \def\fnA{Sempre se refere a seleção do elemento com maior prioridade}
+        \def\fnB{Considerando que se pretende remover um elemento arbitrário}
+        \def\fnC{Construção com ordenação}
         \begin{tabular}{ccccc}
-            \textbf{Operação} & \textbf{Lista} & \textbf{Lista Ordenada} & \textbf{Árvore balanceada} & \textbf{Heap} \\
+            \textbf{Operação}         & \textbf{Lista} & \textbf{Lista Ordenada} & \textbf{Árvore balanceada} & \textbf{Heap} \\
             \hline
-            Seleção           & $O(n)$         & $O(1)$                  & $O(log(n))$                & $O(1)$        \\
-            Inserção          & $O(1)$         & $O(n)$                  & $O(log(n))$                & $O(log(n))$   \\
-            Remoção           & $O(n)$         & $O(1)$                  & $O(log(n))$                & $O(log(n))$   \\
-            Construção        & $O(n)$         & $O(n\ log(n))$          & $O(log(n))$                & $O(n)$        \\
+            Seleção\footnote{\fnA}    & $O(n)$         & $O(1)$                  & $O(log(n))$                & $O(1)$        \\
+            Inserção                  & $O(1)$         & $O(n)$                  & $O(log(n))$                & $O(log(n))$   \\
+            Remoção\footnote{\fnB}    & $O(n)$         & $O(1)$                  & $O(log(n))$                & $O(log(n))$   \\
+            Construção\footnote{\fnC} & $O(n)$         & $O(n\ log(n))$          & $O(log(n))$                & $O(n)$        \\
         \end{tabular}
     \end{center}
 
@@ -401,28 +360,28 @@
 
 \begin{frame}
     \frametitle{Exercícios}
-    
+
     \begin{enumerate}
         \item Verifique se as sequências correspondem a uma HEAP:
-        $$33\ 32\ 28\ 31\ 26\ 29\ 25\ 30\ 27$$
-        $$33\ 32\ 28\ 31\ 29\ 26\ 25\ 30\ 27$$
-        
+              $$33\ 32\ 28\ 31\ 26\ 29\ 25\ 30\ 27$$
+              $$33\ 32\ 28\ 31\ 29\ 26\ 25\ 30\ 27$$
+
         \item Realize a inserção dos elementos $L = \{63, 55, 59\}$ na Heap abaixo:
-        $$H = \{66\ 62\ 56\ 60\ 58\ 52\ 50\ 54\}$$
+              $$H = \{66\ 62\ 56\ 60\ 58\ 52\ 50\ 54\}$$
         \item Do resultado da Heap anterior, remova os três elementos com maior prioridade.
         \item Seja uma lista dada pelas prioridades a seguir:
-        
-        $$ L=\{18\ 25\ 41\ 34\ 14\ 10\ 52\ 50\ 48\}$$
 
-        Explique passo a passo o procedimento de contrução para uma Heap-Max e uma Heap-Min.
+              $$ L=\{18\ 25\ 41\ 34\ 14\ 10\ 52\ 50\ 48\}$$
 
-        
-        
-        
-        
-        %\item Repetir o exercício anterior, considerando, agora, $i < j$ e $s_i < s_j$ .
+              Explique passo a passo o procedimento de contrução para uma Heap-Max e uma Heap-Min.
+
+
+
+
+
+              %\item Repetir o exercício anterior, considerando, agora, $i < j$ e $s_i < s_j$ .
     \end{enumerate}
-    
+
 \end{frame}
 
 \begin{frame}
@@ -433,7 +392,7 @@
         \item Como generalizar a questão anterior para descobrir o n-ésimo maior elemento?
         \item Todo vetor decrescente é uma heap-max?
         \item Toda Heap-max é um vetor decrescente?
-        \item  Suponha que $H[1\ldots m]$ é um heap e p é um índice menor que $m/2$.  É verdade que $H[2p] \geq H[2p+1]$?  É verdade que $H[2p] \leq H[2p+1]$?  
+        \item  Suponha que $H[1\ldots m]$ é um heap e p é um índice menor que $m/2$.  É verdade que $H[2p] \geq H[2p+1]$?  É verdade que $H[2p] \leq H[2p+1]$?
     \end{enumerate}
 \end{frame}
 
