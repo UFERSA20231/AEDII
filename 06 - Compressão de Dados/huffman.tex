@@ -1,4 +1,4 @@
-\documentclass[10pt, handout]{beamer}
+\documentclass[10pt]{beamer}
 % \setbeamercovered{transparent}
 \beamerdefaultoverlayspecification{<+(1)-| alert@+(1)>}
 \usetheme{Boadilla}
@@ -8,12 +8,14 @@
 \usepackage{xcolor}
 \usepackage{xstring}
 \usepackage{dirtree}
+\usepackage{enumitem}
 
 \usepackage{tikz}
 \usepackage{expl3}
 
 
 \title{Compressão de Dados}
+\subtitle{Algoritmo de Huffman}
 \author{Prof. Kennedy Reurison Lopes}
 \date{\today}
 
@@ -54,15 +56,15 @@
         \def\nl{\l/9}
         \begin{tikzpicture}[pixel/.style={very thin,rounded corners=3pt, color=white}]
 
-            \draw<1->[white] (-\l,-\l) rectangle (\mdX+\ml,\mdY+\ml);
+            \draw<1-4>[white] (-\l,-\l) rectangle (\mdX+\ml,\mdY+\ml);
 
-            \fill<1-6>[mixA] (\mdX,\mdY) rectangle (\ml +\mdX,\ml+\mdY);
-            \fill<2-6>[mixB] (\mdX,\mdY) rectangle (\ml +\mdX,-\ml+\mdY);
-            \fill<3-6>[mixC] (\mdX,\mdY) rectangle (-\ml+\mdX,-\ml+\mdY);
-            \fill<4-6>[mixD] (\mdX,\mdY) rectangle (-\ml+\mdX, \ml+\mdY);
+            \fill<1-4>[mixA] (\mdX,\mdY) rectangle (\ml +\mdX,\ml+\mdY);
+            \fill<2-4>[mixB] (\mdX,\mdY) rectangle (\ml +\mdX,-\ml+\mdY);
+            \fill<3-4>[mixC] (\mdX,\mdY) rectangle (-\ml+\mdX,-\ml+\mdY);
+            \fill<4-4>[mixD] (\mdX,\mdY) rectangle (-\ml+\mdX, \ml+\mdY);
 
-            \draw<4-5>[dashed,very thin] (-\l, \l) -- (-\ml +\mdX, \ml+\mdY);
-            \draw<4-5>[dashed,very thin] (\l, -\l) -- (\ml +\mdX, -\ml+\mdY);
+            \draw<4>[dashed,very thin] (-\l, \l) -- (-\ml +\mdX, \ml+\mdY);
+            \draw<4>[dashed,very thin] (\l, -\l) -- (\ml +\mdX, -\ml+\mdY);
 
             \draw<1->[dotted,color=black] (0,0) rectangle (\l,\l);
             \draw<2->[dotted,color=black] (0,0) rectangle (\l,-\l);
@@ -81,9 +83,9 @@
             \fill<3->[pixel,fill=corD2] (-4*\nl, -8*\nl) rectangle (-5*\nl,-1*\nl);
             \fill<3->[pixel,fill=corD3] (-1*\nl, -8*\nl) rectangle (-2*\nl,-1*\nl);
 
-            \fill<4->[pixel,fill=corB1] (-7*\nl, \nl) rectangle (-8*\nl, 8*\nl);
-            \fill<4->[pixel,fill=corB2] (-4*\nl, \nl) rectangle (-5*\nl, 8*\nl);
-            \fill<4->[pixel,fill=corB3] (-1*\nl, \nl) rectangle (-2*\nl, 8*\nl);
+            \fill<4-5>[pixel,fill=corB1] (-7*\nl, \nl) rectangle (-8*\nl, 8*\nl);
+            \fill<4-5>[pixel,fill=corB2] (-4*\nl, \nl) rectangle (-5*\nl, 8*\nl);
+            \fill<4-5>[pixel,fill=corB3] (-1*\nl, \nl) rectangle (-2*\nl, 8*\nl);
         \end{tikzpicture}
     \end{center}
 \end{frame}
@@ -259,12 +261,10 @@
     \frametitle{Codificação de texto}
     Vamos considerar um texto maior: \textbf{Um prato de trigo para tres tigres tristes}:
     Este texto contem:
-    \newcount\resultado
-    \resultado=\numexpr 42*8 \relax
     \begin{itemize}
-        \item \contararCaracteres{Um-prato-de-trigo-para-tres-tigres-tristes} caracteres.
-        \item \contararAlgoritmosDistintos{Um-prato-de-trigo-para-tres-tigres-tristes} caracteres distintos.
-        \item O texto ocupa \the\resultado\ bits.
+        \item $42$ caracteres.
+        \item $13$ caracteres distintos.
+        \item O texto ocupa $336$ bits.
     \end{itemize}
 
     \pause É possível ocupar menos espaço?
@@ -284,7 +284,7 @@
     \frametitle{Análise de Frequência}
     Frequência dos caracteres:
 
-    \begin{table}
+    \pause\begin{table}
         \resizebox{0.8\textwidth}{!}{%
             \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
                 U          & m          & -          & p          & r          & a          & t          & o          & d          & e          & i          & g          & s          \\
@@ -296,7 +296,7 @@
 
     Ordenando as frequências:
 
-    \begin{table}
+    \pause\begin{table}
         \resizebox{0.8\textwidth}{!}{%
             \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
                 U          & m          & d          & p          & o          & g          & a          & i          & e          & s          & r          & t          & -          \\
@@ -308,7 +308,7 @@
 
     Agrupando as menores frequências:
 
-    \begin{table}
+    \pause\begin{table}
         \resizebox{0.8\textwidth}{!}{%
             \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c}
                 U          & $\{d,m\}$ & p          & o          & g          & a          & i          & e          & s          & r          & t          & -          \\
@@ -327,7 +327,7 @@
     \vfill
     Agrupando(U e $\{d,m\}$):
 
-    \begin{table}
+    \pause\begin{table}
         \resizebox{0.8\textwidth}{!}{%
             \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c}
                 $\{U, d,m\}$ & p          & o          & g          & a          & i          & e          & s          & r          & t          & -          \\
@@ -339,7 +339,7 @@
 
     Ordenando:
 
-    \begin{table}
+    \pause\begin{table}
         \resizebox{0.8\textwidth}{!}{%
             \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c}
                 g          & p          & o          & $\{U, d,m\}$ & a          & i          & e          & s          & r          & t          & -          \\
@@ -354,7 +354,7 @@
 
 \begin{frame}[t]
     \frametitle{Análise de Frequência}
-    \begin{table}
+    \pause\begin{table}
         \resizebox{0.8\textwidth}{!}{%
             \begin{tabular}{c|c|c|c|c|c|c|c|c|c}
                 g          & $\{p,o\}$ & $\{U, d,m\}$ & a          & i          & e          & s          & r          & t          & -          \\
@@ -364,7 +364,7 @@
         }
     \end{table}
 
-    \begin{table}
+    \pause\begin{table}
         \resizebox{0.8\textwidth}{!}{%
             \begin{tabular}{c|c|c|c|c|c|c|c|c}
                 $\{g,a\}$ & $\{p,o\}$ & $\{U, d,m\}$ & i          & e          & s          & r          & t          & -          \\
@@ -374,7 +374,7 @@
         }
     \end{table}
 
-    \begin{table}
+    \pause\begin{table}
         \resizebox{0.8\textwidth}{!}{%
             \begin{tabular}{c|c|c|c|c|c|c|c}
                 $\{g,a\}$ & $\{p,o\}$ & $\{U,d,m,i\}$ & e          & s          & r          & t          & -          \\
@@ -384,7 +384,7 @@
         }
     \end{table}
 
-    \begin{table}
+    \pause\begin{table}
         \resizebox{0.8\textwidth}{!}{%
             \begin{tabular}{c|c|c|c|c|c|c}
                 $\{g,a\}$ & $\{p,o\}$ & $\{U,d,m,i\}$ & $\{e,s\}$ & r          & t          & -          \\
@@ -397,7 +397,7 @@
 
 \begin{frame}[t]
     \frametitle{Análise de Frequência}
-    \begin{table}
+    \pause\begin{table}
         \resizebox{0.8\textwidth}{!}{%
             \begin{tabular}{c|c|c|c|c|c}
                 $\{g,a,p,o\}$ & $\{U,d,m,i\}$ & $\{e,s\}$ & r          & t          & -          \\
@@ -407,7 +407,7 @@
         }
     \end{table}
 
-    \begin{table}
+    \pause\begin{table}
         \resizebox{0.8\textwidth}{!}{%
             \begin{tabular}{c|c|c|c|c}
                 $\{g,a,p,o\}$ & $\{U,d,m,i\}$ & $\{e,s\}$ & $\{r,t\}$ & -          \\
@@ -417,7 +417,7 @@
         }
     \end{table}
 
-    \begin{table}
+    \pause\begin{table}
         \resizebox{0.8\textwidth}{!}{%
             \begin{tabular}{c|c|c|c}
                 $\{g,a,p,o\}$ & $\{U,d,m,i,-\}$ & $\{e,s\}$ & $\{r,t\}$ \\
@@ -427,7 +427,7 @@
         }
     \end{table}
 
-    \begin{table}
+    \pause\begin{table}
         \resizebox{0.8\textwidth}{!}{%
             \begin{tabular}{c|c|c}
                 $\{g,a,p,o,e,s\}$ & $\{U,d,m,i,-\}$ & $\{r,t\}$ \\
@@ -441,7 +441,7 @@
 
 \begin{frame}[t]
     \frametitle{Análise de Frequência}
-    \begin{table}
+    \pause\begin{table}
         \resizebox{0.7\textwidth}{!}{%
             \begin{tabular}{c|c}
                 $\{g,a,p,o,e,s\}$ & $\{U,d,m,i,-,r,t\}$ \\
@@ -450,7 +450,7 @@
             \end{tabular}%
         }
     \end{table}
-    \begin{table}
+    \pause\begin{table}
         \resizebox{0.7\textwidth}{!}{%
             \begin{tabular}{c}
                 $\{g,a,p,o,e,s,U,d,m,i,-,r,t\}$ \\
@@ -474,56 +474,56 @@
 }
 
 \begin{frame}
-    % \frametitle{Construção da árvore}
+    \frametitle{Construção da árvore}
     \begin{columns}[t]
-        \begin{column}[t]{0.28\textwidth}
+        \begin{column}[t]{0.30\textwidth}
             \dirtree{%
-                .1 gapoesUdmi-r.
-                .2 gapoes(0).
-                .3 gapo(0).
-                .4 ga(0).
-                .5 g(0).
-                .5 a(1).
-                .4 po(1).
-                .5 p(0).
-                .5 o(1).
-                .3 es(1).
-                .4 e(0).
-                .4 s(1).
+                .1 gapoesUdmi-r(42).
+                .2 gapoes(0,17).
+                .3 gapo(0,9).
+                .4 ga(0,5).
+                .5 g(0,2).
+                .5 a(1,3).
+                .4 po(1,4).
+                .5 p(0,2).
+                .5 o(1,2).
+                .3 es(1,8).
+                .4 e(0,4).
+                .4 s(1,4).
             }
         \end{column}
         \begin{column}[t]{0.40\textwidth}
             \dirtree{%
-                .1 gapoesUdmi-r.
-                .2 Udmi-rt(1).
-                .3 Udmi-(0).
-                .4 Udmi(0).
-                .5 Udm(0).
-                .6 U(0).
-                .6 dm(1).
-                .7 d(0).
-                .7 m(1).
-                .5 i(1).
-                .4 -(0).
-                .3 rt(1).
-                .4 r(0).
-                .4 t(1).
+                .1 gapoesUdmi-r(42).
+                .2 Udmi-rt(1,25).
+                .3 Udmi-(0,13).
+                .4 Udmi(0,6).
+                .5 Udm(0,3).
+                .6 U(0,1).
+                .6 dm(1,2).
+                .7 d(0,1).
+                .7 m(1,1).
+                .5 i(1,3).
+                .4 -(0,7).
+                .3 rt(1,12).
+                .4 r(0,6).
+                .4 t(1,6).
             }
         \end{column}\hfill
         \begin{column}[t]{0.30\textwidth}
             \begin{itemize}\setlength\itemsep{0.1em}
                 \item [U]$\rightarrow 10000$
-                \item [m]$\rightarrow 1000010$
-                \item [d]$\rightarrow 1000011$
+                \item [m]$\rightarrow 1000011$
+                \item [d]$\rightarrow 1000010$
                 \item [p]$\rightarrow 0010$
                 \item [o]$\rightarrow 0011$
                 \item [g]$\rightarrow 0000$
                 \item [a]$\rightarrow 0001$
                 \item [i]$\rightarrow 1001$
-                \item [e]$\rightarrow 100010$
+                \item [e]$\rightarrow 010$
                 \item [s]$\rightarrow 011$
-                \item [r]$\rightarrow 100$
-                \item [t]$\rightarrow 111$
+                \item [r]$\rightarrow 110$
+                \item [t]$\rightarrow 110$
                 \item [-]$\rightarrow 100$
             \end{itemize}
         \end{column}
@@ -534,24 +534,94 @@
 \begin{frame}[t]
     \frametitle{Análise do armazenamento}
     \begin{center}
-        \begin{tabular}{c|c|c|c}
-            char & bin     & bits & freq \\
+        \begin{tabular}{clccc}
+            char        & bin     & bits & freq & total \\
             \hline
-            U    & 10000   & 5    &     1\\
-            d    & 1000010 & 7    &1     \\
-            m    & 1000011 & 7    &  1   \\
-            p    & 0010    & 4    &   2  \\
-            o    & 0011    & 4    &   2  \\
-            g    & 0000    & 4    &   2  \\
-            a    & 0001    & 4    &   3  \\
-            i    & 1001    & 4    &   3  \\
-            e    & 100010  & 6    &   4  \\
-            s    & 011     & 3    &     \\
-            r    & 100     & 3    &     \\
-            t    & 111     & 3    &     \\
-            -    & 100     & 3    &     \\
+            \pause U           &  10000   & 5    & 1    & 5     \\
+            \pause d           & 1000010 & 7    & 1    & 7     \\
+            \pause m           & 1000011 & 7    & 1    & 7     \\
+            \pause p           & 0010    & 4    & 2    & 8     \\
+            \pause o           & 0011    & 4    & 2    & 8     \\
+            \pause g           & 0000    & 4    & 2    & 8     \\
+            \pause a           & 0001    & 4    & 3    & 12    \\
+            \pause i           & 1001    & 4    & 3    & 12    \\
+            \pause e           & 100010  & 6    & 4    & 24    \\
+            \pause s           & 011     & 3    & 4    & 12    \\
+            \pause r           & 100     & 3    & 6    & 18    \\
+            \pause t           & 111     & 3    & 6    & 18    \\
+            \pause -           & 100     & 3    & 7    & 21    \\
+            \hline
+            \pause Comprimido  &         &      &      & 160   \\
+            \pause Comp. médio &         &      &      & 3.81  \\
         \end{tabular}
     \end{center}
+
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Análise do armazenamento}
+    Antes do armazenamento:
+
+    $$S = 42\times 8 = 336\ \text{bits}$$
+
+    \pause Depois do armazenamento:
+
+    $$s=5+7+7+8+8+8+12+12+24+12+18+21 = 160\ \text{bits}$$
+
+    \pause Tabela de Símbolos:
+
+    $$t = 13\times 8 = 104\ \text{bits}$$
+    
+    \pause Compactado:
+
+    $$c = S-(s+t) = 336-(160+104) = 72\ \text{bits}$$
+
+    \pause Taxa de compressão:
+
+    $$Tx = \frac{c}{T} = \frac{72}{336}=21.42\%$$
+
+
+\end{frame}
+\input binhex
+\begin{frame}[t]
+    \frametitle{Resultados}
+    % Antes da compressão(em decimal):\vfill
+
+    % 85-109-95-112-114-97-116-111-95-100-101-95-116-114-105-103-111-95-112-97-114-97-95-116-114-101-115-95-116-105-103-114-101-115-95-116-114-105-115-116-101-115\vfill
+
+    Antes da compressão(em binário):\vfill
+
+    \nbinary{8}{85}\nbinary{8}{109}\nbinary{8}{95}\nbinary{8}{112}\nbinary{8}{114}\nbinary{8}{97}\nbinary{8}{116}\nbinary{8}{111}
+    
+    \nbinary{8}{95}\nbinary{8}{100}\nbinary{8}{101}\nbinary{8}{95}\nbinary{8}{116}\nbinary{8}{114}\nbinary{8}{105}\nbinary{8}{103}
+    
+    \nbinary{8}{111}\nbinary{8}{95}\nbinary{8}{112}\nbinary{8}{97}\nbinary{8}{114}\nbinary{8}{97}\nbinary{8}{95}\nbinary{8}{116}
+    
+    \nbinary{8}{114}\nbinary{8}{101}\nbinary{8}{115}\nbinary{8}{95}\nbinary{8}{116}\nbinary{8}{105}\nbinary{8}{103}\nbinary{8}{114}
+
+    \nbinary{8}{101}\nbinary{8}{115}\nbinary{8}{95}\nbinary{8}{116}\nbinary{8}{114}\nbinary{8}{105}\nbinary{8}{115}\nbinary{8}{116}
+    
+    \nbinary{8}{101}\nbinary{8}{115}\vfill
+
+    Após a compressão:\vfill
+
+    1000010000111000010110000111000111001000010010100110110100100000
+    0111000010000111000011001101100100111001101001000011001001110011
+    0110100101111001001101010101011011010101111101110000011100100110
+    00010111010001101111
+
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Exercício}
+    \begin{enumerate}[label=\textcircled{\scriptsize\arabic*}]
+        \item Calcule a taxa de compressão de: "ABABABACBABABABA".
+        \item Utilize o resultado da compressão dos dados para representar: "ACCCCCCCCC".
+        \item Dado um texto qualquer, a compressão é única? Explique o porquê.
+        \item 
+        \item 
+    \end{enumerate}
 
 \end{frame}
 \end{document}
