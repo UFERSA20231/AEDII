@@ -1,0 +1,558 @@
+\documentclass[10pt, handout]{beamer}
+% \setbeamercovered{transparent}
+\beamerdefaultoverlayspecification{<+(1)-| alert@+(1)>}
+\usetheme{Boadilla}
+\usecolortheme{seahorse}
+\usefonttheme{structurebold}
+\usepackage{rotating}
+\usepackage{xcolor}
+\usepackage{xstring}
+\usepackage{dirtree}
+
+\usepackage{tikz}
+\usepackage{expl3}
+
+
+\title{Compressão de Dados}
+\author{Prof. Kennedy Reurison Lopes}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+
+\definecolor{corA1}{RGB}{0, 0, 0}
+\definecolor{corA2}{RGB}{0, 225, 0}
+\definecolor{corA3}{RGB}{0, 0, 255}
+\definecolor{mixA}{RGB}{0,225,255}
+% \definecolor{mixA}{rgb}{0.7,102,25}
+
+\definecolor{corB1}{RGB}{98, 0, 0}
+\definecolor{corB2}{RGB}{0, 255, 0}
+\definecolor{corB3}{RGB}{0, 0, 0}
+\definecolor{mixB}{RGB}{95,255,0}
+
+\definecolor{corC1}{RGB}{255, 0, 0}
+\definecolor{corC2}{RGB}{0, 30, 0}
+\definecolor{corC3}{RGB}{0, 0, 0}
+\definecolor{mixC}{RGB}{255,30,0}
+
+\definecolor{corD1}{rgb}{157, 0, 0}
+\definecolor{corD2}{rgb}{0, 0, 0}
+\definecolor{corD3}{rgb}{0, 0, 255}
+\definecolor{mixD}{RGB}{157,0,255}
+\begin{frame}[t]
+    \frametitle{Codificação}
+    Uma imagem numa tela é composta por uma sequência de pixels no formato RGB.
+    \vfill
+    \begin{center}
+        \def\l{2}
+        \def\ml{0.25}
+        \def\mdX{6}
+        \def\mdY{3.5}
+        \def\nl{\l/9}
+        \begin{tikzpicture}[pixel/.style={very thin,rounded corners=3pt, color=white}]
+
+            \draw<1->[white] (-\l,-\l) rectangle (\mdX+\ml,\mdY+\ml);
+
+            \fill<1-6>[mixA] (\mdX,\mdY) rectangle (\ml +\mdX,\ml+\mdY);
+            \fill<2-6>[mixB] (\mdX,\mdY) rectangle (\ml +\mdX,-\ml+\mdY);
+            \fill<3-6>[mixC] (\mdX,\mdY) rectangle (-\ml+\mdX,-\ml+\mdY);
+            \fill<4-6>[mixD] (\mdX,\mdY) rectangle (-\ml+\mdX, \ml+\mdY);
+
+            \draw<4-5>[dashed,very thin] (-\l, \l) -- (-\ml +\mdX, \ml+\mdY);
+            \draw<4-5>[dashed,very thin] (\l, -\l) -- (\ml +\mdX, -\ml+\mdY);
+
+            \draw<1->[dotted,color=black] (0,0) rectangle (\l,\l);
+            \draw<2->[dotted,color=black] (0,0) rectangle (\l,-\l);
+            \draw<3->[dotted,color=black] (0,0) rectangle (-\l,-\l);
+            \draw<4->[dotted,color=black] (0,0) rectangle (-\l,\l);
+
+            \fill<1->[pixel,fill=corA1] (1*\nl, \nl) rectangle (2*\nl, 8*\nl);
+            \fill<1->[pixel,fill=corA2] (4*\nl, \nl) rectangle (5*\nl, 8*\nl);
+            \fill<1->[pixel,fill=corA3] (7*\nl, \nl) rectangle (8*\nl, 8*\nl);
+
+            \fill<2->[pixel,fill=corC1] (1*\nl, -8*\nl) rectangle (2*\nl,-1*\nl);
+            \fill<2->[pixel,fill=corC2] (4*\nl, -8*\nl) rectangle (5*\nl,-1*\nl);
+            \fill<2->[pixel,fill=corC3] (7*\nl, -8*\nl) rectangle (8*\nl,-1*\nl);
+
+            \fill<3->[pixel,fill=corD1] (-7*\nl, -8*\nl) rectangle (-8*\nl,-1*\nl);
+            \fill<3->[pixel,fill=corD2] (-4*\nl, -8*\nl) rectangle (-5*\nl,-1*\nl);
+            \fill<3->[pixel,fill=corD3] (-1*\nl, -8*\nl) rectangle (-2*\nl,-1*\nl);
+
+            \fill<4->[pixel,fill=corB1] (-7*\nl, \nl) rectangle (-8*\nl, 8*\nl);
+            \fill<4->[pixel,fill=corB2] (-4*\nl, \nl) rectangle (-5*\nl, 8*\nl);
+            \fill<4->[pixel,fill=corB3] (-1*\nl, \nl) rectangle (-2*\nl, 8*\nl);
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\def\nota1{Um arquivo RAW contém todos os dados de uma imagem não compactados e não processados capturados por um scanner ou pelos sensores de uma câmera digital. As fotos feitas no formato RAW contêm alto nível de detalhes, são grandes e não têm perdas de qualidade.}
+\begin{frame}[t]
+    \frametitle{Codificação - Imagem RAW}
+    Considere uma imagem no formato \emph{raw}\footnote{\nota1}. O arquivo desta imagem preserva a qualidade original da foto, sem perder nem um \emph{bit} de informação.\vfill
+
+    Uma imagem em 4K desta imagem tem a seguinte quantidade de pixels:
+
+    \[P =  3840 \times 2160 = 8.294.400\ \text{pixels}\]
+
+    \vfill
+
+    Cada Pixel contem uma cor no formato RGB(3 \emph{bytes}):
+
+    \[S = 3840 \times 2160 \times 3 = 24.883.200\ \text{bytes}\]
+
+    \vfill
+
+    Cada $1.024$ bytes corresponde a 1kB e cada $1.024kB$ corresponde a $1$MB. Portanto, uma imagem RAW em formato 4K contém aproximadamente:
+
+    \[S \simeq 23.73\ \text{MB}\]
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Video 4K}
+
+    Imagine a situação que os dados são transmitidos pixel a pixel no formato 4K. Uma hora deste filme custaria aproximagamente:
+    \pause
+    $$S = (1h)\times\left(\frac{23.73\ MB}{frame}\right) \times
+        \pause\left(\frac{120\ frame}{s}\right)\times
+        \pause\left(\frac{60 min}{1h}\right)\times
+        \pause\left(\frac{60s}{1min}\right) $$
+
+    \pause
+    $$S = 23.73\times 120\times 60\times 60\times\frac{MB\times h\times frame\times min\times s}{frame\times s\times h\times min}$$
+
+    \pause
+    $$S = 1.025.136.000\ \text{MB} \simeq 1.001.110\ \text{GB}\simeq 977\ \text{TB}$$
+
+    \pause
+    Obviamente os filmes não ocupam este espaço no disco. Então como é possível armazenar um filme em um Blue-Ray\footnote{Mídia digital capaz de armazenar até 25GB de dados}, ou mesmo transferir o filme em 4K no \emph{streaming}?\vfill
+
+    \pause
+    \begin{flushbottom}
+        \begin{minipage}{\textwidth}
+            \ {\raggedleft
+            \begin{turn}{180}
+                \tiny Resposta: Compactação.
+            \end{turn}
+            \par}
+        \end{minipage}
+    \end{flushbottom}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Codificação - Imagem RAW}
+    Algumas considerações:\vfill
+    \begin{itemize}
+        \setlength\itemsep{2em}
+        \item Como é um byte para cada cor, o computador pode gerar até:
+              $$(2^8)^3 = 2^{24} = 16.777.216\ \text{cores}$$
+        \item O ser humano consegue enxergar \emph{apenas} 1 milhão de cores.
+        \item Em uma imagem, não são utilizadas todas estas cores. Exemplos:
+              \begin{itemize}
+                  \item Uma imagem $800\times 600$ precisa ter no máximo 480.000 cores;
+                  \item A resolução HD precisa de no máximo $1280\times 720 = 921.600$ cores.
+                  \item A própria resolução 4K precisa apenas de $8.294.400$ cores.
+              \end{itemize}
+        \item Existem muitos pixels repetidos (cores repetidas).
+    \end{itemize}
+\end{frame}
+
+\newcommand{\asc}[1]{\number`#1}
+% Novo comando para obter o valor ASCII de uma palavra
+\newcommand{\asciiValueWord}[1]{%
+    \begingroup
+    \def\result{}%
+    \expandafter\asciiValueWordAux#1\relax
+    \result
+    \endgroup
+}
+\def\asciiValueWordAux#1{%
+    \ifx#1\relax
+    \else
+        \ifx\result\empty
+            \edef\result{\number`#1}%
+        \else
+            \edef\result{\result - \number`#1}%
+        \fi
+        \expandafter\asciiValueWordAux
+    \fi
+}
+
+
+\begin{frame}[t]
+    \frametitle{Codificação de texto}
+    Um texto é composto por uma sequência de caracteres (imprimíveis e não-imprimíveis) sendo, cada caractere representado por uma sequência de bits. Exemplo:
+
+    $$K - E - N - N - E - D - Y$$
+
+    Utilizando a codificação ASCII pode ser:
+
+    $$\asciiValueWord{Kennedy}$$
+
+    Sendo que cada símbolo deste é representado por uma sequência binária com 8 bits.
+
+    Cada caractere possui exatamente 1byte de representação. Desta forma, o meu nome ocupa:
+
+    $$56\ \text{bits}$$
+
+\end{frame}
+
+\newcommand{\separarPorTravessao}[1]{%
+    \@tfor\next:=#1\do{%
+        \next--\space
+    }%
+}
+\makeatother
+
+\ExplSyntaxOn
+\NewDocumentCommand{\separarPorHifen}{m}
+{
+    \tl_map_inline:nn { #1 } { ##1\ \ }
+}
+\ExplSyntaxOff
+
+\begin{frame}[t]
+    \frametitle{Codificação de texto}
+    Vamos considerar um texto maior: \textbf{Um prato de trigo para tres tigres tristes}:
+
+    $$\separarPorHifen{Um\_prato}$$
+    $$\asciiValueWord{Um\_prato}$$
+
+    $$\separarPorHifen{de\_trigo}$$
+    $$\asciiValueWord{de\_trigo}$$
+
+    $$\separarPorHifen{para\_tres}$$
+    $$\asciiValueWord{para\_tres}$$
+
+    $$\separarPorHifen{tigres\_tristes}$$
+    $$\asciiValueWord{tigres\_tristes}$$
+\end{frame}
+
+
+\ExplSyntaxOn
+\NewDocumentCommand{\contararCaracteres}{m}
+{
+    \str_count:n { #1 }
+}
+\ExplSyntaxOff
+
+\ExplSyntaxOn
+\NewDocumentCommand{\contararAlgoritmosDistintos}{m}
+{
+    \seq_new:N \l_char_seq
+    \tl_map_inline:nn { #1 }
+    {
+        \seq_put_right:Nn \l_char_seq { ##1 }
+    }
+    \seq_remove_duplicates:N \l_char_seq
+    \int_compare:nT {\seq_count:N \l_char_seq > 0}
+    {
+        \seq_count:N \l_char_seq
+    }
+}
+\ExplSyntaxOff
+
+
+\begin{frame}[t]
+    \frametitle{Codificação de texto}
+    Vamos considerar um texto maior: \textbf{Um prato de trigo para tres tigres tristes}:
+    Este texto contem:
+    \newcount\resultado
+    \resultado=\numexpr 42*8 \relax
+    \begin{itemize}
+        \item \contararCaracteres{Um-prato-de-trigo-para-tres-tigres-tristes} caracteres.
+        \item \contararAlgoritmosDistintos{Um-prato-de-trigo-para-tres-tigres-tristes} caracteres distintos.
+        \item O texto ocupa \the\resultado\ bits.
+    \end{itemize}
+
+    \pause É possível ocupar menos espaço?
+
+    \pause Vamos analisar a frequência dos caracteres:
+
+
+
+\end{frame}
+
+\def\texto{Um-prato-de-trigo-para-tres-tigres-tristes}
+\newcommand{\contar}[1]{%
+    \StrCount{\texto}{#1}%
+}
+
+\begin{frame}[t]
+    \frametitle{Análise de Frequência}
+    Frequência dos caracteres:
+
+    \begin{table}
+        \resizebox{0.8\textwidth}{!}{%
+            \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
+                U          & m          & -          & p          & r          & a          & t          & o          & d          & e          & i          & g          & s          \\
+                \hline
+                \contar{U} & \contar{m} & \contar{-} & \contar{p} & \contar{r} & \contar{a} & \contar{t} & \contar{o} & \contar{d} & \contar{e} & \contar{i} & \contar{g} & \contar{s} \\
+            \end{tabular}%
+        }
+    \end{table}
+
+    Ordenando as frequências:
+
+    \begin{table}
+        \resizebox{0.8\textwidth}{!}{%
+            \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
+                U          & m          & d          & p          & o          & g          & a          & i          & e          & s          & r          & t          & -          \\
+                \hline
+                \contar{U} & \contar{m} & \contar{d} & \contar{p} & \contar{o} & \contar{g} & \contar{a} & \contar{i} & \contar{e} & \contar{s} & \contar{r} & \contar{t} & \contar{-} \\
+            \end{tabular}%
+        }
+    \end{table}
+
+    Agrupando as menores frequências:
+
+    \begin{table}
+        \resizebox{0.8\textwidth}{!}{%
+            \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c}
+                U          & $\{d,m\}$ & p          & o          & g          & a          & i          & e          & s          & r          & t          & -          \\
+                \hline
+                \contar{U} & 2         & \contar{p} & \contar{o} & \contar{g} & \contar{a} & \contar{i} & \contar{e} & \contar{s} & \contar{r} & \contar{t} & \contar{-} \\
+            \end{tabular}%
+        }
+    \end{table}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Análise de Frequência}
+    O algoritmo continua (agrupando os menores) até não for mais possível continuar:
+    \vfill
+    Agrupando(U e $\{d,m\}$):
+
+    \begin{table}
+        \resizebox{0.8\textwidth}{!}{%
+            \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c}
+                $\{U, d,m\}$ & p          & o          & g          & a          & i          & e          & s          & r          & t          & -          \\
+                \hline
+                3            & \contar{p} & \contar{o} & \contar{g} & \contar{a} & \contar{i} & \contar{e} & \contar{s} & \contar{r} & \contar{t} & \contar{-} \\
+            \end{tabular}%
+        }
+    \end{table}
+
+    Ordenando:
+
+    \begin{table}
+        \resizebox{0.8\textwidth}{!}{%
+            \begin{tabular}{c|c|c|c|c|c|c|c|c|c|c}
+                g          & p          & o          & $\{U, d,m\}$ & a          & i          & e          & s          & r          & t          & -          \\
+                \hline
+                \contar{g} & \contar{p} & \contar{o} & 3            & \contar{a} & \contar{i} & \contar{e} & \contar{s} & \contar{r} & \contar{t} & \contar{-} \\
+            \end{tabular}%
+        }
+    \end{table}
+
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Análise de Frequência}
+    \begin{table}
+        \resizebox{0.8\textwidth}{!}{%
+            \begin{tabular}{c|c|c|c|c|c|c|c|c|c}
+                g          & $\{p,o\}$ & $\{U, d,m\}$ & a          & i          & e          & s          & r          & t          & -          \\
+                \hline
+                \contar{g} & 4         & 3            & \contar{a} & \contar{i} & \contar{e} & \contar{s} & \contar{r} & \contar{t} & \contar{-} \\
+            \end{tabular}%
+        }
+    \end{table}
+
+    \begin{table}
+        \resizebox{0.8\textwidth}{!}{%
+            \begin{tabular}{c|c|c|c|c|c|c|c|c}
+                $\{g,a\}$ & $\{p,o\}$ & $\{U, d,m\}$ & i          & e          & s          & r          & t          & -          \\
+                \hline
+                5         & 4         & 3            & \contar{i} & \contar{e} & \contar{s} & \contar{r} & \contar{t} & \contar{-} \\
+            \end{tabular}%
+        }
+    \end{table}
+
+    \begin{table}
+        \resizebox{0.8\textwidth}{!}{%
+            \begin{tabular}{c|c|c|c|c|c|c|c}
+                $\{g,a\}$ & $\{p,o\}$ & $\{U,d,m,i\}$ & e          & s          & r          & t          & -          \\
+                \hline
+                5         & 4         & 6             & \contar{e} & \contar{s} & \contar{r} & \contar{t} & \contar{-} \\
+            \end{tabular}%
+        }
+    \end{table}
+
+    \begin{table}
+        \resizebox{0.8\textwidth}{!}{%
+            \begin{tabular}{c|c|c|c|c|c|c}
+                $\{g,a\}$ & $\{p,o\}$ & $\{U,d,m,i\}$ & $\{e,s\}$ & r          & t          & -          \\
+                \hline
+                5         & 4         & 6             & 8         & \contar{r} & \contar{t} & \contar{-} \\
+            \end{tabular}%
+        }
+    \end{table}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Análise de Frequência}
+    \begin{table}
+        \resizebox{0.8\textwidth}{!}{%
+            \begin{tabular}{c|c|c|c|c|c}
+                $\{g,a,p,o\}$ & $\{U,d,m,i\}$ & $\{e,s\}$ & r          & t          & -          \\
+                \hline
+                9             & 6             & 8         & \contar{r} & \contar{t} & \contar{-} \\
+            \end{tabular}%
+        }
+    \end{table}
+
+    \begin{table}
+        \resizebox{0.8\textwidth}{!}{%
+            \begin{tabular}{c|c|c|c|c}
+                $\{g,a,p,o\}$ & $\{U,d,m,i\}$ & $\{e,s\}$ & $\{r,t\}$ & -          \\
+                \hline
+                9             & 6             & 8         & 12        & \contar{-} \\
+            \end{tabular}%
+        }
+    \end{table}
+
+    \begin{table}
+        \resizebox{0.8\textwidth}{!}{%
+            \begin{tabular}{c|c|c|c}
+                $\{g,a,p,o\}$ & $\{U,d,m,i,-\}$ & $\{e,s\}$ & $\{r,t\}$ \\
+                \hline
+                9             & 13              & 8         & 12        \\
+            \end{tabular}%
+        }
+    \end{table}
+
+    \begin{table}
+        \resizebox{0.8\textwidth}{!}{%
+            \begin{tabular}{c|c|c}
+                $\{g,a,p,o,e,s\}$ & $\{U,d,m,i,-\}$ & $\{r,t\}$ \\
+                \hline
+                17                & 13              & 12        \\
+            \end{tabular}%
+        }
+    \end{table}
+
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Análise de Frequência}
+    \begin{table}
+        \resizebox{0.7\textwidth}{!}{%
+            \begin{tabular}{c|c}
+                $\{g,a,p,o,e,s\}$ & $\{U,d,m,i,-,r,t\}$ \\
+                \hline
+                17                & 25                  \\
+            \end{tabular}%
+        }
+    \end{table}
+    \begin{table}
+        \resizebox{0.7\textwidth}{!}{%
+            \begin{tabular}{c}
+                $\{g,a,p,o,e,s,U,d,m,i,-,r,t\}$ \\
+                \hline
+                42                              \\
+            \end{tabular}%
+        }
+    \end{table}
+
+\end{frame}
+
+\newcommand{\duascolunas}[2]{
+    \begin{columns}
+        \begin{column}{0.72\textwidth}
+            #1
+        \end{column}
+        \begin{column}{0.28\textwidth}
+            #2
+        \end{column}
+    \end{columns}
+}
+
+\begin{frame}
+    % \frametitle{Construção da árvore}
+    \begin{columns}[t]
+        \begin{column}[t]{0.28\textwidth}
+            \dirtree{%
+                .1 gapoesUdmi-r.
+                .2 gapoes(0).
+                .3 gapo(0).
+                .4 ga(0).
+                .5 g(0).
+                .5 a(1).
+                .4 po(1).
+                .5 p(0).
+                .5 o(1).
+                .3 es(1).
+                .4 e(0).
+                .4 s(1).
+            }
+        \end{column}
+        \begin{column}[t]{0.40\textwidth}
+            \dirtree{%
+                .1 gapoesUdmi-r.
+                .2 Udmi-rt(1).
+                .3 Udmi-(0).
+                .4 Udmi(0).
+                .5 Udm(0).
+                .6 U(0).
+                .6 dm(1).
+                .7 d(0).
+                .7 m(1).
+                .5 i(1).
+                .4 -(0).
+                .3 rt(1).
+                .4 r(0).
+                .4 t(1).
+            }
+        \end{column}\hfill
+        \begin{column}[t]{0.30\textwidth}
+            \begin{itemize}\setlength\itemsep{0.1em}
+                \item [U]$\rightarrow 10000$
+                \item [d]$\rightarrow 1000010$
+                \item [m]$\rightarrow 1000011$
+                \item [p]$\rightarrow 0010$
+                \item [o]$\rightarrow 0011$
+                \item [g]$\rightarrow 0000$
+                \item [a]$\rightarrow 0001$
+                \item [i]$\rightarrow 1001$
+                \item [d]$\rightarrow 100010$
+                \item [s]$\rightarrow 011$
+                \item [r]$\rightarrow 100$
+                \item [t]$\rightarrow 111$
+                \item [-]$\rightarrow 100$
+            \end{itemize}
+        \end{column}
+
+    \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Análise do armazenamento}
+    \begin{center}
+        \begin{tabular}{c|c|c|c}
+            char & Representação & COL & COL \\
+            \hline
+            U    &               &     &     \\
+            d    &               &     &     \\
+            m    &               &     &     \\
+            p    &               &     &     \\
+            o    &               &     &     \\
+            g    &               &     &     \\
+            a    &               &     &     \\
+            i    &               &     &     \\
+            d    &               &     &     \\
+            s    &               &     &     \\
+            r    &               &     &     \\
+            t    &               &     &     \\
+            -    &               &     &     \\
+        \end{tabular}
+    \end{center}
+
+\end{frame}
+\end{document}
+
