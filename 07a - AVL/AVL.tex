@@ -1,0 +1,110 @@
+\documentclass[12pt]{beamer}
+% \setbeamercovered{transparent}
+\usepackage{tikzpeople}
+\usepackage[portuguese]{babel}
+
+\beamerdefaultoverlayspecification{<+(1)-| alert@+(1)>}
+\usetheme{Boadilla}
+\usecolortheme{seahorse}
+\usefonttheme{structurebold}
+\usepackage{xcolor}
+
+\title{Árvore Balanceadas}
+\subtitle{AVL}
+\author{Prof. Kennedy Reurison Lopes}
+\date{\today}
+
+\usepackage{forest}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\newcommand{\floresta}[1]{
+    \begin{center}
+        \begin{forest}
+            for tree={circle, minimum size=0.5em,edge={->},l sep+=0em,s sep+=2em,font=\small}
+            #1
+        \end{forest}
+    \end{center}
+}
+\begin{frame}[t]
+    \frametitle{Introdução}
+
+    Vimos que a ordem de inserção interfere o formato de uma árvore binária:
+    \vfill
+    \begin{columns}[T]
+        \begin{column}{0.45\textwidth}
+            Inserir: 1-2-3-4\vfill
+            % \floresta{[1[2[3[4]]]]}
+            \floresta{[1[,edge=white]
+                            [2
+                                    [,edge=white]
+                                    [3
+                                            [,edge=white]
+                                            [4]]]]}
+        \end{column}\hfill
+        \begin{column}{0.45\textwidth}
+            Inserir: 2-1-4-3\vfill
+            \floresta{[2[1][4[3][,edge=white]]]}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\hyphenation{es-tri-ta-men-te}
+\begin{frame}[t]
+    \frametitle{Introdução}
+
+    Em casos extremos a árvore tem comportamento de uma estritamente igual a uma sequencial ou binária.
+
+    Portanto:
+    \begin{itemize}
+        \item O balanceamento é importante;
+        \item Caso possível, podemos escolher a ordem de inserção;
+        \item Caso não seja possível, precisamos re-estruturar a árvore a medida que os elementos forem inseridos.
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[t]
+    \frametitle{Árvores Balanceadas}
+    \begin{center}
+        \begin{tikzpicture}[meuestilo/.style={ellipse callout, very thin, draw, text width=2.5cm, font=\small},
+                meuestiloA/.style={meuestilo,draw=white, fill=red!10, xshift=4cm,yshift=4cm,callout absolute pointer={(a.mouth)}},
+                meuestiloB/.style={meuestilo,draw=white, fill=green!10, xshift=5cm,yshift=4cm,, callout absolute pointer={(b.mouth)}}]
+            \draw[white] (0,0) rectangle (10,6);
+            \node<1->[name=a,anchor=south west,saturated, shape=businessman,monitor,shirt=purple, minimum size=2cm] at (0,0){};
+            \node<2>[meuestiloA,callout absolute pointer={(a.mouth)}] {O que é isso?};
+            \node<2->[name=b,anchor=south east,shape=graduate,minimum size=2cm,mirrored] at (10,0){};
+            \node<3>[meuestiloB] {Calma que eu explico.};
+            \node<4>[meuestiloB] {Basta que as árvores sejam \textbf{completas}!};
+            \node<5>[meuestiloA] {Então só posso usar árvores com $2^n - 1$ nós?};
+            \node<6>[meuestiloB] {Sendo \textbf{cheia} já é \emph{suficiente}};
+            \node<7>[meuestiloA] {Ainda estou achando muito difícil};
+            \node<8>[meuestiloA] {A ordem de inserção ainda determina se a árvore será \textbf{cheia} ou \textbf{completa}};
+            \node<9>[meuestiloB,text width=3cm] {Então vamos definir o conceito de \textbf{Fator de Balanceameto}};
+            \node<10>[meuestiloB,text width=3cm] {A partir deste, apresento como balancear a árvore};
+            \node<11>[meuestiloB,text width=3.5cm] {Não serão mais exigências: Árvores Completas};
+            \node<11>[meuestiloB,text width=3.5cm] {Cheias};
+            \node<11>[meuestiloB,text width=3.5cm] {Ou Ordem de Inserção};
+        \end{tikzpicture}
+    \end{center}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Fator de balanceamento}
+    
+    
+
+\end{frame}
+\begin{frame}
+    \frametitle{Teste}
+    \begin{forest}
+        for tree={circle, draw, minimum size=0.5em,edge={->},l sep+=0.1em,s sep+=0.3em}
+        [a[b[d[h][i]][e[j][k]]][c[f[l][m]][g[n][o]]]]
+    \end{forest}
+\end{frame}
+\end{document}
