@@ -4,6 +4,8 @@
 \usetheme{Boadilla}
 \usecolortheme{seahorse}
 \usefonttheme{structurebold}
+\usepackage{booktabs}
+\usepackage{array}
 \usepackage{rotating}
 \usepackage{xcolor}
 \usepackage{xstring}
@@ -535,9 +537,9 @@
     \frametitle{Análise do armazenamento}
     \begin{center}
         \begin{tabular}{clccc}
-            char        & bin     & bits & freq & total \\
+            char               & bin     & bits & freq & total \\
             \hline
-            \pause U           &  10000   & 5    & 1    & 5     \\
+            \pause U           & 10000   & 5    & 1    & 5     \\
             \pause d           & 1000010 & 7    & 1    & 7     \\
             \pause m           & 1000011 & 7    & 1    & 7     \\
             \pause p           & 0010    & 4    & 2    & 8     \\
@@ -571,7 +573,7 @@
     \pause Tabela de Símbolos:
 
     $$t = 13\times 8 = 104\ \text{bits}$$
-    
+
     \pause Compactado:
 
     $$c = S-(s+t) = 336-(160+104) = 72\ \text{bits}$$
@@ -592,15 +594,15 @@
     Antes da compressão(em binário):\vfill
 
     \nbinary{8}{85}\nbinary{8}{109}\nbinary{8}{95}\nbinary{8}{112}\nbinary{8}{114}\nbinary{8}{97}\nbinary{8}{116}\nbinary{8}{111}
-    
+
     \nbinary{8}{95}\nbinary{8}{100}\nbinary{8}{101}\nbinary{8}{95}\nbinary{8}{116}\nbinary{8}{114}\nbinary{8}{105}\nbinary{8}{103}
-    
+
     \nbinary{8}{111}\nbinary{8}{95}\nbinary{8}{112}\nbinary{8}{97}\nbinary{8}{114}\nbinary{8}{97}\nbinary{8}{95}\nbinary{8}{116}
-    
+
     \nbinary{8}{114}\nbinary{8}{101}\nbinary{8}{115}\nbinary{8}{95}\nbinary{8}{116}\nbinary{8}{105}\nbinary{8}{103}\nbinary{8}{114}
 
     \nbinary{8}{101}\nbinary{8}{115}\nbinary{8}{95}\nbinary{8}{116}\nbinary{8}{114}\nbinary{8}{105}\nbinary{8}{115}\nbinary{8}{116}
-    
+
     \nbinary{8}{101}\nbinary{8}{115}\vfill
 
     Após a compressão:\vfill
@@ -614,15 +616,57 @@
 
 
 \begin{frame}[t]
-    \frametitle{Exercício}
+    \frametitle{Exercícios}
     \begin{enumerate}[label=\textcircled{\scriptsize\arabic*}]
         \item Calcule a taxa de compressão de: "ABABABACBABABABA".
         \item Utilize o resultado da compressão dos dados para representar: "ACCCCCCCCC".
         \item Dado um texto qualquer, a compressão é única? Explique o porquê.
-        \item 
-        \item 
-    \end{enumerate}
+        \item Construa a árvore de Huffman a partir da frequência relativa das letras da lingua portuguesa.
 
+              \begin{table}[htbp]
+                  \centering
+
+                  \begin{tabular}{lc|lc|lc|lc|lc}
+                      \toprule
+                      \textbf{\$} & \textbf{f (\%)} & \textbf{\$} & \textbf{f (\%)} & \textbf{\$} & \textbf{f (\%)} & \textbf{\$} & \textbf{f (\%)} & \textbf{\$} & \textbf{f (\%)} \\
+                      \midrule
+                      A           & 14.31           & N           & 5.86            & L           & 2.78            & F           & 0.97            & W           & 0.01            \\
+                      E           & 12.46           & M           & 4.99            & P           & 2.52            & H           & 0.74            & Y           & 0.01            \\
+                      O           & 10.73           & U           & 4.86            & V           & 1.52            & Z           & 0.55            &             &                 \\
+                      I           & 8.99            & T           & 4.36            & G           & 1.25            & J           & 0.53            &             &                 \\
+                      S           & 7.07            & D           & 3.53            & Q           & 1.20            & X           & 0.48            &             &                 \\
+                      R           & 6.54            & C           & 3.13            & B           & 1.04            & K           & 0.02            &             &                 \\
+                      \bottomrule
+                  \end{tabular}
+              \end{table}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[t]
+    \frametitle{Exercícios}
+    \begin{enumerate}[label=\textcircled{\scriptsize\arabic*}]
+        \setcounter{enumi}{4}
+        \item De acordo com a arvore construída na questão anterior, determine a codificação de: `ABABABACBABABABA'. Apresente a tabela de símbolos.
+        \item Uma palavra foi codificada usando o código de Huffman, tendo-se obtido a sequência binária:\ $1 0 1 1 1 0 1 1 0 1 0 1 1 1 0 0 1 1 1 0 1 0 0$
+
+              \begin{table}[htbp]
+                  \centering
+                  \begin{tabular}{c|c}
+                      \textbf{Caractere} & \textbf{Probabilidade} \\
+                      \hline
+                      $P(A)$             & 0,26                   \\
+                      $P(B)$             & 0,09                   \\
+                      $P(C)$             & 0,08                   \\
+                      $P(D)$             & 0,01                   \\
+                      $P(E)$             & 0,07                   \\
+                      $P(I)$             & 0,22                   \\
+                      $P(L)$             & 0,01                   \\
+                      $P(R)$             & 0,23                   \\
+                      $P(T)$             & 0,03                   \\
+                  \end{tabular}
+              \end{table}
+              Sabe-se que o $I$ é codificado como sendo 00. Qual é a palavra?
+    \end{enumerate}
 \end{frame}
 \end{document}
 
