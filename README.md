@@ -1,10 +1,12 @@
 # Algoritmo e Estrutura de Dados II
 
-## Aula Teórica de Recursão
+## Primeira Unidade
+
+1) Aula Teórica de Recursão
 + Adição da função potência
 + Adição da função Torre de Hanoi (Animação)
 
-## Aula de Complexidade
+2) Aula de Complexidade
 + Arquivo com todas a apresentação
 + Separação em três arquivos:
   + Parte 1
@@ -12,20 +14,23 @@
   + Parte 3
 + Inclusão de tabelas com complexidades
 
-## Exercícios para a primeira avaliação
+1)  *Primeira unidade*
 
-## Próximos temas:
 
-### Primeira unidade
-  + Árvores Binárias
+2)   Exercícios para a primeira avaliação
 
-### Segunda Unidade
-  + Heap
-  + Árvores Balanceadas
-    + AVL
-    + B, B+
-    + RN
-  + Tabela HASH
+## Segunda Unidade
+
+5) Aula de Codificação (Huffman)
+
+6) Heap
+   
+7) *Árvores Balanceadas*
+    + *AVL*
+    + *B, B+*
+    + *RN*
+
+8) *Tabela HASH*
   
 ### Terceira Unidade
   + Grafos
