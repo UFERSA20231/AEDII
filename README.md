@@ -14,23 +14,22 @@
   + Parte 3
 + Inclusão de tabelas com complexidades
 
-1)  *Primeira unidade*
-
-
-2)   Exercícios para a primeira avaliação
+3) Árvores (Incompleto)
+   
+4) Exercícios para a primeira avaliação
 
 ## Segunda Unidade
 
-5) Aula de Codificação (Huffman)
-
-6) Heap
+5) Heap
+   
+6) Compressão (Huffman)
    
 7) *Árvores Balanceadas*
     + *AVL*
-    + *B, B+*
-    + *RN*
 
 8) *Tabela HASH*
+  
+9)  Exercícios para a segunda avaliação
   
 ### Terceira Unidade
   + Grafos
