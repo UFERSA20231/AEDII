@@ -18,6 +18,13 @@
    
 4) Exercícios para a primeira avaliação
 
+Extras:
+
+I) Exercício GDB
+
+II) Laboratório GDB
+
+
 ## Segunda Unidade
 
 5) Heap
@@ -28,6 +35,8 @@
     + *AVL*
 
 8) *Tabela HASH*
+   1) *Função HASH*
+   2) Tratamento de colisão
   
 9)  Exercícios para a segunda avaliação
   
@@ -42,3 +51,5 @@
     + Busca (largura e profundidade)
     + Árvore Geradora mínima
     + Caminhos mínimos
+
+
