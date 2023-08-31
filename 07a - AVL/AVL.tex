@@ -94,17 +94,52 @@
 
 \end{frame}
 
-\begin{frame}
+\begin{frame}[t]
     \frametitle{Fator de balanceamento}
-    
-    
+
+    \begin{block}{Fator de Balanceamento (FB)}
+        Considere $h_{esq}(n)$ e $h_{dir}(n)$ de um nó $n$, então o $FB(n)$ é:
+        $$FB(n) = h_{esq} - h_{dir}$$
+    \end{block}
+
+    \pause Corolário 1:
+
+    Uma árvore Cheia possui o FB igual a zero para todos os nós.
+
+    \vfill
+    \pause Corolário 2:
+    Toda árvore Cheia é balanceada, mas nem toda árvore balanceada é cheia.
+
+
 
 \end{frame}
 \begin{frame}
     \frametitle{Teste}
-    \begin{forest}
-        for tree={circle, draw, minimum size=0.5em,edge={->},l sep+=0.1em,s sep+=0.3em}
-        [a[b[d[h][i]][e[j][k]]][c[f[l][m]][g[n][o]]]]
-    \end{forest}
+    \begin{center}
+        \begin{forest}
+            for tree={circle,draw=white,fill=blue!10, minimum size=0.5em,edge={->},l sep+=0.1em,s sep+=0.3em},
+            [a
+                        [b
+                                [d
+                                        [h]
+                                        [i]
+                                ]
+                                [e
+                                        [j]
+                                        [k]
+                                ]
+                        ]
+                        [c
+                                [f[l][,edge=blue!0,fill=white]]
+                                [g
+                                        [n]
+                                        [o]
+                                ]
+                        ]
+                ]
+        \end{forest}
+    \end{center}
 \end{frame}
+
+
 \end{document}
