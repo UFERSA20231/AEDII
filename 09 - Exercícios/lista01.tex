@@ -1,0 +1,225 @@
+\documentclass[12pt]{article}
+\usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=2cm]{geometry} % Reduzindo as margens
+
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{enumitem}
+
+\usepackage[brazilian]{babel}
+\usepackage{datetime2}
+
+\usepackage{listings} % Pacote para exibir código fonte
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fontawesome}
+\lstset{
+    basicstyle=\small\ttfaky, % Estilo básico do código fonte
+    breaklines=true, % Quebra de linha automática
+    frame=single, % Borda ao redor do código
+    numbers=left % Números de linha à esquerda
+}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\pgfmathsetseed{\number\pdfrandomseed}
+
+\newcommand{\randominteger}[2]{\pgfmathrandominteger{\random}{#1}{#2}\random}
+
+\newcommand{\sequencia}[2]{
+\foreach \i in {1,...,#1} {
+        \randominteger{10}{#2}
+    }
+}
+% Cabeçalho
+\newcommand{\professor}{Prof. Kennedy Lopes}
+\newcommand{\turma}{Algoritmos e Estrutura de Dados II}
+\newcommand{\ano}{2023}
+\newcommand{\periodo}{1º Semestre}
+
+% Configuração do cabeçalho
+\fancyhead{}
+\fancyhead[L]{\professor}
+\fancyhead[C]{\turma}
+\fancyhead[R]{\ano, \periodo}
+
+\setlength{\headheight}{14.49998pt}
+\addtolength{\topmargin}{-2.49998pt}
+
+\begin{document}
+
+\begin{center}
+    \LARGE \textbf{Lista de exercícios}
+\end{center}
+\section{Compressão de Dados}
+\begin{enumerate}[label=\textbf{Q\arabic*}]
+    \item Calcule a taxa de compressão de: "ABABABACBABABABA".
+    \item Utilize o resultado da compressão dos dados para representar: "ACCCCCCCCC".
+    \item Lápis Dado um texto qualquer, a compressão é única? Explique o porquê.
+    \item \faLaptop A Lei de Benford é reconhecida como uma ferramenta que permite analisar dados para determinar sua autenticidade ou possível fabricação. Essa abordagem é aplicada para avaliar a validade dos dados em contextos como pesquisas, onde a lei é utilizada para verificar se os números mais significativos coletados refletem a realidade. A lei diz que um conjunto de números obedece a lei se os dígitos \textbf{mais significativos} surgem com a seguinte probabilidade:
+          \begin{center}
+
+              \begin{tabular}{c|ccccccccc}
+                  \hline
+                  Dígito     & 1    & 2    & 3    & 4   & 5   & 6   & 7   & 8   & 9   \\
+                  Prob($\%$) & 30.1 & 17.6 & 12.5 & 9.7 & 7.9 & 6.7 & 5.8 & 5.1 & 4.6 \\
+                  \hline
+              \end{tabular}
+          \end{center}
+          Baseado na Lei de Benford, determine computacionalmente se a os dados abaixo sobre a quantidade de habitantes das 50 maiores cidades do Brasil.
+
+          \begin{minipage}{0.50\textwidth}
+
+              \begin{tabular}{@{}clcr@{}}
+                  \toprule
+                  Posição & Cidade              & Pop     \\
+                  \midrule
+                  1       & São Paulo, SP       & 12.33 M \\
+                  2       & Rio de Janeiro, RJ  & 6.75 M  \\
+                  3       & Brasília, DF        & 3.11 M  \\
+                  4       & Salvador, BA        & 2.88 M  \\
+                  5       & Fortaleza, CE       & 2.69 M  \\
+                  6       & Belo Horizonte, MG  & 2.52 M  \\
+                  7       & Manaus, AM          & 2.22 M  \\
+                  8       & Curitiba, PR        & 1.95 M  \\
+                  9       & Recife, PE          & 1.65 M  \\
+                  10      & Porto Alegre, RS    & 1.48 M  \\
+                  11      & Belém, PA           & 1.49 M  \\
+                  12      & Goiânia, GO         & 1.53 M  \\
+                  13      & Guarulhos, SP       & 1.39 M  \\
+                  14      & Campinas, SP        & 1.2 M   \\
+                  15      & São Luís, MA        & 1.1 M   \\
+                  16      & São Gonçalo, RJ     & 1.05 M  \\
+                  17      & Maceió, AL          & 1.02 M  \\
+                  18      & Duque de Caxias, RJ & 932 k   \\
+                  19      & Natal, RN           & 890 k   \\
+                  20      & Teresina, PI        & 868 k   \\
+                  21      & S. B. do Campo, SP  & 837 k   \\
+                  22      & Nova Iguaçu, RJ     & 818 k   \\
+                  23      & Campo Grande, MS    & 906 k   \\
+                  24      & Osasco, SP          & 696 k   \\
+                  25      & Santo André, SP     & 721 k   \\
+                  \bottomrule
+              \end{tabular}
+          \end{minipage}
+          \hfill
+          \begin{minipage}{0.50\textwidth}
+              \begin{tabular}{@{}clcr@{}}
+                  \toprule
+                  Posição & Cidade                 & Pop   \\
+                  \midrule
+                  26      & João Pessoa, PB        & 809 k \\
+                  27      & Jaboatão, PE           & 698 k \\
+                  28      & S. J. dos Campos, SP   & 729 k \\
+                  29      & Ribeirão Preto, SP     & 711 k \\
+                  30      & Uberlândia, MG         & 699 k \\
+                  31      & Contagem, MG           & 668 k \\
+                  32      & Sorocaba, SP           & 666 k \\
+                  33      & Aracaju, SE            & 664 k \\
+                  34      & Feira de Santana, BA   & 627 k \\
+                  35      & Cuiabá, MT             & 618 k \\
+                  36      & Joinville, SC          & 597 k \\
+                  37      & Juiz de Fora, MG       & 563 k \\
+                  38      & Londrina, PR           & 575 k \\
+                  39      & Niterói, RJ            & 515 k \\
+                  40      & Ap. de GO, GO          & 590 k \\
+                  41      & Ananindeua, PA         & 525 k \\
+                  42      & Belford Roxo, RJ       & 502 k \\
+                  43      & São João de Meriti, RJ & 473 k \\
+                  44      & C. dos Goy., RJ        & 507 k \\
+                  45      & Caxias do Sul, RS      & 516 k \\
+                  46      & Santos, SP             & 434 k \\
+                  47      & Betim, MG              & 425 k \\
+                  48      & Olinda, PE             & 390 k \\
+                  49      & S. J. do R. Preto, SP  & 461 k \\
+                  50      & Diadema, SP            & 416 k \\
+                  \bottomrule
+              \end{tabular}
+          \end{minipage}
+\end{enumerate}
+\section{Árvores AVL}
+\begin{enumerate}[resume,label=\textbf{Q\arabic*}]
+    \item Considere uma árvore AVL com iniciada apenas com o valor de 50. Realize o processo de inserção dos elementos na ordem indicada nesta árvore AVL.\label{QAVL_1}
+
+          $$X = \{35,85,48,47,24,40,69,93,31,11,77,30,74,67,87,98,40,83,18,35\}$$
+
+          Após a inserção de cada número, realize o processo de balanceamento, indicando qual rotação foi necessária para balancear.
+
+    \item Julgue a seguinte afirmação: ``Toda árvore binária de busca cheia é necessariamente uma árvore AVL.'' Caso seja falso, mostre uma árvore biária de busca completa que não é AVL. Caso seja verdadeiro, explique em termos dos fatores de balanceamento.
+
+    \item Julgue a seguinte afirmação: ``Toda árvore AVL é necessariamente uma árvore binária de busca completa'' Caso seja falso, mostre uma árvore AVL que não é Binária de busca completa. Caso seja verdadeiro, explique em termos dos fatores de balanceamento.
+
+    \item Utilizando a árvore construída na questão~\ref{QAVL_1}, realize o processo de remoção dos nós um a um, na mesma ordem que foi inserido. Realize o processo de rotação a cada momento que for necessário.
+
+\end{enumerate}
+
+\section{Árvore 23}
+\begin{enumerate}[resume,label=\textbf{Q\arabic*}]
+    \item Considere uma árvore 23 com iniciada apenas com o valor de 50. Realize o processo de inserção dos elementos na ordem indicada nesta árvore AVL.\label{Q23_1}
+
+          $$X = \{12,86,68,99,82,59,65,70,16,58,40,67,22,48,59,11,52,91,65,73\}$$
+
+          Após a inserção de cada número, realize o processo de balanceamento, garantindo que o nós folhas estejam sempre no último nível da árvore.
+
+    \item Julgue a seguinte afirmação, provando se é verdadeiro ou falso: ``Uma árvore 23 com N chaves possui a altura maior com exatamente $\log_3(N)$ níveis''.
+
+    \item Calcule:
+          \begin{enumerate}
+              \item A maior e menor quantidade de chaves que uma Árvore 23 com 10 níveis possui?
+              \item A maior e menor quantidade de nós que uma Árvore 23 com 10 níveis possui?
+              \item A altura de uma Árvore 23 com $10^5$ chaves?
+          \end{enumerate}
+\end{enumerate}
+
+\section{HEAP}
+
+\begin{enumerate}[resume,label=\textbf{Q\arabic*}]
+    \item Considere uma HEAP como a mostrada logo abaixo para realizar as operações na ordem que são solicitadas:
+
+          $$HEAP = \{97, 88, 84, 72, 55, 44, 37, 30, 26, 12, 18, 20, 25, 14, 8, 10, 6, 15, 5, 9\}$$
+          \begin{enumerate}
+              \item Modifique a prioridade de 20 para 40;
+              \item Modifique a prioridade de 9 para 99;
+              \item Modifique a prioridade e 97 para 11;
+              \item Remova o elemento com maior prioridade;
+              \item Remova o elemento com maior prioridade;
+          \end{enumerate}
+
+          Após cada operação certifique-se que a estrutura continua sendo uma HEAP.
+
+    \item Julgue as afirmações seguintes:
+
+          \begin{enumerate}
+              \item Toda HEAP-MAX é uma lista em ordem decrescente.
+              \item Toda lista em ordem decrescente é uma HEAP-MAX.
+              \item O menor elemento é o último elemento da lista.
+              \item Um elemento de um nível menor tem prioridade menor do que todos os de níveis acima.
+              \item A HEAP-MIN pode ser construída a partir de uma HEAP-MAX invertendo o vetor de prioridades.
+          \end{enumerate}
+
+    \item Construa uma HEAP-MIN com os elementos inseridos na HEAP na ordem indicada:
+
+          $$X = \{92,24,67,30,61,58,36,33,14,81,55,16,26,51,39,15,82,49,90,84\}$$
+
+\end{enumerate}
+
+\section{Tabela HASH}
+
+\begin{enumerate}[resume,label=\textbf{Q\arabic*}]
+    \item Apresente o objetivo (pretensão) da tabela Hash e apresente o porquê as colisões dificultam essa estrutura alcançar este objetivo.
+    \item Considere uma tabela Hash com 16 elementos e tratamento de colisão no formato de endereçamento aberto no formato com sondagem linear. Apresente a configuração final da           tabela ao tentar inserir os elementos na ordem apresentada abaixo:
+
+          $$X = \{13, 12, 27, 77, 32, 16,49\}$$
+
+    \item Realize o mapeamento da chave 18 utilizando o método da multiplicação em uma tabela com apenas 8 posições. Em qual dessas 8 posições estará o elemento 18?
+
+    \item Calcule mapeamentos dos valores:
+          $$\{61,58,36,33,14,81,55,16,26,51,39\}$$
+          \begin{enumerate}
+              \item Em uma tabela com 4 posições utilizando método da divisão e tratamento de colisão por endereçamento encadeado exterior;
+              \item Em uma tabela com 20 posições, utilizando o método da dobra e tratamento de colisão por encadeamento exterior com 8 valores primários e o restante para extensão.
+              \item Em uma tabela com 16 posições pelo método da multiplicação sem tratamento de colisão.
+          \end{enumerate}
+\end{enumerate}
+
+\end{document}
