@@ -1,0 +1,117 @@
+\documentclass[11pt]{article}
+\usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=2cm]{geometry} % Reduzindo as margens
+
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{enumitem}
+
+\usepackage[brazilian]{babel}
+\usepackage{datetime2}
+
+\usepackage{listings} % Pacote para exibir código fonte
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{fontawesome}
+\lstset{
+    basicstyle=\small\ttfaky, % Estilo básico do código fonte
+    breaklines=true, % Quebra de linha automática
+    frame=single, % Borda ao redor do código
+    numbers=left % Números de linha à esquerda
+}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\pgfmathsetseed{\number\pdfrandomseed}
+
+\newcommand{\randominteger}[2]{\pgfmathrandominteger{\random}{#1}{#2}\random}
+
+\newcommand{\sequencia}[2]{
+\foreach \i in {1,...,#1} {
+        \randominteger{10}{#2}
+    }
+}
+% Cabeçalho
+\newcommand{\professor}{Prof. Kennedy Lopes}
+\newcommand{\turma}{Algoritmos e Estrutura de Dados II}
+\newcommand{\ano}{2023}
+\newcommand{\periodo}{1º Semestre}
+
+% Configuração do cabeçalho
+\fancyhead{}
+\fancyhead[L]{\professor}
+\fancyhead[C]{\turma}
+\fancyhead[R]{2a Avaliação}
+
+\setlength{\headheight}{14.49998pt}
+\addtolength{\topmargin}{-2.49998pt}
+
+% \pagestyle{empty}
+
+\begin{document}
+
+\large \textbf{Nome: \tiny ......................................................................................................................................................................................................}
+\begin{enumerate}[label=\textbf{Q\arabic*}]
+    \item Foram calculados a frequência com que determinadas palavras aparecem em um deteminado texto:
+          \begin{center}
+              \begin{tabular}{c|cccccccccc}
+                  \hline
+                  Letra      & A & B & C & D & E & I & L & M & N & O \\
+                  Frequência & 3 & 3 & 1 & 2 & 2 & 5 & 2 & 2 & 4 & 5 \\
+                  \hline
+              \end{tabular}
+          \end{center}
+          (a) Construa a árvore de Huffman sobre essa codificação e (b) gere o código para a palavra:
+
+          $$MELANCIA$$
+
+    \item Considere uma árvore AVL inicialmente vazia e pretende-se inserir os elementos na ordem indicada:\label{QAVL_1}
+
+          $$X = \{93, 31, 11, 40, 52, 95\}$$
+
+          Após a inserção e balanceamento de cada valor, item a item indique: (a) a árvore AVL final e (b) a quantidade que cada rotação ocorreu:
+
+          \begin{center}
+              \begin{tabular}{|c|c|c|c|c|}
+                  \hline
+                  Letra      & LL & RL & RR & LR \\
+                  \hline
+                  Frequência & \  & \  & \  & \  \\
+                  \hline
+              \end{tabular}
+          \end{center}
+
+    \item Realize o processo de inserção dos mesmos valores da questão anterior em uma árvore 23.
+
+    \item Considere uma HEAP como a mostrada logo abaixo e julgue as afirmações em verdadeiras ou falsas:
+
+          $$HEAP = \{97, 88, 84, 72, 55, 44, 37, 30, 26, 12, 18, 20, 25, 14, 8, 10, 6, 15, 5, 9\}$$
+          \begin{enumerate}
+              \item Esta é uma HEAP-MAX.
+              \item Para converter em uma HEAP-MIN basta inverter os valores do jeito que estão posicionados.
+              \item Se a prioridade do item 72 mudar para 85, o elemento 84 não mudará de posição.
+              \item 88 e 84 estão no mesmo nível, portanto os 4 próximos números tem que ser menores que 84.
+              \item A modificação de qualquer um dos elementos 20,25,14,8 para o valor de 86 reduz a prioridade do elemento 84.
+          \end{enumerate}
+
+    \item Calcule mapeamentos dos valores:
+          $$\{33,14,32,12\}$$
+          \begin{enumerate}
+              \item Em uma tabela com 4 posições, utilizando o método da dobra no formato binário;
+              \item Em uma tabela com 8 posições utilizando método da divisão;
+              \item Em uma tabela com 16 posições pelo método da multiplicação;
+          \end{enumerate}
+          Não realize o tratamento de colisões, mas indique na tabela abaixo quantas colisões ocorreram:
+          \begin{center}
+              \begin{tabular}{|c|c|c|c|}
+                  \hline
+                  Alternativa & a) & b) & c) \\
+                  \hline
+                  Colisões    & \  & \  & \  \\
+                  \hline
+              \end{tabular}
+          \end{center}
+\end{enumerate}
+
+\end{document}
