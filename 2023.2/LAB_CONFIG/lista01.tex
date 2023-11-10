@@ -1,0 +1,122 @@
+\documentclass[12pt]{article}
+\usepackage[left=1.5cm,right=1.5cm,top=3cm,bottom=2cm]{geometry} % Reduzindo as margens
+
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\usepackage[brazilian]{babel}
+\usepackage{datetime2}
+
+\usepackage{listings} 
+
+\lstdefinestyle{codigoC}{
+  language=C,
+  basicstyle=\ttfamily\small,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=5pt,
+  keywordstyle=\color{blue},
+  morekeywords={int, char, float, double, if, else, for, while, return},
+  stringstyle=\color{red!80!black!80},
+  showstringspaces=false,
+  breaklines=true,
+  frame=single
+}
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{green!60!black},
+                morecomment=[l][\color{black!50}]{\#}
+}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\pgfmathsetseed{\number\pdfrandomseed}
+
+\newcommand{\randominteger}[2]{\pgfmathrandominteger{\random}{#1}{#2}\random}
+
+\newcommand{\sequencia}[2]{
+\foreach \i in {1,...,#1} {
+        \randominteger{10}{#2}
+    }
+}
+% Cabeçalho
+\newcommand{\professor}{Huliane Medeiros\\Kennedy Lopes\\Marcos Mikael}
+\newcommand{\turma}{Laboratório de Algoritmos\\ e Estrutura de Dados II}
+\newcommand{\ano}{BTI/BICT\\}
+\newcommand{\periodo}{2023.2}
+
+% Configuração do cabeçalho
+\fancyhead{}
+\fancyhead[L]{\professor}
+\fancyhead[C]{\turma}
+\fancyhead[R]{\ano \periodo}
+
+\setlength{\headheight}{43.49998pt}
+\addtolength{\topmargin}{-2.49998pt}
+
+\begin{document}
+\begin{center}
+    \LARGE \textbf{Lista de exercícios (CONFIG)}
+\end{center}
+
+\subsection*{Preparação do ambiente}
+\begin{itemize}
+    \item Configure uma máquina virtual com o sistema linux:
+          \begin{itemize}
+              \item Opção 1: Utilize uma máquina com o linux instalado;
+              \item Opção 2: Instale uma máquina virtual para instalar o linux: \href{https://www.virtualbox.org/}{https://www.virtualbox.org/}
+              \item Opção 3: Instale uma versão nativa do linux (recomendado);
+          \end{itemize}
+\end{itemize}
+
+\subsection*{Instalações}
+\begin{itemize}
+    \item Instale o vscode:
+          \begin{verbatim}
+        sudo snap install --classic code
+    \end{verbatim}
+    \item instale o GCC, G++ e o GDB:
+          \begin{verbatim}
+        sudo apt-get install build-essential gdb
+    \end{verbatim}
+    \item Instale o GIT:
+          \begin{verbatim}
+        sudo apt-get install git
+    \end{verbatim}
+    \item Verifique se está tudo corretamente instalado:
+          \begin{verbatim}
+        gcc --version
+        g++ --version
+        gdb --version
+        code --version
+        git --version
+    \end{verbatim}
+\end{itemize}
+\textbf{Atenção:}  Se algum erro ocorrer, notifique os professores ou o monitor da disciplina.
+\subsection*{Testando o ambiente}
+\begin{itemize}
+    \item Excute o vscode;
+    \item Crie uma função simples (helloWorld.c);
+    \item Execute o código com:
+    \begin{verbatim}
+        gcc -o main helloWorld.c -g
+    \end{verbatim}
+    \item Execute o código com:
+    \begin{verbatim}
+        ./main
+    \end{verbatim}
+    Rode em depuração com:
+    \begin{verbatim}
+        gdb main
+    \end{verbatim}
+    \textbf{Atenção:}  Se algum erro ocorrer, notifique os professores ou o monitor da disciplina.
+\end{itemize}
+
+\end{document}
